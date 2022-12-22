@@ -7,7 +7,7 @@
             "url": "customer"
         }
     },
-    "password": "$SECRET(token)",
+    "password": "$SECRET(jwt)",
     "type": "system:rest",
     "url_pattern": "{{@ base_url @}}/v2/%s",
     "username": "0",
