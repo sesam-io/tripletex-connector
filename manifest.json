@@ -8,5 +8,6 @@
     }
   },
   "system-template": "templates/system.json",
-  "auth": "tripletex"
+  "auth": "api_key",
+  "auth_variant": "tripletex"
 }
