@@ -1,0 +1,15 @@
+{
+    "_id": "{{@ system @}}",
+    "authentication": "basic",
+    "operations": {
+        "list-customer": {
+            "method": "GET",
+            "url": "customer"
+        }
+    },
+    "password": "$SECRET(token)",
+    "type": "system:rest",
+    "url_pattern": "{{@ base_url @}}/v2/%s",
+    "username": "0",
+    "verify_ssl": true
+}

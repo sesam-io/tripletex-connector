@@ -1,0 +1,12 @@
+{
+  "additional_parameters": {
+    "base_url": {}
+  },
+  "datatypes": {
+    "customer": {
+      "template": "templates/customer.json"
+    }
+  },
+  "system-template": "templates/system.json",
+  "auth": "tripletex"
+}
