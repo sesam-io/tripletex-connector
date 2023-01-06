@@ -5,6 +5,15 @@
         "list-customer": {
             "method": "GET",
             "url": "customer"
+        },
+        "register-webhook": {
+            "method": "POST",
+            "payload": {
+                "authHeaderName": "Authorization",
+                "authHeaderValue": "Bearer $SECRET(service_jwt)"
+            },
+            "payload-type": "json",
+            "url": "event/subscription"
         }
     },
     "password": "$SECRET(sessionToken)",
