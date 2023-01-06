@@ -14,6 +14,8 @@
         "list": {
             "id_expression": "{{ id }}",
             "method": "GET",
+            "next_page_link": "{{ from }}",
+            "next_page_termination_strategy": "next-page-link-empty",
             "payload_property": "values",
             "url": "{{ properties.datatype }}"
         },
