@@ -2,18 +2,39 @@
     "_id": "{{@ system @}}",
     "authentication": "basic",
     "operations": {
-        "list-customer": {
-            "method": "GET",
-            "url": "customer"
+        "delete": {
+            "method": "DELETE",
+            "url": "{{ properties.datatype }}/{{ properties.id }}"
         },
-        "register-webhook": {
+        "insert": {
             "method": "POST",
             "payload": {
                 "authHeaderName": "Authorization",
-                "authHeaderValue": "Bearer $SECRET(service_jwt)"
+                "authHeaderValue": "Bearer $SECRET(service_jwt)",
+                "event": "{{ properties.event }}",
+                "targetUrl": "{{ properties.targetUrl }}"
             },
             "payload-type": "json",
-            "url": "event/subscription"
+            "url": "{{ properties.datatype }}"
+        },
+        "list": {
+            "method": "GET",
+            "url": "{{ properties.datatype }}"
+        },
+        "lookup": {
+            "method": "GET",
+            "url": "{{ properties.datatype }}/{{ properties.id }}"
+        },
+        "update": {
+            "method": "PUT",
+            "payload": {
+                "authHeaderName": "Authorization",
+                "authHeaderValue": "Bearer $SECRET(service_jwt)",
+                "event": "{{ properties.event }}",
+                "targetUrl": "{{ properties.targetUrl }}"
+            },
+            "payload-type": "json",
+            "url": "{{ properties.datatype }}/{{ properties.id }}"
         }
     },
     "password": "$SECRET(sessionToken)",

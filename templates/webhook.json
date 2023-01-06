@@ -1,0 +1,329 @@
+[
+    {
+        "_id": "{{@ system @}}-webhook-merge",
+        "source": {
+            "datasets": [
+                "{{@ system @}}-webhook-master m",
+                "{{@ system @}}-webhook-collect c"
+            ],
+            "equality_sets": [
+                [
+                    [
+                        "tuples",
+                        "c.targetUrl",
+                        "c.event"
+                    ],
+                    [
+                        "tuples",
+                        "m.targetUrl",
+                        "m.event"
+                    ]
+                ]
+            ],
+            "identity": "first",
+            "strategy": "compact",
+            "type": "merge",
+            "version": 2
+        },
+        "type": "pipe"
+    },
+    {
+        "_id": "{{@ system @}}-webhook-master",
+        "source": {
+            "entities": [
+                {
+                    "_id": "customer-create",
+                    "event": "customer.create",
+                    "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-customer-event/entities"
+                },
+                {
+                    "_id": "customer-update",
+                    "event": "customer.update",
+                    "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-customer-event/entities"
+                },
+                {
+                    "_id": "customer-delete",
+                    "event": "customer.delete",
+                    "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-customer-event/entities"
+                }
+            ],
+            "type": "embedded"
+        },
+        "type": "pipe"
+    },
+    {
+        "_id": "{{@ system @}}-webhook-collect",
+        "source": {
+            "id_expression": "{{ id }}",
+            "operation": "list",
+            "payload_property": "values",
+            "properties": {
+                "datatype": "event/subscription"
+            },
+            "system": "{{@ system @}}",
+            "type": "rest"
+        },
+        "type": "pipe"
+    },
+    {
+        "_id": "{{@ system @}}-webhook-share",
+        "namespaced_identifiers": false,
+        "sink": {
+            "deletion_tracking": false,
+            "set_initial_offset": "onload"
+        },
+        "source": {
+            "dataset": "{{@ system @}}-webhook-transform",
+            "type": "dataset"
+        },
+        "transform": [
+            {
+                "rules": {
+                    "default": [
+                        [
+                            "comment",
+                            "check if we have a record of this _id in the sink and use that, if not check the upstream id"
+                        ],
+                        [
+                            "add",
+                            "id",
+                            [
+                                "coalesce",
+                                [
+                                    "list",
+                                    [
+                                        "max",
+                                        [
+                                            "hops",
+                                            {
+                                                "datasets": [
+                                                    "{{@ system @}}-webhook-share s"
+                                                ],
+                                                "return": "s.id",
+                                                "track-dependencies": false,
+                                                "where": [
+                                                    [
+                                                        "eq",
+                                                        "_S._id",
+                                                        "s.$original_id"
+                                                    ]
+                                                ]
+                                            }
+                                        ]
+                                    ],
+                                    "_S.id"
+                                ]
+                            ]
+                        ],
+                        [
+                            "if",
+                            [
+                                "is-not-null",
+                                "_T.id"
+                            ],
+                            [
+                                [
+                                    "comment",
+                                    "we have an existing id, let's do a lookup first"
+                                ],
+                                [
+                                    "add",
+                                    "operation",
+                                    "lookup"
+                                ]
+                            ],
+                            [
+                                "add",
+                                "operation",
+                                "insert"
+                            ]
+                        ],
+                        [
+                            "add",
+                            "properties",
+                            [
+                                "apply",
+                                "properties",
+                                "_S."
+                            ]
+                        ]
+                    ],
+                    "properties": [
+                        [
+                            "comment",
+                            "copy all the transformed properties, except internal stuff"
+                        ],
+                        [
+                            "copy",
+                            "*",
+                            "_*"
+                        ],
+                        [
+                            "remove",
+                            "$*"
+                        ],
+                        [
+                            "comment",
+                            "add datatype for operation template"
+                        ],
+                        [
+                            "add",
+                            "datatype",
+                            "event/subscription"
+                        ],
+                        [
+                            "comment",
+                            "use the id that we determined previously"
+                        ],
+                        [
+                            "add",
+                            "id",
+                            "_R._T.id"
+                        ]
+                    ]
+                },
+                "type": "dtl"
+            },
+            {
+                "allowed_status_codes": "200,404",
+                "replace_entity": false,
+                "response_status_property": "status",
+                "side_effects": false,
+                "system": "{{@ system @}}",
+                "trigger_on": {
+                    "key": "operation",
+                    "value": "lookup"
+                },
+                "type": "rest"
+            },
+            {
+                "rules": {
+                    "default": [
+                        [
+                            "copy",
+                            "properties"
+                        ],
+                        [
+                            "if",
+                            [
+                                "eq",
+                                "_S.operation",
+                                "lookup"
+                            ],
+                            [
+                                "case-eq",
+                                "_S.status",
+                                404,
+                                [
+                                    "if",
+                                    [
+                                        "eq",
+                                        "_S._deleted",
+                                        true
+                                    ],
+                                    [
+                                        "add",
+                                        "$state",
+                                        "already-deleted"
+                                    ],
+                                    [
+                                        "add",
+                                        "operation",
+                                        "insert"
+                                    ]
+                                ],
+                                200,
+                                [
+                                    "if",
+                                    [
+                                        "eq",
+                                        "_S._deleted",
+                                        true
+                                    ],
+                                    [
+                                        "add",
+                                        "operation",
+                                        "delete"
+                                    ],
+                                    [
+                                        "add",
+                                        "operation",
+                                        "update"
+                                    ]
+                                ],
+                                [
+                                    "add",
+                                    "$state",
+                                    "unhandled-status"
+                                ]
+                            ]
+                        ]
+                    ]
+                },
+                "type": "dtl"
+            },
+            {
+                "replace_entity": false,
+                "side_effects": true,
+                "system": "{{@ system @}}",
+                "trigger_on": {
+                    "key": "operation",
+                    "value": "*"
+                },
+                "type": "rest"
+            },
+            {
+                "rules": {
+                    "default": [
+                        [
+                            "comment",
+                            "capture last operation as state, if we are not already in final state"
+                        ],
+                        [
+                            "default",
+                            "$state",
+                            "_S.operation"
+                        ],
+                        [
+                            "if",
+                            [
+                                "eq",
+                                "_S.operation",
+                                "insert"
+                            ],
+                            [
+                                [
+                                    "comment",
+                                    "rewrite id after insert to capture the generated id as a unique entity"
+                                ],
+                                [
+                                    "add",
+                                    "id",
+                                    [
+                                        "first",
+                                        "_S.response.value.id"
+                                    ]
+                                ],
+                                [
+                                    "add",
+                                    "_id",
+                                    [
+                                        "string",
+                                        "_T.id"
+                                    ]
+                                ],
+                                [
+                                    "add",
+                                    "$original_id",
+                                    "_S._id"
+                                ]
+                            ]
+                        ]
+                    ]
+                },
+                "type": "dtl"
+            }
+        ],
+        "type": "pipe"
+    }
+]

@@ -67,49 +67,6 @@
         "type": "pipe"
     },
     {
-        "_id": "{{@ system @}}-customer-register-webhook",
-        "add_namespaces": false,
-        "source": {
-            "entities": [
-                {
-                    "_id": "operation-settings-create",
-                    "_updated": 0,
-                    "payload": {
-                        "event": "customer.create",
-                        "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-customer-event/entities"
-                    }
-                },
-                {
-                    "_id": "operation-settings-update",
-                    "_updated": 1,
-                    "payload": {
-                        "event": "customer.update",
-                        "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-customer-event/entities"
-                    }
-                },
-                {
-                    "_id": "operation-settings-delete",
-                    "_updated": 2,
-                    "payload": {
-                        "event": "customer.delete",
-                        "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-customer-event/entities"
-                    }
-                }
-            ],
-            "if_source_empty": "accept",
-            "supports_since": true,
-            "type": "embedded"
-        },
-        "transform": {
-            "operation": "register-webhook",
-            "replace_entity": false,
-            "side_effects": true,
-            "system": "{{@ system @}}",
-            "type": "rest"
-        },
-        "type": "pipe"
-    },
-    {
         "_id": "{{@ system @}}-customer-collect",
         "namespaced_identifiers": false,
         "source": {
@@ -126,8 +83,11 @@
         "namespaced_identifiers": false,
         "source": {
             "id_expression": "{{ id }}",
-            "operation": "list-customer",
+            "operation": "list",
             "payload_property": "values",
+            "properties": {
+                "datatype": "customer"
+            },
             "system": "{{@ system @}}",
             "type": "rest"
         },

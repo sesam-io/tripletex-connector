@@ -8,6 +8,9 @@
   "datatypes": {
     "customer": {
       "template": "templates/customer.json"
+    },
+    "webhook": {
+      "template": "templates/webhook.json"
     }
   },
   "system-template": "templates/system.json"
