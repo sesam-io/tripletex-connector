@@ -85,7 +85,7 @@
             "set_initial_offset": "onload"
         },
         "source": {
-            "dataset": "{{@ system @}}-webhook-transform",
+            "dataset": "{{@ system @}}-webhook-transform-noshim",
             "type": "dataset"
         },
         "transform": [
@@ -336,6 +336,112 @@
                 "type": "dtl"
             }
         ],
+        "type": "pipe"
+    },
+    {
+        "_id": "{{@ system @}}-webhook-transform-noshim",
+        "source": {
+            "dataset": "{{@ system @}}-webhook-merge",
+            "type": "dataset"
+        },
+        "transform": {
+            "rules": {
+                "default": [
+                    [
+                        "comment",
+                        "we only care about webhooks that got merged with the master dataset"
+                    ],
+                    [
+                        "filter",
+                        [
+                            "is-not-null",
+                            "_S.{{@ system @}}-webhook-master:event"
+                        ]
+                    ],
+                    [
+                        "comment",
+                        "handle existing ids in the target system"
+                    ],
+                    [
+                        "if",
+                        [
+                            "is-not-null",
+                            "_S.{{@ system @}}-webhook-collect:id"
+                        ],
+                        [
+                            [
+                                "add",
+                                "::id",
+                                [
+                                    "first",
+                                    "_S.{{@ system @}}-webhook-collect:id"
+                                ]
+                            ],
+                            [
+                                "comment",
+                                "emit deletes for the rest of the ids"
+                            ],
+                            [
+                                "create",
+                                [
+                                    "apply",
+                                    "delete",
+                                    [
+                                        "slice",
+                                        1,
+                                        "_S.{{@ system @}}-webhook-collect:id"
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    [
+                        "comment",
+                        "reshape how the share pipe want to see the desired state"
+                    ],
+                    [
+                        "add",
+                        "::targetUrl",
+                        "_R._S.{{@ system @}}-webhook-master:targetUrl"
+                    ],
+                    [
+                        "add",
+                        "::event",
+                        "_R._S.{{@ system @}}-webhook-master:event"
+                    ]
+                ],
+                "delete": [
+                    [
+                        "add",
+                        "_id",
+                        [
+                            "string",
+                            "_S."
+                        ]
+                    ],
+                    [
+                        "add",
+                        "::id",
+                        "_S."
+                    ],
+                    [
+                        "comment",
+                        "always add a reference to source entity for debugging"
+                    ],
+                    [
+                        "add",
+                        "$original_id",
+                        "_R._S._id"
+                    ],
+                    [
+                        "add",
+                        "_deleted",
+                        true
+                    ]
+                ]
+            },
+            "type": "dtl"
+        },
         "type": "pipe"
     }
 ]
