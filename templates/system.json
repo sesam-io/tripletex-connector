@@ -35,18 +35,7 @@
                 "targetUrl": "{{ properties.targetUrl }}"
             },
             "payload-type": "json",
-            "url": "{{ properties.datatype }}"
-        },
-        "webhook-update": {
-            "method": "PUT",
-            "payload": {
-                "authHeaderName": "Authorization",
-                "authHeaderValue": "Bearer $SECRET(service_jwt)",
-                "event": "{{ properties.event }}",
-                "targetUrl": "{{ properties.targetUrl }}"
-            },
-            "payload-type": "json",
-            "url": "{{ properties.datatype }}/{{ properties.id }}"
+            "url": "event/subscription"
         }
     },
     "password": "$SECRET(sessionToken)",

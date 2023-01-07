@@ -67,6 +67,48 @@
         "type": "pipe"
     },
     {
+        "_id": "{{@ system @}}-customer-register-webhook",
+        "namespaced_identifiers": false,
+        "source": {
+            "entities": [
+                {
+                    "_id": "customer-create",
+                    "_updated": 0,
+                    "properties": {
+                        "event": "customer.create",
+                        "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-customer-event/entities"
+                    }
+                },
+                {
+                    "_id": "customer-update",
+                    "_updated": 1,
+                    "properties": {
+                        "event": "customer.update",
+                        "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-customer-event/entities"
+                    }
+                },
+                {
+                    "_id": "customer-delete",
+                    "_updated": 2,
+                    "properties": {
+                        "event": "customer.delete",
+                        "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-customer-event/entities"
+                    }
+                }
+            ],
+            "supports_since": true,
+            "type": "embedded"
+        },
+        "transform": {
+            "operation": "webhook-insert",
+            "replace_entity": false,
+            "side_effects": true,
+            "system": "{{@ system @}}",
+            "type": "rest"
+        },
+        "type": "pipe"
+    },
+    {
         "_id": "{{@ system @}}-customer-collect",
         "namespaced_identifiers": false,
         "source": {
