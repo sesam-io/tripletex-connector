@@ -6,12 +6,22 @@
             "method": "DELETE",
             "url": "{{ properties.datatype }}/{{ properties.id }}"
         },
+        "insert": {
+            "method": "POST",
+            "payload-type": "json",
+            "url": "{{ properties.datatype }}"
+        },
         "list": {
             "method": "GET",
             "url": "{{ properties.datatype }}"
         },
         "lookup": {
             "method": "GET",
+            "url": "{{ properties.datatype }}/{{ properties.id }}"
+        },
+        "update": {
+            "method": "PUT",
+            "payload-type": "json",
             "url": "{{ properties.datatype }}/{{ properties.id }}"
         },
         "webhook-insert": {
