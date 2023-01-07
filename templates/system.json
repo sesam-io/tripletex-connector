@@ -6,7 +6,15 @@
             "method": "DELETE",
             "url": "{{ properties.datatype }}/{{ properties.id }}"
         },
-        "insert": {
+        "list": {
+            "method": "GET",
+            "url": "{{ properties.datatype }}"
+        },
+        "lookup": {
+            "method": "GET",
+            "url": "{{ properties.datatype }}/{{ properties.id }}"
+        },
+        "webhook-insert": {
             "method": "POST",
             "payload": {
                 "authHeaderName": "Authorization",
@@ -17,15 +25,7 @@
             "payload-type": "json",
             "url": "{{ properties.datatype }}"
         },
-        "list": {
-            "method": "GET",
-            "url": "{{ properties.datatype }}"
-        },
-        "lookup": {
-            "method": "GET",
-            "url": "{{ properties.datatype }}/{{ properties.id }}"
-        },
-        "update": {
+        "webhook-update": {
             "method": "PUT",
             "payload": {
                 "authHeaderName": "Authorization",

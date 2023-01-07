@@ -135,7 +135,7 @@
                             [
                                 "add",
                                 "operation",
-                                "insert"
+                                "webhook-insert"
                             ]
                         ],
                         [
@@ -229,7 +229,7 @@
                                     [
                                         "add",
                                         "operation",
-                                        "insert"
+                                        "webhook-insert"
                                     ]
                                 ],
                                 200,
@@ -248,7 +248,7 @@
                                     [
                                         "add",
                                         "operation",
-                                        "update"
+                                        "webhook-update"
                                     ]
                                 ],
                                 [
@@ -289,7 +289,7 @@
                             [
                                 "eq",
                                 "_S.operation",
-                                "insert"
+                                "webhook-insert"
                             ],
                             [
                                 [
