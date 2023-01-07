@@ -7,7 +7,6 @@
         },
         "namespaced_identifiers": false,
         "source": {
-            "trace": true,
             "type": "http_endpoint"
         },
         "transform": [
