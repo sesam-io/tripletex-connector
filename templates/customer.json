@@ -82,9 +82,7 @@
         "_id": "{{@ system @}}-customer-all",
         "namespaced_identifiers": false,
         "source": {
-            "id_expression": "{{ id }}",
             "operation": "list",
-            "payload_property": "values",
             "properties": {
                 "datatype": "customer"
             },

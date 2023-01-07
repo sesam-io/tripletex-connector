@@ -4,7 +4,7 @@
         "source": {
             "datasets": [
                 "{{@ system @}}-webhook-master m",
-                "{{@ system @}}-webhook-collect c"
+                "{{@ system @}}-webhook-enrich c"
             ],
             "equality_sets": [
                 [
@@ -52,11 +52,23 @@
         "type": "pipe"
     },
     {
-        "_id": "{{@ system @}}-webhook-collect",
+        "_id": "{{@ system @}}-webhook-enrich",
+        "add_namespaces": true,
+        "namespaces": {
+            "identity": "{{@ system @}}-webhook-collect",
+            "property": "{{@ system @}}-webhook-collect"
+        },
         "source": {
-            "id_expression": "{{ id }}",
+            "dataset": "{{@ system @}}-webhook-collect",
+            "type": "dataset"
+        },
+        "type": "pipe"
+    },
+    {
+        "_id": "{{@ system @}}-webhook-collect",
+        "namespaced_identifiers": false,
+        "source": {
             "operation": "list",
-            "payload_property": "values",
             "properties": {
                 "datatype": "event/subscription"
             },
