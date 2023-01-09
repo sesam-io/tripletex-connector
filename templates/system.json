@@ -5,13 +5,13 @@
   "operations": {
     "list-customer": {
       "method": "GET",
-      "next_page_link": "https://api.tripletex.io/v2/customer?from={{ body.from + body.count }}",
+      "next_page_link": "{{@ base_url @}}/v2/customer?from={{ body.from + body.count }}",
       "next_page_termination_strategy": "empty-result",
       "url": "customer"
     }
   },
   "password": "$SECRET(sessionToken)",
-  "url_pattern": "https://api.tripletex.io/v2/%s",
+  "url_pattern": "{{@ base_url @}}/v2/%s",
   "username": "0",
   "verify_ssl": true
 }
