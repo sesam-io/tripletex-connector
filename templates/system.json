@@ -4,6 +4,8 @@
     "operations": {
         "list-customer": {
             "method": "GET",
+            "next_page_link": "{{ from }}",
+            "next_page_termination_strategy": "next-page-link-empty",
             "url": "customer"
         }
     },
