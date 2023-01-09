@@ -1,13 +1,15 @@
 {
   "additional_parameters": {
-    "base_url": {}
+    "base_url": {},
+    "service_url": {}
   },
+  "auth": "api_key",
+  "auth_variant": "tripletex",
   "datatypes": {
     "customer": {
       "template": "templates/customer.json"
     }
   },
   "system-template": "templates/system.json",
-  "auth": "api_key",
-  "auth_variant": "tripletex"
+  "requires_service_api_access": true
 }

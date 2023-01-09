@@ -1,12 +1,135 @@
-{
-    "_id": "{{@ system @}}-customer-collect",
-    "namespaced_identifiers": false,
-    "source": {
-        "id_expression": "{{ id }}",
-        "operation": "list-customer",
-        "payload_property": "values",
-        "system": "{{@ system @}}",
-        "type": "rest"
+[
+    {
+        "_id": "{{@ system @}}-customer-event",
+        "compaction": {
+            "keep_versions": 0,
+            "time_threshold_hours": 168
+        },
+        "namespaced_identifiers": false,
+        "source": {
+            "type": "http_endpoint"
+        },
+        "transform": [
+            {
+                "rules": {
+                    "default": [
+                        [
+                            "copy",
+                            "*"
+                        ],
+                        [
+                            "add",
+                            "_id",
+                            [
+                                "string",
+                                "_S.id"
+                            ]
+                        ]
+                    ]
+                },
+                "type": "dtl"
+            }
+        ],
+        "type": "pipe"
     },
-    "type": "pipe"
-}
+    {
+        "_id": "{{@ system @}}-customer-event-processed",
+        "namespaced_identifiers": false,
+        "source": {
+            "dataset": "{{@ system @}}-customer-event",
+            "type": "dataset"
+        },
+        "transform": {
+            "rules": {
+                "default": [
+                    [
+                        "if",
+                        [
+                            "eq",
+                            "_S.event",
+                            "customer.delete"
+                        ],
+                        [
+                            "add",
+                            "_deleted",
+                            true
+                        ]
+                    ],
+                    [
+                        "merge",
+                        "_S.value"
+                    ]
+                ]
+            },
+            "type": "dtl"
+        },
+        "type": "pipe"
+    },
+    {
+        "_id": "{{@ system @}}-customer-register-webhook",
+        "namespaced_identifiers": false,
+        "source": {
+            "entities": [
+                {
+                    "_id": "customer-create",
+                    "_updated": 0,
+                    "properties": {
+                        "event": "customer.create",
+                        "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-customer-event/entities"
+                    }
+                },
+                {
+                    "_id": "customer-update",
+                    "_updated": 1,
+                    "properties": {
+                        "event": "customer.update",
+                        "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-customer-event/entities"
+                    }
+                },
+                {
+                    "_id": "customer-delete",
+                    "_updated": 2,
+                    "properties": {
+                        "event": "customer.delete",
+                        "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-customer-event/entities"
+                    }
+                }
+            ],
+            "supports_since": true,
+            "type": "embedded"
+        },
+        "transform": {
+            "operation": "webhook-insert",
+            "replace_entity": false,
+            "side_effects": true,
+            "system": "{{@ system @}}",
+            "type": "rest"
+        },
+        "type": "pipe"
+    },
+    {
+        "_id": "{{@ system @}}-customer-collect",
+        "namespaced_identifiers": false,
+        "source": {
+            "datasets": [
+                "{{@ system @}}-customer-all",
+                "{{@ system @}}-customer-event-processed"
+            ],
+            "type": "merge_datasets"
+        },
+        "type": "pipe"
+    },
+    {
+        "_id": "{{@ system @}}-customer-all",
+        "namespaced_identifiers": false,
+        "source": {
+            "operation": "list",
+            "properties": {
+                "datatype": "customer"
+            },
+            "system": "{{@ system @}}",
+            "type": "rest"
+        },
+        "type": "pipe"
+    }
+]
