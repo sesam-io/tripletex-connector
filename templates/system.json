@@ -1,5 +1,5 @@
 {
-  "_id": "tripletex",
+  "_id": "{{@ system @}}",
   "type": "system:rest",
   "authentication": "basic",
   "operations": {
