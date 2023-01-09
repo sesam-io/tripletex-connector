@@ -6,7 +6,7 @@
     "list-customer": {
       "method": "GET",
       "next_page_link": "{{@ base_url @}}/v2/customer?from={{ body.from + body.count }}",
-      "next_page_termination_strategy": "empty-result",
+      "next_page_termination_strategy": ["empty-result", "same-next-page-link"],
       "url": "customer"
     }
   },
