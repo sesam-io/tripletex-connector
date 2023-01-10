@@ -14,8 +14,11 @@
         "list": {
             "id_expression": "{{ id }}",
             "method": "GET",
-            "next_page_link": "{{ from }}",
-            "next_page_termination_strategy": "next-page-link-empty",
+            "next_page_link": "{{@ base_url @}}/v2/customer?from={{ body.from + body.count }}",
+            "next_page_termination_strategy": [
+                "empty-result",
+                "same-next-page-link"
+            ],
             "payload_property": "values",
             "url": "{{ properties.datatype }}"
         },
