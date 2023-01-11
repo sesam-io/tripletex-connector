@@ -1,0 +1,13 @@
+{
+  "_id": "{{@ system @}}-travelexpense-collect",
+  "namespaced_identifiers": false,
+  "source": {
+    "operation": "list",
+    "properties": {
+      "datatype": "travelExpense"
+    },
+    "system": "{{@ system @}}",
+    "type": "rest"
+  },
+  "type": "pipe"
+}
