@@ -6,9 +6,6 @@
   "auth": "api_key",
   "auth_variant": "tripletex",
   "datatypes": {
-    "account": {
-      "template": "templates/customer.json"
-    },
     "address": {
       "template": "templates/customer.json"
     },
@@ -33,6 +30,9 @@
     "ledger": {
       "template": "templates/customer.json"
     },
+    "ledgeraccount": {
+      "template": "templates/ledgeraccount.json"
+    },
     "order": {
       "template": "templates/customer.json"
     },
@@ -47,9 +47,6 @@
     },
     "projectcategory": {
       "template": "templates/projectcategory.json"
-    },
-    "subscription": {
-      "template": "templates/customer.json"
     },
     "supplier": {
       "template": "templates/customer.json"

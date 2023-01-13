@@ -1,0 +1,13 @@
+{
+  "_id": "{{@ system @}}-ledgeraccount-collect",
+  "namespaced_identifiers": false,
+  "source": {
+    "operation": "list",
+    "properties": {
+      "datatype": "ledger/account"
+    },
+    "system": "{{@ system @}}",
+    "type": "rest"
+  },
+  "type": "pipe"
+}
