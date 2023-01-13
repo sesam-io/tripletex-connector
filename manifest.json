@@ -27,12 +27,6 @@
     "invoice": {
       "template": "templates/customer.json"
     },
-    "ledger": {
-      "template": "templates/customer.json"
-    },
-    "ledgeraccount": {
-      "template": "templates/ledgeraccount.json"
-    },
     "order": {
       "template": "templates/customer.json"
     },
@@ -42,17 +36,8 @@
     "productgroup": {
       "template": "templates/productgroup.json"
     },
-    "project": {
-      "template": "templates/customer.json"
-    },
     "projectcategory": {
       "template": "templates/projectcategory.json"
-    },
-    "supplier": {
-      "template": "templates/customer.json"
-    },
-    "travelexpense": {
-      "template": "templates/travelexpense.json"
     }
   },
   "requires_service_api_access": true,
