@@ -1,48 +1,49 @@
 {
-    "_id": "{{@ system @}}",
-    "authentication": "basic",
-    "operations": {
-        "delete": {
-            "method": "DELETE",
-            "url": "{{ properties.datatype }}/{{ properties.id }}"
-        },
-        "insert": {
-            "method": "POST",
-            "payload-type": "json",
-            "url": "{{ properties.datatype }}"
-        },
-        "list": {
-            "id_expression": "{{ id }}",
-            "method": "GET",
-            "next_page_link": "{{ from }}",
-            "next_page_termination_strategy": "next-page-link-empty",
-            "payload_property": "values",
-            "url": "{{ properties.datatype }}"
-        },
-        "lookup": {
-            "method": "GET",
-            "url": "{{ properties.datatype }}/{{ properties.id }}"
-        },
-        "update": {
-            "method": "PUT",
-            "payload-type": "json",
-            "url": "{{ properties.datatype }}/{{ properties.id }}"
-        },
-        "webhook-insert": {
-            "method": "POST",
-            "payload": {
-                "authHeaderName": "Authorization",
-                "authHeaderValue": "Bearer $SECRET(service_jwt)",
-                "event": "{{ properties.event }}",
-                "targetUrl": "{{ properties.targetUrl }}"
-            },
-            "payload-type": "json",
-            "url": "event/subscription"
-        }
+  "_id": "{{@ system @}}",
+  "authentication": "basic",
+  "operations": {
+    "delete": {
+      "method": "DELETE",
+      "url": "{{ properties.datatype }}/{{ entity['$id'] }}"
     },
-    "password": "$SECRET(sessionToken)",
-    "type": "system:rest",
-    "url_pattern": "{{@ base_url @}}/v2/%s",
-    "username": "0",
-    "verify_ssl": true
+    "insert": {
+      "method": "POST",
+      "payload-type": "json",
+      "url": "{{ properties.datatype }}"
+    },
+    "list": {
+      "id_expression": "{{ id }}",
+      "method": "GET",
+      "next_page_link": "{{ from }}",
+      "next_page_termination_strategy": "next-page-link-empty",
+      "payload_property": "values",
+      "url": "{{ properties.datatype }}"
+    },
+    "lookup": {
+      "method": "GET",
+      "payload_property": "value",
+      "url": "{{ properties.datatype }}/{{ entity['$id'] }}"
+    },
+    "update": {
+      "method": "PUT",
+      "payload-type": "json",
+      "url": "{{ properties.datatype }}/{{ entity['$id'] }}"
+    },
+    "webhook-insert": {
+      "method": "POST",
+      "payload": {
+        "authHeaderName": "Authorization",
+        "authHeaderValue": "Bearer $SECRET(service_jwt)",
+        "event": "{{ properties.event }}",
+        "targetUrl": "{{ properties.targetUrl }}"
+      },
+      "payload-type": "json",
+      "url": "event/subscription"
+    }
+  },
+  "password": "$SECRET(sessionToken)",
+  "type": "system:rest",
+  "url_pattern": "{{@ base_url @}}/v2/%s",
+  "username": "0",
+  "verify_ssl": true
 }
