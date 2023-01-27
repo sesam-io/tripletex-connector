@@ -42,7 +42,7 @@
                 "if",
                 [
                   "is-not-null",
-                  "_S.$id"
+                  "_S.id"
                 ],
                 [
                   "if",
@@ -98,7 +98,7 @@
                   [
                     [
                       "comment",
-                      "At this point there is no $id, so we should do an insert unless there are sink entity ids in $ids with $generated_id in them."
+                      "At this point there is no primary key, so we should do an insert unless there are sink entity ids in $ids with $generated_id in them."
                     ],
                     [
                       "if",
@@ -160,13 +160,13 @@
               ]
             ],
             [
-              "copy",
-              "$id"
-            ],
-            [
               "add",
               "$source",
               "_S."
+            ],
+            [
+              "copy",
+              "id"
             ],
             [
               "copy",
@@ -280,7 +280,7 @@
         "replace_entity": false,
         "response_property": "response_body",
         "response_status_property": "response_status",
-        "side_effects": false,
+        "side_effects": true,
         "system": "{{@ system @}}",
         "trigger_on": {
           "key": "$operation",
@@ -475,10 +475,6 @@
                     ],
                     [
                       "copy",
-                      "$id"
-                    ],
-                    [
-                      "copy",
                       "$source"
                     ],
                     [
@@ -601,7 +597,6 @@
       {
         "allowed_status_codes": "200,201,400",
         "operation": "insert",
-        "payload_property": "value",
         "properties": {
           "datatype": "{{@ datatype @}}"
         },
@@ -638,10 +633,6 @@
           "default": [
             [
               "copy",
-              "$id"
-            ],
-            [
-              "copy",
               "$source"
             ],
             [
@@ -673,10 +664,7 @@
                 [
                   "add",
                   "$origin",
-                  [
-                    "ni",
-                    "_S._id"
-                  ]
+                  "_S._id"
                 ],
                 [
                   "add",
@@ -692,22 +680,26 @@
               "add",
               "$previous",
               [
-                "first",
+                "apply",
+                "previous",
                 [
-                  "hops",
-                  {
-                    "datasets": [
-                      "{{@ system @}}-{{@ datatype @}}-share st"
-                    ],
-                    "track-dependencies": false,
-                    "where": [
-                      [
-                        "eq",
-                        "_S._id",
-                        "st._id"
+                  "first",
+                  [
+                    "hops",
+                    {
+                      "datasets": [
+                        "{{@ system @}}-{{@ datatype @}}-share st"
+                      ],
+                      "track-dependencies": false,
+                      "where": [
+                        [
+                          "eq",
+                          "_S._id",
+                          "st._id"
+                        ]
                       ]
-                    ]
-                  }
+                    }
+                  ]
                 ]
               ]
             ],
@@ -772,6 +764,16 @@
                 "$origin",
                 "_T.$previous.$origin"
               ]
+            ]
+          ],
+          "previous": [
+            [
+              "copy",
+              "$generated_id"
+            ],
+            [
+              "copy",
+              "$origin"
             ]
           ]
         },

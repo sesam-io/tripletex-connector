@@ -4,11 +4,12 @@
   "operations": {
     "delete": {
       "method": "DELETE",
-      "url": "{{ properties.datatype }}/{{ entity['$id'] }}"
+      "url": "{{ properties.datatype }}/{{ entity.id }}"
     },
     "insert": {
       "method": "POST",
       "payload-type": "json",
+      "payload_property": "value",
       "url": "{{ properties.datatype }}"
     },
     "list": {
@@ -22,12 +23,12 @@
     "lookup": {
       "method": "GET",
       "payload_property": "value",
-      "url": "{{ properties.datatype }}/{{ entity['$id'] }}"
+      "url": "{{ properties.datatype }}/{{ entity.id }}"
     },
     "update": {
       "method": "PUT",
       "payload-type": "json",
-      "url": "{{ properties.datatype }}/{{ entity['$id'] }}"
+      "url": "{{ properties.datatype }}/{{ entity.id }}"
     },
     "webhook-insert": {
       "method": "POST",
