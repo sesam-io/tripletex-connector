@@ -39,8 +39,8 @@
     "projectcategory": {
       "template": "templates/projectcategory.json"
     },
-    "customer-category": {
-      "template": "templates/customer-category.json"
+    "customercategory": {
+      "template": "templates/customercategory.json"
     }
   },
   "requires_service_api_access": true,
