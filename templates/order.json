@@ -1,0 +1,185 @@
+[
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-event",
+    "compaction": {
+      "keep_versions": 0,
+      "time_threshold_hours": 168
+    },
+    "namespaced_identifiers": false,
+    "source": {
+      "type": "http_endpoint"
+    },
+    "transform": [
+      {
+        "rules": {
+          "default": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-event-processed",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-event",
+      "type": "dataset"
+    },
+    "transform": {
+      "rules": {
+        "default": [
+          [
+            "if",
+            [
+              "eq",
+              "_S.event",
+              "{{@ datatype @}}.delete"
+            ],
+            [
+              "add",
+              "_deleted",
+              true
+            ]
+          ],
+          [
+            "merge",
+            "_S.value"
+          ]
+        ]
+      },
+      "type": "dtl"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "namespaced_identifiers": false,
+    "source": {
+      "datasets": [
+        "{{@ system @}}-{{@ datatype @}}-all",
+        "{{@ system @}}-{{@ datatype @}}-event-processed"
+      ],
+      "type": "merge_datasets"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "type": "pipe",
+    "source": {
+      "type": "embedded",
+      "entities": [{
+        "start": "~t2023-01-01T00:00:00Z"
+      }]
+    },
+    "transform": [{
+      "type": "dtl",
+      "rules": {
+        "default": [
+          ["add", "_id",
+            ["datetime-format", "%Y-%m-%d", "_S.start"]
+          ],
+          ["add", "::properties",
+            ["dict", "type", "{{@ datatype @}}", "query",
+              ["concat", "{{@ datatype @}}DateFrom=",
+                ["datetime-format", "%Y-%m-%d", "_S.start"], "&{{@ datatype @}}DateTo=",
+                ["datetime-format", "%Y-%m-%d",
+                  ["datetime-plus", "month", 2, "_S.start"]
+                ]
+              ]
+            ]
+          ],
+          ["add", "::operation", "get-raw"]
+        ]
+      }
+    },
+      {
+      "type": "rest",
+      "system": "{{@ system @}}",
+      "replace_entity": true
+    },
+      {
+      "type": "dtl",
+      "rules": {
+        "default": [
+          ["add", "_id", "x"],
+          ["create",
+            ["apply", "item", "_S.values"]
+          ],
+          ["filter"]
+        ],
+        "item": [
+          ["copy", "*"],
+          ["add", "_id",
+            ["string", "_S.id"]
+          ]
+        ]
+      }
+    }],
+    "pump": {
+      "rescan_run_count": 1,
+      "schedule_interval": 3600
+    },
+    "add_namespaces": false,
+    "namespaces": {
+      "identity": "",
+      "property": ""
+    }
+  },  
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-register-webhook",
+    "namespaced_identifiers": false,
+    "source": {
+      "entities": [
+        {
+          "_id": "{{@ datatype @}}-create",
+          "_updated": 0,
+          "properties": {
+            "event": "{{@ datatype @}}.create",
+            "targetUrl": "$ENV(service_url)/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+          }
+        },
+        {
+          "_id": "{{@ datatype @}}-update",
+          "_updated": 1,
+          "properties": {
+            "event": "{{@ datatype @}}.update",
+            "targetUrl": "$ENV(service_url)/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+          }
+        },
+        {
+          "_id": "{{@ datatype @}}-delete",
+          "_updated": 2,
+          "properties": {
+            "event": "{{@ datatype @}}.delete",
+            "targetUrl": "$ENV(service_url)/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+          }
+        }
+      ],
+      "supports_since": true,
+      "type": "embedded"
+    },
+    "transform": {
+      "operation": "webhook-insert",
+      "replace_entity": false,
+      "side_effects": true,
+      "system": "{{@ system @}}",
+      "type": "rest"
+    },
+    "type": "pipe"
+  }
+]

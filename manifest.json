@@ -25,10 +25,10 @@
       "template": "templates/customer.json"
     },
     "invoice": {
-      "template": "templates/customer.json"
+      "template": "templates/order.json"
     },
     "order": {
-      "template": "templates/customer.json"
+      "template": "templates/order.json"
     },
     "product": {
       "template": "templates/customer.json"
