@@ -33,6 +33,9 @@
     "product": {
       "template": "templates/customer.json"
     },
+    "project": {
+      "template": "templates/customer.json"
+    },
     "productgroup": {
       "template": "templates/productgroup.json"
     },
