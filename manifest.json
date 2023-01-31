@@ -42,7 +42,7 @@
     "projectcategory": {
       "template": "templates/projectcategory.json"
     },
-    "customercategory": {
+    "customer-category": {
       "template": "templates/customer-category.json"
     }
   },
