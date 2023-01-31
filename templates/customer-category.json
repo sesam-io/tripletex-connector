@@ -1,5 +1,5 @@
 {
-  "_id": "{{@ system @}}-customercategory-collect",
+  "_id": "{{@ system @}}-customer-category-collect",
   "namespaced_identifiers": false,
   "source": {
     "operation": "list",

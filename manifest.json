@@ -43,7 +43,7 @@
       "template": "templates/projectcategory.json"
     },
     "customercategory": {
-      "template": "templates/customercategory.json"
+      "template": "templates/customer-category.json"
     }
   },
   "requires_service_api_access": true,
