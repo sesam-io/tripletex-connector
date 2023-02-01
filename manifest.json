@@ -25,7 +25,7 @@
       "template": "templates/customer.json"
     },
     "invoice": {
-      "template": "templates/order.json"
+      "template": "templates/invoice.json"
     },
     "order": {
       "template": "templates/order.json"
@@ -33,14 +33,11 @@
     "product": {
       "template": "templates/customer.json"
     },
-    "project": {
-      "template": "templates/customer.json"
-    },
-    "vattype": {
-      "template": "templates/customer.json"
-    },
     "productgroup": {
       "template": "templates/productgroup.json"
+    },
+    "project": {
+      "template": "templates/customer.json"
     },
     "projectcategory": {
       "template": "templates/projectcategory.json"

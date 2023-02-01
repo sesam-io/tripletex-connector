@@ -1,13 +1,28 @@
-{
-  "_id": "{{@ system @}}-productgroup-collect",
-  "namespaced_identifiers": false,
-  "source": {
-    "operation": "list",
-    "properties": {
-      "datatype": "product/group"
+[
+  {
+    "_id": "{{@ system @}}-productgroup-collect",
+    "namespaced_identifiers": false,
+    "source": {
+      "operation": "list",
+      "properties": {
+        "datatype": "product/group"
+      },
+      "system": "{{@ system @}}",
+      "type": "rest"
     },
-    "system": "{{@ system @}}",
-    "type": "rest"
+    "type": "pipe"
   },
-  "type": "pipe"
-}
+  {
+    "_id": "{{@ system @}}-productgroup-collect",
+    "namespaced_identifiers": false,
+    "source": {
+      "operation": "list",
+      "properties": {
+        "datatype": "product/group"
+      },
+      "system": "{{@ system @}}",
+      "type": "rest"
+    },
+    "type": "pipe"
+  }
+]

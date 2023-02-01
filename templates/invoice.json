@@ -139,10 +139,10 @@
         "list": {
           "id_expression": "{{ id }}",
           "method": "GET",
-          "next_page_link": "{{@ base_url @}}/v2/{{ properties.datatype }}?from={{ body.from + body.count }}&{{@ datatype @}}orderDateFrom={{ properties.DateFrom }}&{{@ datatype @}}orderDateTo={{ properties.DateTo }}",
+          "next_page_link": "{{@ base_url @}}/v2/{{ properties.datatype }}?from={{ body.from + body.count }}&{{@ datatype @}}invoiceDateFrom={{ properties.DateFrom }}&{{@ datatype @}}invoiceDateTo={{ properties.DateTo }}",
           "next_page_termination_strategy": "empty-result",
           "payload_property": "values",
-          "url": "{{ properties.datatype }}?{{@ datatype @}}orderDateFrom={{ properties.DateFrom }}&{{@ datatype @}}orderDateTo={{ properties.DateTo }}"
+          "url": "{{ properties.datatype }}?{{@ datatype @}}invoiceDateFrom={{ properties.DateFrom }}&{{@ datatype @}}invoiceDateTo={{ properties.DateTo }}"
         }
       },
       "properties": {
