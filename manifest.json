@@ -10,6 +10,6 @@
       "template": "templates/customer.json"
     }
   },
-  "system-template": "templates/system.json",
-  "requires_service_api_access": true
+  "requires_service_api_access": true,
+  "system-template": "templates/system.json"
 }
