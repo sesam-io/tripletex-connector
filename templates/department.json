@@ -1,0 +1,14 @@
+{
+  "_id": "{{@ system @}}-department-all",
+  "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
+  "namespaced_identifiers": false,
+  "source": {
+    "operation": "list",
+    "properties": {
+      "datatype": "department"
+    },
+    "system": "{{@ system @}}",
+    "type": "rest"
+  },
+  "type": "pipe"
+}

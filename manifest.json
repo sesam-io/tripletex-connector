@@ -6,6 +6,9 @@
   "auth": "api_key",
   "auth_variant": "tripletex",
   "datatypes": {
+    "activity": {
+      "template": "templates/activity.json"
+    },
     "address": {
       "template": "templates/customer.json"
     },
@@ -21,6 +24,9 @@
     "customer": {
       "template": "templates/customer.json"
     },
+    "department": {
+      "template": "templates/department.json"
+    },
     "employee": {
       "template": "templates/customer.json"
     },
@@ -30,11 +36,17 @@
     "order": {
       "template": "templates/order.json"
     },
+    "orderline": {
+      "template": "templates/orderline.json"
+    },
     "product": {
       "template": "templates/customer.json"
     },
     "productgroup": {
       "template": "templates/productgroup.json"
+    },
+    "productgrouprelation": {
+      "template": "templates/productgrouprelation.json"
     },
     "project": {
       "template": "templates/customer.json"
@@ -42,8 +54,8 @@
     "projectcategory": {
       "template": "templates/projectcategory.json"
     },
-    "customer-category": {
-      "template": "templates/customer-category.json"
+    "vattype": {
+      "template": "templates/vattype.json"
     }
   },
   "requires_service_api_access": true,

@@ -1,15 +1,7 @@
 [
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-category-transform",
-    "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-category-collect",
-      "supports_signalling": false,
-      "type": "dataset"
-    },
-    "type": "pipe"
-  },
-  {
     "_id": "{{@ system @}}-{{@ datatype @}}-event",
+    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "compaction": {
       "keep_versions": 0,
       "time_threshold_hours": 168
@@ -43,6 +35,7 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-event-processed",
+    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "source": {
       "dataset": "{{@ system @}}-{{@ datatype @}}-event",
@@ -76,6 +69,7 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "source": {
       "datasets": [
@@ -87,25 +81,13 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-category-collect",
-    "namespaced_identifiers": false,
-    "source": {
-      "operation": "list",
-      "properties": {
-        "datatype": "{{@ datatype @}}/category"
-      },
-      "system": "{{@ system @}}",
-      "type": "rest"
-    },
-    "type": "pipe"
-  },
-  {
     "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "source": {
       "operation": "list",
       "properties": {
-        "datatype": "{{@ datatype @}}"
+        "datatype": "ledger/vatType"
       },
       "system": "{{@ system @}}",
       "type": "rest"
@@ -114,6 +96,7 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-register-webhook",
+    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "source": {
       "entities": [
@@ -149,78 +132,6 @@
       "operation": "webhook-insert",
       "replace_entity": false,
       "side_effects": true,
-      "system": "{{@ system @}}",
-      "type": "rest"
-    },
-    "type": "pipe"
-  },
-  {
-    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
-    "namespaced_identifiers": false,
-    "source": {
-      "datasets": [
-        "{{@ system @}}-{{@ datatype @}}-all",
-        "{{@ system @}}-{{@ datatype @}}-event-processed"
-      ],
-      "type": "merge_datasets"
-    },
-    "transform": {
-      "rules": {
-        "default": [
-          [
-            "copy",
-            "*"
-          ],
-          [
-            "add",
-            "_origin",
-            [
-              "first",
-              [
-                "hops",
-                {
-                  "datasets": [
-                    "{{@ system @}}-{{@ datatype @}}-share st"
-                  ],
-                  "return": "st.$origin",
-                  "track-dependencies": false,
-                  "where": [
-                    [
-                      "eq",
-                      "_S.id",
-                      "st.$generated_id"
-                    ]
-                  ]
-                }
-              ]
-            ]
-          ],
-          [
-            "if",
-            [
-              "is-not-null",
-              "_T._origin"
-            ],
-            [
-              "add",
-              "$origin",
-              "_T._origin"
-            ]
-          ]
-        ]
-      },
-      "type": "dtl"
-    },
-    "type": "pipe"
-  },
-  {
-    "_id": "{{@ system @}}-{{@ datatype @}}-all",
-    "namespaced_identifiers": false,
-    "source": {
-      "operation": "list",
-      "properties": {
-        "datatype": "{{@ datatype @}}"
-      },
       "system": "{{@ system @}}",
       "type": "rest"
     },

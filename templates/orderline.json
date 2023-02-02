@@ -1,0 +1,51 @@
+{
+  "_id": "{{@ system @}}-orderline-all",
+  "source": {
+    "dataset": "{{@ system @}}-order-all",
+    "type": "dataset"
+  },
+  "transform": [
+    {
+      "rules": {
+        "default": [
+          [
+            "add",
+            "::properties",
+            [
+              "dict",
+              "datatype",
+              [
+                "concat",
+                "order/orderline/",
+                [
+                  "string",
+                  "_S.id"
+                ]
+              ]
+            ]
+          ]
+        ]
+      },
+      "type": "dtl"
+    },
+    {
+      "operation": "list",
+      "replace_entity": false,
+      "system": "{{@ system @}}",
+      "trace": true,
+      "type": "rest"
+    },
+    {
+      "rules": {
+        "default": [
+          [
+            "copy",
+            "*"
+          ]
+        ]
+      },
+      "type": "dtl"
+    }
+  ],
+  "type": "pipe"
+}
