@@ -31,7 +31,7 @@
       "template": "templates/customer.json"
     },
     "invoice": {
-      "template": "templates/invoice.json"
+      "template": "templates/order.json"
     },
     "order": {
       "template": "templates/order.json"
