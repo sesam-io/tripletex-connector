@@ -11,6 +11,12 @@
       "payload-type": "json",
       "url": "{{ properties.datatype }}"
     },
+    "lines": {
+      "id_expression": "{{ id }}",
+      "method": "GET",
+      "payload_property": "value",
+      "url": "{{ properties.datatype }}"
+    },
     "list": {
       "id_expression": "{{ id }}",
       "method": "GET",
