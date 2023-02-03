@@ -1,8 +1,9 @@
 [
   {
-    "_id": "{{@ system @}}-orderline-all-lookup",
+    "_id": "{{@ system @}}-orderline-collect",
+    "namespaced_identifiers": false,
     "source": {
-      "dataset": "{{@ system @}}-orderline-all",
+      "dataset": "{{@ system @}}-orderline-all-2",
       "type": "dataset"
     },
     "transform": [
@@ -10,27 +11,84 @@
         "rules": {
           "default": [
             [
+              "filter",
+              [
+                "neq",
+                "_S._deleted",
+                true
+              ]
+            ],
+            [
               "copy",
-              "properties"
+              "*"
+            ],
+            [
+              "add",
+              "properties",
+              [
+                "dict",
+                "id",
+                "_S.id",
+                "datatype",
+                "order/orderline"
+              ]
             ]
           ]
         },
         "type": "dtl"
       },
       {
-        "operation": "lines",
-        "replace_entity": false,
+        "operation": "lookup",
+        "replace_entity": true,
+        "side_effects": false,
         "system": "{{@ system @}}",
-        "trace": true,
         "type": "rest"
+      },
+      {
+        "rules": {
+          "default": [
+            [
+              "comment",
+              "TODO should use id-expression and payload-property in rest transform"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.value.id"
+              ]
+            ],
+            [
+              "merge",
+              "_S.value"
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-orderline-all-2",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-orderline-all",
+      "type": "dataset"
+    },
+    "transform": [
+      {
+        "type": "emit_children"
       }
     ],
     "type": "pipe"
   },
   {
     "_id": "{{@ system @}}-orderline-all",
+    "namespaced_identifiers": false,
     "source": {
-      "dataset": "{{@ system @}}-order-all",
+      "dataset": "{{@ system @}}-order-collect",
       "type": "dataset"
     },
     "transform": [
@@ -39,7 +97,7 @@
           "create_rows": [
             [
               "add",
-              "::_id",
+              "_id",
               [
                 "string",
                 "_S.id"
@@ -47,19 +105,13 @@
             ],
             [
               "add",
-              "::properties",
-              [
-                "dict",
-                "datatype",
-                [
-                  "concat",
-                  "order/orderline/",
-                  [
-                    "string",
-                    "_S.id"
-                  ]
-                ]
-              ]
+              "id",
+              "_S.id"
+            ],
+            [
+              "add",
+              "$original_id",
+              "_R._S._id"
             ]
           ],
           "default": [
@@ -74,9 +126,6 @@
           ]
         },
         "type": "dtl"
-      },
-      {
-        "type": "emit_children"
       }
     ],
     "type": "pipe"
