@@ -112,7 +112,7 @@
           "_updated": 0,
           "properties": {
             "event": "{{@ datatype @}}.create",
-            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+            "targetUrl": "$ENV(service_url)/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
           }
         },
         {
@@ -120,7 +120,7 @@
           "_updated": 1,
           "properties": {
             "event": "{{@ datatype @}}.update",
-            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+            "targetUrl": "$ENV(service_url)/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
           }
         },
         {
@@ -128,7 +128,7 @@
           "_updated": 2,
           "properties": {
             "event": "{{@ datatype @}}.delete",
-            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+            "targetUrl": "$ENV(service_url)/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
           }
         }
       ],
