@@ -7,7 +7,7 @@
   "auth_variant": "tripletex",
   "datatypes": {
     "activity": {
-      "template": "templates/activity.json"
+      "template": "templates/customer.json"
     },
     "address": {
       "template": "templates/customer.json"
@@ -25,7 +25,7 @@
       "template": "templates/customer.json"
     },
     "department": {
-      "template": "templates/department.json"
+      "template": "templates/customer.json"
     },
     "employee": {
       "template": "templates/customer.json"

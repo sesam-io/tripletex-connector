@@ -71,20 +71,6 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-orderline-all-2",
-    "namespaced_identifiers": false,
-    "source": {
-      "dataset": "{{@ system @}}-orderline-all",
-      "type": "dataset"
-    },
-    "transform": [
-      {
-        "type": "emit_children"
-      }
-    ],
-    "type": "pipe"
-  },
-  {
     "_id": "{{@ system @}}-orderline-all",
     "namespaced_identifiers": false,
     "source": {
@@ -126,6 +112,20 @@
           ]
         },
         "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-orderline-all-2",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-orderline-all",
+      "type": "dataset"
+    },
+    "transform": [
+      {
+        "type": "emit_children"
       }
     ],
     "type": "pipe"
