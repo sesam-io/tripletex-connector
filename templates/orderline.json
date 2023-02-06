@@ -27,10 +27,17 @@
               "properties",
               [
                 "dict",
-                "id",
-                "_S.id",
                 "datatype",
                 "order/orderline"
+              ]
+            ],
+            [
+              "add",
+              "entity",
+              [
+                "dict",
+                "id",
+                "_S.id"
               ]
             ]
           ]
@@ -98,6 +105,11 @@
               "add",
               "$original_id",
               "_R._S._id"
+            ],
+            [
+              "add",
+              "version",
+              "_P._S.version"
             ]
           ],
           "default": [

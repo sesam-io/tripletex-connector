@@ -4,7 +4,7 @@
   "operations": {
     "delete": {
       "method": "DELETE",
-      "url": "{{ properties.datatype }}/{{ properties.id }}"
+      "url": "{{ properties.datatype }}/{{ entity.id }}"
     },
     "insert": {
       "method": "POST",
@@ -21,12 +21,12 @@
     },
     "lookup": {
       "method": "GET",
-      "url": "{{ properties.datatype }}/{{ properties.id }}"
+      "url": "{{ properties.datatype }}/{{ entity.id }}"
     },
     "update": {
       "method": "PUT",
       "payload-type": "json",
-      "url": "{{ properties.datatype }}/{{ properties.id }}"
+      "url": "{{ properties.datatype }}/{{ entity.id }}"
     },
     "webhook-insert": {
       "method": "POST",
