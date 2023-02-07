@@ -1,0 +1,147 @@
+[
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "namespaced_identifiers": false,
+    "source": {
+      "operation": "list",
+      "operations": {
+        "list": {
+          "id_expression": "{{ id }}",
+          "method": "GET",
+          "next_page_link": "{{@ base_url @}}/v2/{{ properties.datatype }}?from={{ body.from + body.count }}&{{@ datatype @}}DateFrom={{ properties.DateFrom }}&{{@ datatype @}}DateTo={{ properties.DateTo }}",
+          "next_page_termination_strategy": "empty-result",
+          "payload_property": "values",
+          "url": "{{ properties.datatype }}?{{@ datatype @}}DateFrom={{ properties.DateFrom }}&{{@ datatype @}}DateTo={{ properties.DateTo }}"
+        }
+      },
+      "properties": {
+        "DateFrom": "1970-01-01",
+        "DateTo": "2999-01-01",
+        "datatype": "{{@ datatype @}}"
+      },
+      "system": "{{@ system @}}",
+      "type": "rest"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-event-processed",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-event",
+      "type": "dataset"
+    },
+    "transform": {
+      "rules": {
+        "default": [
+          [
+            "if",
+            [
+              "eq",
+              "_S.event",
+              "{{@ datatype @}}.delete"
+            ],
+            [
+              "add",
+              "_deleted",
+              true
+            ]
+          ],
+          [
+            "merge",
+            "_S.value"
+          ]
+        ]
+      },
+      "type": "dtl"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "namespaced_identifiers": false,
+    "source": {
+      "datasets": [
+        "{{@ system @}}-{{@ datatype @}}-all",
+        "{{@ system @}}-{{@ datatype @}}-event-processed"
+      ],
+      "type": "merge_datasets"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-event",
+    "compaction": {
+      "keep_versions": 0,
+      "time_threshold_hours": 168
+    },
+    "namespaced_identifiers": false,
+    "source": {
+      "type": "http_endpoint"
+    },
+    "transform": [
+      {
+        "rules": {
+          "default": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-register-webhook",
+    "namespaced_identifiers": false,
+    "source": {
+      "entities": [
+        {
+          "_id": "{{@ datatype @}}-create",
+          "_updated": 0,
+          "properties": {
+            "event": "{{@ datatype @}}.create",
+            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+          }
+        },
+        {
+          "_id": "{{@ datatype @}}-update",
+          "_updated": 1,
+          "properties": {
+            "event": "{{@ datatype @}}.update",
+            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+          }
+        },
+        {
+          "_id": "{{@ datatype @}}-delete",
+          "_updated": 2,
+          "properties": {
+            "event": "{{@ datatype @}}.delete",
+            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+          }
+        }
+      ],
+      "supports_since": true,
+      "type": "embedded"
+    },
+    "transform": {
+      "operation": "webhook-insert",
+      "replace_entity": false,
+      "side_effects": true,
+      "system": "{{@ system @}}",
+      "type": "rest"
+    },
+    "type": "pipe"
+  }
+]

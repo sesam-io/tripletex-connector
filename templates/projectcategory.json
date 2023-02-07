@@ -1,0 +1,13 @@
+{
+  "_id": "{{@ system @}}-projectcategory-all",
+  "namespaced_identifiers": false,
+  "source": {
+    "operation": "list",
+    "properties": {
+      "datatype": "project/category"
+    },
+    "system": "{{@ system @}}",
+    "type": "rest"
+  },
+  "type": "pipe"
+}

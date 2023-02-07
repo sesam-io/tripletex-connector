@@ -6,8 +6,56 @@
   "auth": "api_key",
   "auth_variant": "tripletex",
   "datatypes": {
+    "activity": {
+      "template": "templates/customer.json"
+    },
+    "address": {
+      "template": "templates/customer.json"
+    },
+    "contact": {
+      "template": "templates/customer.json"
+    },
+    "country": {
+      "template": "templates/customer.json"
+    },
+    "currency": {
+      "template": "templates/customer.json"
+    },
     "customer": {
       "template": "templates/customer.json"
+    },
+    "department": {
+      "template": "templates/customer.json"
+    },
+    "employee": {
+      "template": "templates/customer.json"
+    },
+    "invoice": {
+      "template": "templates/order.json"
+    },
+    "order": {
+      "template": "templates/order.json"
+    },
+    "orderline": {
+      "template": "templates/orderline.json"
+    },
+    "product": {
+      "template": "templates/customer.json"
+    },
+    "productgroup": {
+      "template": "templates/productgroup.json"
+    },
+    "productgrouprelation": {
+      "template": "templates/productgrouprelation.json"
+    },
+    "project": {
+      "template": "templates/customer.json"
+    },
+    "projectcategory": {
+      "template": "templates/projectcategory.json"
+    },
+    "vattype": {
+      "template": "templates/vattype.json"
     }
   },
   "requires_service_api_access": true,
