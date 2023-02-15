@@ -1,5 +1,5 @@
 {
-  "_id": "{{@ system @}}-vattype-all",
+  "_id": "{{@ system @}}-vattype-collect",
   "namespaced_identifiers": false,
   "source": {
     "operation": "list",

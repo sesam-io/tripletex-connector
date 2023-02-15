@@ -1,5 +1,38 @@
 [
   {
+    "_id": "{{@ system @}}-{{@ datatype @}}-event",
+    "compaction": {
+      "keep_versions": 0,
+      "time_threshold_hours": 168
+    },
+    "namespaced_identifiers": false,
+    "source": {
+      "type": "http_endpoint"
+    },
+    "transform": [
+      {
+        "rules": {
+          "default": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
     "_id": "{{@ system @}}-{{@ datatype @}}-share",
     "batch_size": 1,
     "namespaced_identifiers": false,
@@ -783,39 +816,6 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-event",
-    "compaction": {
-      "keep_versions": 0,
-      "time_threshold_hours": 168
-    },
-    "namespaced_identifiers": false,
-    "source": {
-      "type": "http_endpoint"
-    },
-    "transform": [
-      {
-        "rules": {
-          "default": [
-            [
-              "copy",
-              "*"
-            ],
-            [
-              "add",
-              "_id",
-              [
-                "string",
-                "_S.id"
-              ]
-            ]
-          ]
-        },
-        "type": "dtl"
-      }
-    ],
-    "type": "pipe"
-  },
-  {
     "_id": "{{@ system @}}-{{@ datatype @}}-event-processed",
     "namespaced_identifiers": false,
     "source": {
@@ -849,49 +849,11 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-register-webhook",
-    "namespaced_identifiers": false,
-    "source": {
-      "entities": [
-        {
-          "_id": "{{@ datatype @}}-create",
-          "_updated": 0,
-          "properties": {
-            "event": "{{@ datatype @}}.create",
-            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
-          }
-        },
-        {
-          "_id": "{{@ datatype @}}-update",
-          "_updated": 1,
-          "properties": {
-            "event": "{{@ datatype @}}.update",
-            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
-          }
-        },
-        {
-          "_id": "{{@ datatype @}}-delete",
-          "_updated": 2,
-          "properties": {
-            "event": "{{@ datatype @}}.delete",
-            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
-          }
-        }
-      ],
-      "supports_since": true,
-      "type": "embedded"
-    },
-    "transform": {
-      "operation": "webhook-insert",
-      "replace_entity": false,
-      "side_effects": true,
-      "system": "{{@ system @}}",
-      "type": "rest"
-    },
-    "type": "pipe"
-  },
-  {
     "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "exclude_completeness": [
+      "{{@ system @}}-{{@ datatype @}}-event-processed",
+      "{{@ system @}}-{{@ datatype @}}-share"
+    ],
     "namespaced_identifiers": false,
     "source": {
       "datasets": [
@@ -957,6 +919,48 @@
       "properties": {
         "datatype": "{{@ datatype @}}"
       },
+      "system": "{{@ system @}}",
+      "type": "rest"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-register-webhook",
+    "namespaced_identifiers": false,
+    "source": {
+      "entities": [
+        {
+          "_id": "{{@ datatype @}}-create",
+          "_updated": 0,
+          "properties": {
+            "event": "{{@ datatype @}}.create",
+            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+          }
+        },
+        {
+          "_id": "{{@ datatype @}}-update",
+          "_updated": 1,
+          "properties": {
+            "event": "{{@ datatype @}}.update",
+            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+          }
+        },
+        {
+          "_id": "{{@ datatype @}}-delete",
+          "_updated": 2,
+          "properties": {
+            "event": "{{@ datatype @}}.delete",
+            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+          }
+        }
+      ],
+      "supports_since": true,
+      "type": "embedded"
+    },
+    "transform": {
+      "operation": "webhook-insert",
+      "replace_entity": false,
+      "side_effects": true,
       "system": "{{@ system @}}",
       "type": "rest"
     },
