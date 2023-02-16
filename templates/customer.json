@@ -203,6 +203,10 @@
             ],
             [
               "copy",
+              "$origin"
+            ],
+            [
+              "copy",
               "$replaced"
             ],
             [
@@ -512,6 +516,10 @@
                     ],
                     [
                       "copy",
+                      "$origin"
+                    ],
+                    [
+                      "copy",
                       "$replaced"
                     ],
                     [
@@ -670,6 +678,10 @@
             ],
             [
               "copy",
+              "$origin"
+            ],
+            [
+              "copy",
               "$replaced"
             ],
             [
@@ -694,10 +706,16 @@
                 "insert"
               ],
               [
-                [
-                  "add",
-                  "$origin",
-                  "_S._id"
+                ["if",
+                  [
+                    "is-null",
+                    "_T.$origin"
+                  ],
+                  [
+                    "add",
+                    "$origin",
+                    "_S._id"
+                  ]
                 ],
                 [
                   "add",
