@@ -21,7 +21,8 @@
     },
     "lookup": {
       "method": "GET",
-      "url": "{{ properties.datatype }}/{{ entity.id }}"
+      "url": "{{ properties.datatype }}/{{ entity.id }}",
+      "payload_property": "value"
     },
     "update": {
       "method": "PUT",
