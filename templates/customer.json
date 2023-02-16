@@ -198,8 +198,9 @@
               "_S."
             ],
             [
-              "copy",
-              "id"
+              "add",
+              "id",
+              "_S.id"
             ],
             [
               "copy",
@@ -309,7 +310,7 @@
         "type": "dtl"
       },
       {
-        "allowed_status_codes": "200,400,404",
+        "allowed_status_codes": "200,404",
         "operation": "lookup",
         "properties": {
           "datatype": "{{@ datatype @}}"
@@ -317,7 +318,7 @@
         "replace_entity": false,
         "response_property": "response_body",
         "response_status_property": "response_status",
-        "side_effects": true,
+        "side_effects": false,
         "system": "{{@ system @}}",
         "trigger_on": {
           "key": "$operation",
@@ -385,31 +386,82 @@
               ]
             ]
           ],
+          "based-on-extract": [
+            [
+              "if",
+              [
+                "is-dict",
+                "_S.a"
+              ],
+              [
+                "merge",
+                [
+                  "dict",
+                  [
+                    "map",
+                    [
+                      "list",
+                      "_.",
+                      [
+                        "if",
+                        [
+                          "is-dict",
+                          [
+                            "path",
+                            "_.",
+                            "_S.b"
+                          ]
+                        ],
+                        [
+                          "apply",
+                          "based-on-extract",
+                          [
+                            "dict",
+                            "a",
+                            [
+                              "path",
+                              "_.",
+                              "_S.a"
+                            ],
+                            "b",
+                            [
+                              "path",
+                              "_.",
+                              "_S.b"
+                            ]
+                          ]
+                        ],
+                        [
+                          "path",
+                          "_.",
+                          "_S.b"
+                        ]
+                      ]
+                    ],
+                    [
+                      "keys",
+                      "_S.a"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
           "based-on-lookup": [
             [
               "add",
               "$based_on_lookup",
               [
-                "dict",
+                "apply",
+                "based-on-extract",
                 [
-                  "filter",
+                  "dict",
+                  "a",
+                  "_S.$source.$based_on",
+                  "b",
                   [
-                    "in",
-                    [
-                      "first",
-                      "_."
-                    ],
-                    [
-                      "keys",
-                      "_S.$source.$based_on"
-                    ]
-                  ],
-                  [
-                    "items",
-                    [
-                      "first",
-                      "_S.response_body"
-                    ]
+                    "first",
+                    "_S.response_body"
                   ]
                 ]
               ]
@@ -420,22 +472,15 @@
               "add",
               "$based_on_update",
               [
-                "dict",
+                "apply",
+                "based-on-extract",
                 [
-                  "filter",
+                  "dict",
+                  "a",
+                  "_S.$source.$based_on",
+                  "b",
                   [
-                    "in",
-                    [
-                      "first",
-                      "_."
-                    ],
-                    [
-                      "keys",
-                      "_S.$source.$based_on"
-                    ]
-                  ],
-                  [
-                    "items",
+                    "first",
                     "_S.$source"
                   ]
                 ]
@@ -619,7 +664,7 @@
         "type": "dtl"
       },
       {
-        "allowed_status_codes": "200,400,404",
+        "allowed_status_codes": "200,404",
         "operation": "update",
         "properties": {
           "datatype": "{{@ datatype @}}"
@@ -636,7 +681,7 @@
         "type": "rest"
       },
       {
-        "allowed_status_codes": "200,201,400",
+        "allowed_status_codes": "200,201",
         "operation": "insert",
         "properties": {
           "datatype": "{{@ datatype @}}"
@@ -653,7 +698,7 @@
         "type": "rest"
       },
       {
-        "allowed_status_codes": "200,400,404",
+        "allowed_status_codes": "200,204,404",
         "operation": "delete",
         "properties": {
           "datatype": "{{@ datatype @}}"
@@ -706,7 +751,8 @@
                 "insert"
               ],
               [
-                ["if",
+                [
+                  "if",
                   [
                     "is-null",
                     "_T.$origin"
@@ -729,7 +775,7 @@
             ],
             [
               "add",
-              "$previous",
+              "_previous",
               [
                 "apply",
                 "previous",
@@ -764,13 +810,13 @@
                 ],
                 [
                   "is-not-null",
-                  "_T.$previous.$generated_id"
+                  "_T._previous.$generated_id"
                 ]
               ],
               [
                 "add",
                 "$generated_id",
-                "_T.$previous.$generated_id"
+                "_T._previous.$generated_id"
               ]
             ],
             [
@@ -807,13 +853,13 @@
                 ],
                 [
                   "is-not-null",
-                  "_T.$previous.$origin"
+                  "_T._previous.$origin"
                 ]
               ],
               [
                 "add",
                 "$origin",
-                "_T.$previous.$origin"
+                "_T._previous.$origin"
               ]
             ]
           ],
