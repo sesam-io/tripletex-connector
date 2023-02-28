@@ -9,6 +9,7 @@
     "insert": {
       "method": "POST",
       "payload-type": "json",
+      "payload_property": "value",
       "url": "{{ properties.datatype }}"
     },
     "list": {
@@ -27,6 +28,7 @@
     "update": {
       "method": "PUT",
       "payload-type": "json",
+      "payload_property": "value",
       "url": "{{ properties.datatype }}/{{ entity.id }}"
     },
     "webhook-insert": {
