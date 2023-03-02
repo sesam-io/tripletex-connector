@@ -24,6 +24,9 @@
     "customer": {
       "template": "templates/customer.json"
     },
+    "customercategory": {
+      "template": "templates/customercategory.json"
+    },
     "department": {
       "template": "templates/customer.json"
     },
