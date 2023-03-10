@@ -26,10 +26,6 @@
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-share",
     "batch_size": 1,
-    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
-    "metadata": {
-      "tags": "foo"
-    },
     "namespaced_identifiers": false,
     "sink": {
       "deletion_tracking": false,
