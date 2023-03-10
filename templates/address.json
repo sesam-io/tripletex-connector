@@ -8,7 +8,7 @@
     "source": {
       "operation": "list",
       "properties": {
-        "datatype": "product/groupRelation"
+        "datatype": "{{@ datatype @}}"
       },
       "system": "{{@ system @}}",
       "type": "rest"
@@ -26,6 +26,10 @@
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-share",
     "batch_size": 1,
+    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
+    "metadata": {
+      "tags": "foo"
+    },
     "namespaced_identifiers": false,
     "sink": {
       "deletion_tracking": false,
@@ -38,16 +42,16 @@
     "transform": {
       "properties": {
         "operation_delete_properties": {
-          "datatype": "product/groupRelation"
+          "datatype": "{{@ datatype @}}"
         },
         "operation_insert_properties": {
-          "datatype": "product/groupRelation"
+          "datatype": "{{@ datatype @}}"
         },
         "operation_lookup_properties": {
-          "datatype": "product/groupRelation"
+          "datatype": "{{@ datatype @}}"
         },
         "operation_update_properties": {
-          "datatype": "product/groupRelation"
+          "datatype": "{{@ datatype @}}"
         },
         "primary_key": "id",
         "rest_system": "{{@ system @}}",

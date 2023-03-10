@@ -1,0 +1,125 @@
+[
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "comment": "WARNING! This pipe is generated from the template of the 'order' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
+    "namespaced_identifiers": false,
+    "source": {
+      "datasets": [
+        "{{@ system @}}-{{@ datatype @}}-all",
+        "{{@ system @}}-{{@ datatype @}}-event-processed"
+      ],
+      "type": "merge_datasets"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-event-processed",
+    "comment": "WARNING! This pipe is generated from the template of the 'order' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-event",
+      "type": "dataset"
+    },
+    "transform": {
+      "rules": {
+        "default": [
+          [
+            "if",
+            [
+              "eq",
+              "_S.event",
+              "{{@ datatype @}}.delete"
+            ],
+            [
+              "add",
+              "_deleted",
+              true
+            ]
+          ],
+          [
+            "merge",
+            "_S.value"
+          ]
+        ]
+      },
+      "type": "dtl"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-register-webhook",
+    "namespaced_identifiers": false,
+    "source": {
+      "entities": [
+        {
+          "_id": "{{@ datatype @}}-charged",
+          "_updated": 0,
+          "properties": {
+            "event": "{{@ datatype @}}.charged",
+            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+          }
+        }
+      ],
+      "supports_since": true,
+      "type": "embedded"
+    },
+    "transform": {
+      "operation": "webhook-insert",
+      "replace_entity": false,
+      "side_effects": true,
+      "system": "{{@ system @}}",
+      "type": "rest"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "comment": "WARNING! This pipe is generated from the template of the 'order' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
+    "namespaced_identifiers": false,
+    "source": {
+      "operation": "alternate_list",
+      "properties": {
+        "DateFrom": "1970-01-01",
+        "DateTo": "2999-01-01",
+        "datatype": "{{@ datatype @}}"
+      },
+      "system": "{{@ system @}}",
+      "type": "rest"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-event",
+    "comment": "WARNING! This pipe is generated from the template of the 'order' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
+    "compaction": {
+      "keep_versions": 0,
+      "time_threshold_hours": 168
+    },
+    "namespaced_identifiers": false,
+    "source": {
+      "type": "http_endpoint"
+    },
+    "transform": [
+      {
+        "rules": {
+          "default": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  }
+]
