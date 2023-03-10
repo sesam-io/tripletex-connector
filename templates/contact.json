@@ -1,16 +1,70 @@
 [
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "_id": "{{@ system @}}-{{@ datatype @}}-event",
+    "compaction": {
+      "keep_versions": 0,
+      "time_threshold_hours": 168
+    },
     "namespaced_identifiers": false,
     "source": {
-      "operation": "alternate_list",
+      "type": "http_endpoint"
+    },
+    "transform": [
+      {
+        "rules": {
+          "default": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-share",
+    "batch_size": 1,
+    "namespaced_identifiers": false,
+    "sink": {
+      "deletion_tracking": false,
+      "set_initial_offset": "onload"
+    },
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
+      "type": "dataset"
+    },
+    "transform": {
       "properties": {
-        "DateFrom": "1970-01-01",
-        "DateTo": "2999-01-01",
-        "datatype": "{{@ datatype @}}"
+        "operation_delete": "alternate_delete",
+        "operation_delete_properties": {
+          "datatype": "{{@ datatype @}}"
+        },
+        "operation_insert_properties": {
+          "datatype": "{{@ datatype @}}"
+        },
+        "operation_lookup_properties": {
+          "datatype": "{{@ datatype @}}"
+        },
+        "operation_update_properties": {
+          "datatype": "{{@ datatype @}}"
+        },
+        "primary_key": "id",
+        "rest_system": "{{@ system @}}",
+        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
       },
-      "system": "{{@ system @}}",
-      "type": "rest"
+      "template": "transform-share-rest",
+      "type": "template"
     },
     "type": "pipe"
   },
@@ -48,41 +102,6 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-share",
-    "batch_size": 1,
-    "namespaced_identifiers": false,
-    "sink": {
-      "deletion_tracking": false,
-      "set_initial_offset": "onload"
-    },
-    "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
-      "type": "dataset"
-    },
-    "transform": {
-      "properties": {
-        "operation_delete_properties": {
-          "datatype": "{{@ datatype @}}"
-        },
-        "operation_insert_properties": {
-          "datatype": "{{@ datatype @}}"
-        },
-        "operation_lookup_properties": {
-          "datatype": "{{@ datatype @}}"
-        },
-        "operation_update_properties": {
-          "datatype": "{{@ datatype @}}"
-        },
-        "primary_key": "id",
-        "rest_system": "{{@ system @}}",
-        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
-      },
-      "template": "transform-share-rest",
-      "type": "template"
-    },
-    "type": "pipe"
-  },
-  {
     "_id": "{{@ system @}}-{{@ datatype @}}-collect",
     "exclude_completeness": [
       "{{@ system @}}-{{@ datatype @}}-event-processed",
@@ -107,36 +126,16 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-event",
-    "compaction": {
-      "keep_versions": 0,
-      "time_threshold_hours": 168
-    },
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
     "namespaced_identifiers": false,
     "source": {
-      "type": "http_endpoint"
+      "operation": "list",
+      "properties": {
+        "datatype": "{{@ datatype @}}"
+      },
+      "system": "{{@ system @}}",
+      "type": "rest"
     },
-    "transform": [
-      {
-        "rules": {
-          "default": [
-            [
-              "copy",
-              "*"
-            ],
-            [
-              "add",
-              "_id",
-              [
-                "string",
-                "_S.id"
-              ]
-            ]
-          ]
-        },
-        "type": "dtl"
-      }
-    ],
     "type": "pipe"
   },
   {

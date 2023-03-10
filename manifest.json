@@ -13,7 +13,7 @@
       "template": "templates/customer.json"
     },
     "contact": {
-      "template": "templates/customer.json"
+      "template": "templates/contact.json"
     },
     "country": {
       "template": "templates/customer.json"
@@ -50,6 +50,9 @@
     },
     "productgrouprelation": {
       "template": "templates/productgrouprelation.json"
+    },
+    "productunit": {
+      "template": "templates/productunit.json"
     },
     "project": {
       "template": "templates/customer.json"
