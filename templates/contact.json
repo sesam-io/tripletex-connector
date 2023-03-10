@@ -2,7 +2,6 @@
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-share",
     "batch_size": 1,
-    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "sink": {
       "deletion_tracking": false,
@@ -38,7 +37,6 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-event-processed",
-    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "source": {
       "dataset": "{{@ system @}}-{{@ datatype @}}-event",
@@ -72,7 +70,6 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-event",
-    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "compaction": {
       "keep_versions": 0,
       "time_threshold_hours": 168
@@ -106,7 +103,6 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-all",
-    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "source": {
       "operation": "list",
@@ -120,11 +116,6 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-collect",
-    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
-    "exclude_completeness": [
-      "{{@ system @}}-{{@ datatype @}}-event-processed",
-      "{{@ system @}}-{{@ datatype @}}-share"
-    ],
     "namespaced_identifiers": false,
     "source": {
       "datasets": [
@@ -145,7 +136,6 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-register-webhook",
-    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "source": {
       "entities": [
