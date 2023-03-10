@@ -6,20 +6,17 @@
   "auth": "api_key",
   "auth_variant": "tripletex",
   "datatypes": {
-    "activity": {
-      "template": "templates/customer.json"
-    },
     "address": {
-      "template": "templates/customer.json"
+      "template": "templates/address.json"
     },
     "contact": {
-      "template": "templates/customer.json"
+      "template": "templates/contact.json"
     },
     "country": {
-      "template": "templates/customer.json"
+      "template": "templates/country.json"
     },
     "currency": {
-      "template": "templates/customer.json"
+      "template": "templates/country.json"
     },
     "customer": {
       "template": "templates/customer.json"
@@ -27,14 +24,11 @@
     "customercategory": {
       "template": "templates/customercategory.json"
     },
-    "department": {
-      "template": "templates/customer.json"
-    },
     "employee": {
       "template": "templates/customer.json"
     },
     "invoice": {
-      "template": "templates/order.json"
+      "template": "templates/invoice.json"
     },
     "order": {
       "template": "templates/order.json"
@@ -50,6 +44,9 @@
     },
     "productgrouprelation": {
       "template": "templates/productgrouprelation.json"
+    },
+    "productunit": {
+      "template": "templates/productunit.json"
     },
     "project": {
       "template": "templates/customer.json"

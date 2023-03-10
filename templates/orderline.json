@@ -1,9 +1,44 @@
 [
   {
-    "_id": "{{@ system @}}-orderline-collect",
+    "_id": "{{@ system @}}-{{@ datatype @}}-share",
+    "batch_size": 1,
+    "namespaced_identifiers": false,
+    "sink": {
+      "deletion_tracking": false,
+      "set_initial_offset": "onload"
+    },
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
+      "type": "dataset"
+    },
+    "transform": {
+      "properties": {
+        "operation_delete_properties": {
+          "datatype": "order/{{@ datatype @}}"
+        },
+        "operation_insert_properties": {
+          "datatype": "order/{{@ datatype @}}"
+        },
+        "operation_lookup_properties": {
+          "datatype": "order/{{@ datatype @}}"
+        },
+        "operation_update_properties": {
+          "datatype": "order/{{@ datatype @}}"
+        },
+        "primary_key": "id",
+        "rest_system": "{{@ system @}}",
+        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
+      },
+      "template": "transform-share-rest",
+      "type": "template"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
     "namespaced_identifiers": false,
     "source": {
-      "dataset": "{{@ system @}}-orderline-all-2",
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all-2",
       "type": "dataset"
     },
     "transform": [
@@ -21,24 +56,6 @@
             [
               "copy",
               "*"
-            ],
-            [
-              "add",
-              "properties",
-              [
-                "dict",
-                "datatype",
-                "order/orderline"
-              ]
-            ],
-            [
-              "add",
-              "entity",
-              [
-                "dict",
-                "id",
-                "_S.id"
-              ]
             ]
           ]
         },
@@ -46,8 +63,10 @@
       },
       {
         "operation": "lookup",
+        "properties": {
+          "datatype": "order/{{@ datatype @}}"
+        },
         "replace_entity": true,
-        "side_effects": false,
         "system": "{{@ system @}}",
         "type": "rest"
       },
@@ -73,12 +92,20 @@
           ]
         },
         "type": "dtl"
+      },
+      {
+        "properties": {
+          "primary_key": "id",
+          "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
+        },
+        "template": "transform-collect-rest",
+        "type": "template"
       }
     ],
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-orderline-all",
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
     "namespaced_identifiers": false,
     "source": {
       "dataset": "{{@ system @}}-order-collect",
@@ -129,10 +156,10 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-orderline-all-2",
+    "_id": "{{@ system @}}-{{@ datatype @}}-all-2",
     "namespaced_identifiers": false,
     "source": {
-      "dataset": "{{@ system @}}-orderline-all",
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all",
       "type": "dataset"
     },
     "transform": [

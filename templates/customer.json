@@ -46,17 +46,17 @@
     },
     "transform": {
       "properties": {
-        "operation_lookup_properties": {
-            "datatype": "{{@ datatype @}}"
+        "operation_delete_properties": {
+          "datatype": "{{@ datatype @}}"
         },
         "operation_insert_properties": {
-            "datatype": "{{@ datatype @}}"
+          "datatype": "{{@ datatype @}}"
+        },
+        "operation_lookup_properties": {
+          "datatype": "{{@ datatype @}}"
         },
         "operation_update_properties": {
-            "datatype": "{{@ datatype @}}"
-        },
-        "operation_delete_properties": {
-            "datatype": "{{@ datatype @}}"
+          "datatype": "{{@ datatype @}}"
         },
         "primary_key": "id",
         "rest_system": "{{@ system @}}",
@@ -116,8 +116,8 @@
     },
     "transform": {
       "properties": {
-          "primary_key": "id",
-          "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
+        "primary_key": "id",
+        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
       },
       "template": "transform-collect-rest",
       "type": "template"
