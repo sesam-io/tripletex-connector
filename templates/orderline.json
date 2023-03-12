@@ -1,37 +1,67 @@
 [
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-share",
-    "batch_size": 1,
+    "_id": "{{@ system @}}-{{@ datatype @}}-all-2",
     "namespaced_identifiers": false,
-    "sink": {
-      "deletion_tracking": false,
-      "set_initial_offset": "onload"
-    },
     "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all",
       "type": "dataset"
     },
-    "transform": {
-      "properties": {
-        "operation_delete_properties": {
-          "datatype": "order/{{@ datatype @}}"
-        },
-        "operation_insert_properties": {
-          "datatype": "order/{{@ datatype @}}"
-        },
-        "operation_lookup_properties": {
-          "datatype": "order/{{@ datatype @}}"
-        },
-        "operation_update_properties": {
-          "datatype": "order/{{@ datatype @}}"
-        },
-        "primary_key": "id",
-        "rest_system": "{{@ system @}}",
-        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
-      },
-      "template": "transform-share-rest",
-      "type": "template"
+    "transform": [
+      {
+        "type": "emit_children"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-order-collect",
+      "type": "dataset"
     },
+    "transform": [
+      {
+        "rules": {
+          "create_rows": [
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ],
+            [
+              "add",
+              "id",
+              "_S.id"
+            ],
+            [
+              "add",
+              "$original_id",
+              "_R._S._id"
+            ],
+            [
+              "add",
+              "version",
+              "_P._S.version"
+            ]
+          ],
+          "default": [
+            [
+              "create-child",
+              [
+                "apply",
+                "create_rows",
+                "_S.orderLines"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
     "type": "pipe"
   },
   {
@@ -105,68 +135,38 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "_id": "{{@ system @}}-{{@ datatype @}}-share",
+    "batch_size": 1,
     "namespaced_identifiers": false,
+    "sink": {
+      "deletion_tracking": false,
+      "set_initial_offset": "onload"
+    },
     "source": {
-      "dataset": "{{@ system @}}-order-collect",
+      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
       "type": "dataset"
     },
-    "transform": [
-      {
-        "rules": {
-          "create_rows": [
-            [
-              "add",
-              "_id",
-              [
-                "string",
-                "_S.id"
-              ]
-            ],
-            [
-              "add",
-              "id",
-              "_S.id"
-            ],
-            [
-              "add",
-              "$original_id",
-              "_R._S._id"
-            ],
-            [
-              "add",
-              "version",
-              "_P._S.version"
-            ]
-          ],
-          "default": [
-            [
-              "create-child",
-              [
-                "apply",
-                "create_rows",
-                "_S.orderLines"
-              ]
-            ]
-          ]
+    "transform": {
+      "properties": {
+        "operation_delete_properties": {
+          "datatype": "order/{{@ datatype @}}"
         },
-        "type": "dtl"
-      }
-    ],
-    "type": "pipe"
-  },
-  {
-    "_id": "{{@ system @}}-{{@ datatype @}}-all-2",
-    "namespaced_identifiers": false,
-    "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-all",
-      "type": "dataset"
+        "operation_insert_properties": {
+          "datatype": "order/{{@ datatype @}}"
+        },
+        "operation_lookup_properties": {
+          "datatype": "order/{{@ datatype @}}"
+        },
+        "operation_update_properties": {
+          "datatype": "order/{{@ datatype @}}"
+        },
+        "primary_key": "id",
+        "rest_system": "{{@ system @}}",
+        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
+      },
+      "template": "transform-share-rest",
+      "type": "template"
     },
-    "transform": [
-      {
-        "type": "emit_children"
-      }
-    ],
     "type": "pipe"
   }
 ]
