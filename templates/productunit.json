@@ -1,5 +1,73 @@
 [
   {
+    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "exclude_completeness": [
+      "{{@ system @}}-{{@ datatype @}}-share"
+    ],
+    "namespaced_identifiers": false,
+    "source": {
+      "operation": "list",
+      "properties": {
+        "datatype": "product/unit"
+      },
+      "system": "{{@ system @}}",
+      "type": "rest"
+    },
+    "transform": [
+      {
+        "properties": {
+          "primary_key": "id",
+          "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
+        },
+        "template": "transform-collect-rest",
+        "type": "template"
+      },
+      {
+        "rules": {
+          "default": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "merge",
+              [
+                "max",
+                "_.",
+                [
+                  "apply",
+                  "last-modified",
+                  "_S.changes"
+                ]
+              ]
+            ]
+          ],
+          "last-modified": [
+            [
+              "filter",
+              [
+                "eq",
+                "_S.changeType",
+                "UPDATE"
+              ]
+            ],
+            [
+              "add",
+              "$last-modified",
+              [
+                "datetime-parse",
+                "%Y-%m-%dT%H:%M:%S%z",
+                "_S.timestamp"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
     "_id": "{{@ system @}}-{{@ datatype @}}-share",
     "batch_size": 1,
     "namespaced_identifiers": false,
@@ -30,30 +98,6 @@
         "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
       },
       "template": "transform-share-rest",
-      "type": "template"
-    },
-    "type": "pipe"
-  },
-  {
-    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
-    "exclude_completeness": [
-      "{{@ system @}}-{{@ datatype @}}-share"
-    ],
-    "namespaced_identifiers": false,
-    "source": {
-      "operation": "list",
-      "properties": {
-        "datatype": "product/unit"
-      },
-      "system": "{{@ system @}}",
-      "type": "rest"
-    },
-    "transform": {
-      "properties": {
-        "primary_key": "id",
-        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
-      },
-      "template": "transform-collect-rest",
       "type": "template"
     },
     "type": "pipe"

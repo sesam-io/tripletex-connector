@@ -1,5 +1,62 @@
 [
   {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "namespaced_identifiers": false,
+    "source": {
+      "operation": "alternate_list",
+      "properties": {
+        "DateFrom": "1970-01-01",
+        "DateTo": "2999-01-01",
+        "datatype": "{{@ datatype @}}"
+      },
+      "system": "{{@ system @}}",
+      "type": "rest"
+    },
+    "transform": {
+      "rules": {
+        "default": [
+          [
+            "copy",
+            "*"
+          ],
+          [
+            "merge",
+            [
+              "max",
+              "_.",
+              [
+                "apply",
+                "last-modified",
+                "_S.changes"
+              ]
+            ]
+          ]
+        ],
+        "last-modified": [
+          [
+            "filter",
+            [
+              "eq",
+              "_S.changeType",
+              "UPDATE"
+            ]
+          ],
+          [
+            "add",
+            "$last-modified",
+            [
+              "datetime-parse",
+              "%Y-%m-%dT%H:%M:%S%z",
+              "_S.timestamp"
+            ]
+          ]
+        ]
+      },
+      "type": "dtl"
+    },
+    "type": "pipe"
+  },
+  {
     "_id": "{{@ system @}}-{{@ datatype @}}-collect",
     "namespaced_identifiers": false,
     "source": {
@@ -45,47 +102,6 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-register-webhook",
-    "namespaced_identifiers": false,
-    "source": {
-      "entities": [
-        {
-          "_id": "{{@ datatype @}}-charged",
-          "_updated": 0,
-          "properties": {
-            "event": "{{@ datatype @}}.charged",
-            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
-          }
-        }
-      ],
-      "supports_since": true,
-      "type": "embedded"
-    },
-    "transform": {
-      "operation": "webhook-insert",
-      "replace_entity": false,
-      "side_effects": true,
-      "system": "{{@ system @}}",
-      "type": "rest"
-    },
-    "type": "pipe"
-  },
-  {
-    "_id": "{{@ system @}}-{{@ datatype @}}-all",
-    "namespaced_identifiers": false,
-    "source": {
-      "operation": "alternate_list",
-      "properties": {
-        "DateFrom": "1970-01-01",
-        "DateTo": "2999-01-01",
-        "datatype": "{{@ datatype @}}"
-      },
-      "system": "{{@ system @}}",
-      "type": "rest"
-    },
-    "type": "pipe"
-  },
-  {
     "_id": "{{@ system @}}-{{@ datatype @}}-event",
     "compaction": {
       "keep_versions": 0,
@@ -116,6 +132,32 @@
         "type": "dtl"
       }
     ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-register-webhook",
+    "namespaced_identifiers": false,
+    "source": {
+      "entities": [
+        {
+          "_id": "{{@ datatype @}}-charged",
+          "_updated": 0,
+          "properties": {
+            "event": "{{@ datatype @}}.charged",
+            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+          }
+        }
+      ],
+      "supports_since": true,
+      "type": "embedded"
+    },
+    "transform": {
+      "operation": "webhook-insert",
+      "replace_entity": false,
+      "side_effects": true,
+      "system": "{{@ system @}}",
+      "type": "rest"
+    },
     "type": "pipe"
   }
 ]
