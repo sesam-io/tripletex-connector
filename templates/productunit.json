@@ -1,29 +1,5 @@
 [
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
-    "exclude_completeness": [
-      "{{@ system @}}-{{@ datatype @}}-share"
-    ],
-    "namespaced_identifiers": false,
-    "source": {
-      "operation": "list",
-      "properties": {
-        "datatype": "product/group"
-      },
-      "system": "{{@ system @}}",
-      "type": "rest"
-    },
-    "transform": {
-      "properties": {
-        "primary_key": "id",
-        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
-      },
-      "template": "transform-collect-rest",
-      "type": "template"
-    },
-    "type": "pipe"
-  },
-  {
     "_id": "{{@ system @}}-{{@ datatype @}}-share",
     "batch_size": 1,
     "namespaced_identifiers": false,
@@ -38,22 +14,46 @@
     "transform": {
       "properties": {
         "operation_delete_properties": {
-          "datatype": "product/group"
+          "datatype": "product/unit"
         },
         "operation_insert_properties": {
-          "datatype": "product/group"
+          "datatype": "product/unit"
         },
         "operation_lookup_properties": {
-          "datatype": "product/group"
+          "datatype": "product/unit"
         },
         "operation_update_properties": {
-          "datatype": "product/group"
+          "datatype": "product/unit"
         },
         "primary_key": "id",
         "rest_system": "{{@ system @}}",
         "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
       },
       "template": "transform-share-rest",
+      "type": "template"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "exclude_completeness": [
+      "{{@ system @}}-{{@ datatype @}}-share"
+    ],
+    "namespaced_identifiers": false,
+    "source": {
+      "operation": "list",
+      "properties": {
+        "datatype": "product/unit"
+      },
+      "system": "{{@ system @}}",
+      "type": "rest"
+    },
+    "transform": {
+      "properties": {
+        "primary_key": "id",
+        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
+      },
+      "template": "transform-collect-rest",
       "type": "template"
     },
     "type": "pipe"

@@ -8,7 +8,7 @@
     "source": {
       "operation": "list",
       "properties": {
-        "datatype": "product/group"
+        "datatype": "{{@ datatype @}}"
       },
       "system": "{{@ system @}}",
       "type": "rest"
@@ -38,16 +38,16 @@
     "transform": {
       "properties": {
         "operation_delete_properties": {
-          "datatype": "product/group"
+          "datatype": "{{@ datatype @}}"
         },
         "operation_insert_properties": {
-          "datatype": "product/group"
+          "datatype": "{{@ datatype @}}"
         },
         "operation_lookup_properties": {
-          "datatype": "product/group"
+          "datatype": "{{@ datatype @}}"
         },
         "operation_update_properties": {
-          "datatype": "product/group"
+          "datatype": "{{@ datatype @}}"
         },
         "primary_key": "id",
         "rest_system": "{{@ system @}}",

@@ -4,7 +4,7 @@
   "source": {
     "operation": "list",
     "properties": {
-      "datatype": "ledger/vatType"
+      "datatype": "{{@ datatype @}}"
     },
     "system": "{{@ system @}}",
     "type": "rest"
