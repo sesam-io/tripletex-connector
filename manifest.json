@@ -55,13 +55,13 @@
       "template": "templates/projectcategory.json"
     },
     "supplier": {
-      "template": "templates/projectcategory.json"
+      "template": "templates/customer.json"
     },
     "vattype": {
       "template": "templates/vattype.json"
     }
   },
   "requires_service_api_access": true,
-  "use_webhook_secret": true,
-  "system-template": "templates/system.json"
+  "system-template": "templates/system.json",
+  "use_webhook_secret": true
 }
