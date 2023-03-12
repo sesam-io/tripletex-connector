@@ -12,48 +12,6 @@
       "system": "{{@ system @}}",
       "type": "rest"
     },
-    "transform": {
-      "rules": {
-        "default": [
-          [
-            "copy",
-            "*"
-          ],
-          [
-            "merge",
-            [
-              "max",
-              "_.",
-              [
-                "apply",
-                "last-modified",
-                "_S.changes"
-              ]
-            ]
-          ]
-        ],
-        "last-modified": [
-          [
-            "filter",
-            [
-              "eq",
-              "_S.changeType",
-              "UPDATE"
-            ]
-          ],
-          [
-            "add",
-            "$last-modified",
-            [
-              "datetime-parse",
-              "%Y-%m-%dT%H:%M:%S%z",
-              "_S.timestamp"
-            ]
-          ]
-        ]
-      },
-      "type": "dtl"
-    },
     "type": "pipe"
   },
   {
@@ -70,14 +28,58 @@
       ],
       "type": "merge_datasets"
     },
-    "transform": {
-      "properties": {
-        "primary_key": "id",
-        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
+    "transform": [
+      {
+        "properties": {
+          "primary_key": "id",
+          "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
+        },
+        "template": "transform-collect-rest",
+        "type": "template"
       },
-      "template": "transform-collect-rest",
-      "type": "template"
-    },
+      {
+        "rules": {
+          "default": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "merge",
+              [
+                "max",
+                "_.",
+                [
+                  "apply",
+                  "last-modified",
+                  "_S.changes"
+                ]
+              ]
+            ]
+          ],
+          "last-modified": [
+            [
+              "filter",
+              [
+                "eq",
+                "_S.changeType",
+                "UPDATE"
+              ]
+            ],
+            [
+              "add",
+              "$last-modified",
+              [
+                "datetime-parse",
+                "%Y-%m-%dT%H:%M:%S%z",
+                "_S.timestamp"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
     "type": "pipe"
   },
   {
@@ -106,6 +108,37 @@
           [
             "merge",
             "_S.value"
+          ],
+          [
+            "merge",
+            [
+              "max",
+              "_.",
+              [
+                "apply",
+                "last-modified",
+                "_T.changes"
+              ]
+            ]
+          ]
+        ],
+        "last-modified": [
+          [
+            "filter",
+            [
+              "eq",
+              "_S.changeType",
+              "UPDATE"
+            ]
+          ],
+          [
+            "add",
+            "$last-modified",
+            [
+              "datetime-parse",
+              "%Y-%m-%dT%H:%M:%S%z",
+              "_S.timestamp"
+            ]
           ]
         ]
       },

@@ -12,6 +12,18 @@
       "system": "{{@ system @}}",
       "type": "rest"
     },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "namespaced_identifiers": false,
+    "source": {
+      "datasets": [
+        "{{@ system @}}-{{@ datatype @}}-all",
+        "{{@ system @}}-{{@ datatype @}}-event-processed"
+      ],
+      "type": "merge_datasets"
+    },
     "transform": {
       "rules": {
         "default": [
@@ -57,18 +69,6 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
-    "namespaced_identifiers": false,
-    "source": {
-      "datasets": [
-        "{{@ system @}}-{{@ datatype @}}-all",
-        "{{@ system @}}-{{@ datatype @}}-event-processed"
-      ],
-      "type": "merge_datasets"
-    },
-    "type": "pipe"
-  },
-  {
     "_id": "{{@ system @}}-{{@ datatype @}}-event-processed",
     "namespaced_identifiers": false,
     "source": {
@@ -94,6 +94,37 @@
           [
             "merge",
             "_S.value"
+          ],
+          [
+            "merge",
+            [
+              "max",
+              "_.",
+              [
+                "apply",
+                "last-modified",
+                "_T.changes"
+              ]
+            ]
+          ]
+        ],
+        "last-modified": [
+          [
+            "filter",
+            [
+              "eq",
+              "_S.changeType",
+              "UPDATE"
+            ]
+          ],
+          [
+            "add",
+            "$last-modified",
+            [
+              "datetime-parse",
+              "%Y-%m-%dT%H:%M:%S%z",
+              "_S.timestamp"
+            ]
           ]
         ]
       },
