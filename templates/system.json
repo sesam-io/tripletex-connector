@@ -12,7 +12,7 @@
       "next_page_link": "{{@ base_url @}}/v2/{{ properties.datatype }}?from={{ body.from + body.count }}&{{ properties.datatype }}DateFrom={{ properties.DateFrom }}&{{ properties.datatype }}DateTo={{ properties.DateTo }}",
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "{{ properties.datatype }}?{{ properties.datatype }}DateFrom={{ properties.DateFrom }}&{{ properties.datatype }}DateTo={{ properties.DateTo }}"
+      "url": "{{ properties.datatype }}?{{ properties.datatype }}DateFrom={{ properties.DateFrom }}&{{ properties.datatype }}DateTo={{ properties.DateTo }}&fields=*,changes"
     },
     "delete": {
       "method": "DELETE",
