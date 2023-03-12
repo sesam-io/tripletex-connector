@@ -54,6 +54,9 @@
     "projectcategory": {
       "template": "templates/projectcategory.json"
     },
+    "supplier": {
+      "template": "templates/projectcategory.json"
+    },
     "vattype": {
       "template": "templates/vattype.json"
     }
