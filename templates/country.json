@@ -2,7 +2,7 @@
   "_id": "{{@ system @}}-{{@ datatype @}}-collect",
   "namespaced_identifiers": false,
   "source": {
-    "operation": "list",
+    "operation": "{{@ datatype @}}-list",
     "properties": {
       "datatype": "{{@ datatype @}}"
     },

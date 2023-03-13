@@ -1,14 +1,137 @@
 [
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "_id": "{{@ system @}}-{{@ datatype @}}-event",
+    "compaction": {
+      "keep_versions": 0,
+      "time_threshold_hours": 168
+    },
     "namespaced_identifiers": false,
     "source": {
-      "operation": "list",
+      "type": "http_endpoint"
+    },
+    "transform": [
+      {
+        "rules": {
+          "default": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-share",
+    "batch_size": 1,
+    "namespaced_identifiers": false,
+    "sink": {
+      "deletion_tracking": false,
+      "set_initial_offset": "onload"
+    },
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
+      "type": "dataset"
+    },
+    "transform": {
       "properties": {
-        "datatype": "{{@ datatype @}}"
+        "operation_delete": "{{@ datatype @}}-delete",
+        "operation_delete_properties": {
+          "datatype": "{{@ datatype @}}"
+        },
+        "operation_insert": "{{@ datatype @}}-insert",
+        "operation_insert_properties": {
+          "datatype": "{{@ datatype @}}"
+        },
+        "operation_lookup": "{{@ datatype @}}-lookup",
+        "operation_lookup_properties": {
+          "datatype": "{{@ datatype @}}"
+        },
+        "operation_update": "{{@ datatype @}}-update",
+        "operation_update_properties": {
+          "datatype": "{{@ datatype @}}"
+        },
+        "primary_key": "id",
+        "rest_system": "{{@ system @}}",
+        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
       },
-      "system": "{{@ system @}}",
-      "type": "rest"
+      "template": "transform-share-rest",
+      "type": "template"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-event-processed",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-event",
+      "type": "dataset"
+    },
+    "transform": {
+      "rules": {
+        "default": [
+          [
+            "if",
+            [
+              "eq",
+              "_S.event",
+              "{{@ datatype @}}.delete"
+            ],
+            [
+              "add",
+              "_deleted",
+              true
+            ]
+          ],
+          [
+            "merge",
+            "_S.value"
+          ],
+          [
+            "merge",
+            [
+              "max",
+              "_.",
+              [
+                "apply",
+                "last-modified",
+                "_T.changes"
+              ]
+            ]
+          ]
+        ],
+        "last-modified": [
+          [
+            "filter",
+            [
+              "eq",
+              "_S.changeType",
+              "UPDATE"
+            ]
+          ],
+          [
+            "add",
+            "$last-modified",
+            [
+              "datetime-parse",
+              "%Y-%m-%dT%H:%M:%S%z",
+              "_S.timestamp"
+            ]
+          ]
+        ]
+      },
+      "type": "dtl"
     },
     "type": "pipe"
   },
@@ -81,100 +204,16 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-event-processed",
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
     "namespaced_identifiers": false,
     "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-event",
-      "type": "dataset"
-    },
-    "transform": {
-      "rules": {
-        "default": [
-          [
-            "if",
-            [
-              "eq",
-              "_S.event",
-              "{{@ datatype @}}.delete"
-            ],
-            [
-              "add",
-              "_deleted",
-              true
-            ]
-          ],
-          [
-            "merge",
-            "_S.value"
-          ],
-          [
-            "merge",
-            [
-              "max",
-              "_.",
-              [
-                "apply",
-                "last-modified",
-                "_T.changes"
-              ]
-            ]
-          ]
-        ],
-        "last-modified": [
-          [
-            "filter",
-            [
-              "eq",
-              "_S.changeType",
-              "UPDATE"
-            ]
-          ],
-          [
-            "add",
-            "$last-modified",
-            [
-              "datetime-parse",
-              "%Y-%m-%dT%H:%M:%S%z",
-              "_S.timestamp"
-            ]
-          ]
-        ]
+      "operation": "{{@ datatype @}}-list",
+      "properties": {
+        "datatype": "{{@ datatype @}}"
       },
-      "type": "dtl"
+      "system": "{{@ system @}}",
+      "type": "rest"
     },
-    "type": "pipe"
-  },
-  {
-    "_id": "{{@ system @}}-{{@ datatype @}}-event",
-    "compaction": {
-      "keep_versions": 0,
-      "time_threshold_hours": 168
-    },
-    "namespaced_identifiers": false,
-    "source": {
-      "type": "http_endpoint"
-    },
-    "transform": [
-      {
-        "rules": {
-          "default": [
-            [
-              "copy",
-              "*"
-            ],
-            [
-              "add",
-              "_id",
-              [
-                "string",
-                "_S.id"
-              ]
-            ]
-          ]
-        },
-        "type": "dtl"
-      }
-    ],
     "type": "pipe"
   },
   {
@@ -216,41 +255,6 @@
       "side_effects": true,
       "system": "{{@ system @}}",
       "type": "rest"
-    },
-    "type": "pipe"
-  },
-  {
-    "_id": "{{@ system @}}-{{@ datatype @}}-share",
-    "batch_size": 1,
-    "namespaced_identifiers": false,
-    "sink": {
-      "deletion_tracking": false,
-      "set_initial_offset": "onload"
-    },
-    "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
-      "type": "dataset"
-    },
-    "transform": {
-      "properties": {
-        "operation_delete_properties": {
-          "datatype": "{{@ datatype @}}"
-        },
-        "operation_insert_properties": {
-          "datatype": "{{@ datatype @}}"
-        },
-        "operation_lookup_properties": {
-          "datatype": "{{@ datatype @}}"
-        },
-        "operation_update_properties": {
-          "datatype": "{{@ datatype @}}"
-        },
-        "primary_key": "id",
-        "rest_system": "{{@ system @}}",
-        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
-      },
-      "template": "transform-share-rest",
-      "type": "template"
     },
     "type": "pipe"
   }
