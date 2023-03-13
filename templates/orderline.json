@@ -1,14 +1,109 @@
 [
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-all-2",
+    "_id": "{{@ system @}}-{{@ datatype @}}-share",
+    "batch_size": 1,
+    "namespaced_identifiers": false,
+    "sink": {
+      "deletion_tracking": false,
+      "set_initial_offset": "onload"
+    },
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
+      "type": "dataset"
+    },
+    "transform": {
+      "properties": {
+        "operation_delete": "{{@ datatype @}}-delete",
+        "operation_delete_properties": {
+          "datatype": "{{@ datatype @}}"
+        },
+        "operation_insert": "{{@ datatype @}}-insert",
+        "operation_insert_properties": {
+          "datatype": "{{@ datatype @}}"
+        },
+        "operation_lookup": "{{@ datatype @}}-lookup",
+        "operation_lookup_properties": {
+          "datatype": "{{@ datatype @}}"
+        },
+        "operation_update": "{{@ datatype @}}-update",
+        "operation_update_properties": {
+          "datatype": "{{@ datatype @}}"
+        },
+        "primary_key": "id",
+        "rest_system": "{{@ system @}}",
+        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
+      },
+      "template": "transform-share-rest",
+      "type": "template"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
     "namespaced_identifiers": false,
     "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-all",
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all-2",
       "type": "dataset"
     },
     "transform": [
       {
-        "type": "emit_children"
+        "rules": {
+          "default": [
+            [
+              "filter",
+              [
+                "neq",
+                "_S._deleted",
+                true
+              ]
+            ],
+            [
+              "copy",
+              "*"
+            ]
+          ]
+        },
+        "type": "dtl"
+      },
+      {
+        "operation": "{{@ datatype @}}-lookup",
+        "properties": {
+          "datatype": "order/{{@ datatype @}}"
+        },
+        "replace_entity": true,
+        "system": "{{@ system @}}",
+        "type": "rest"
+      },
+      {
+        "rules": {
+          "default": [
+            [
+              "comment",
+              "TODO should use id-expression and payload-property in rest transform"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.value.id"
+              ]
+            ],
+            [
+              "merge",
+              "_S.value"
+            ]
+          ]
+        },
+        "type": "dtl"
+      },
+      {
+        "properties": {
+          "primary_key": "id",
+          "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
+        },
+        "template": "transform-collect-rest",
+        "type": "template"
       }
     ],
     "type": "pipe"
@@ -65,108 +160,17 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "_id": "{{@ system @}}-{{@ datatype @}}-all-2",
     "namespaced_identifiers": false,
     "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-all-2",
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all",
       "type": "dataset"
     },
     "transform": [
       {
-        "rules": {
-          "default": [
-            [
-              "filter",
-              [
-                "neq",
-                "_S._deleted",
-                true
-              ]
-            ],
-            [
-              "copy",
-              "*"
-            ]
-          ]
-        },
-        "type": "dtl"
-      },
-      {
-        "operation": "lookup",
-        "properties": {
-          "datatype": "order/{{@ datatype @}}"
-        },
-        "replace_entity": true,
-        "system": "{{@ system @}}",
-        "type": "rest"
-      },
-      {
-        "rules": {
-          "default": [
-            [
-              "comment",
-              "TODO should use id-expression and payload-property in rest transform"
-            ],
-            [
-              "add",
-              "_id",
-              [
-                "string",
-                "_S.value.id"
-              ]
-            ],
-            [
-              "merge",
-              "_S.value"
-            ]
-          ]
-        },
-        "type": "dtl"
-      },
-      {
-        "properties": {
-          "primary_key": "id",
-          "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
-        },
-        "template": "transform-collect-rest",
-        "type": "template"
+        "type": "emit_children"
       }
     ],
-    "type": "pipe"
-  },
-  {
-    "_id": "{{@ system @}}-{{@ datatype @}}-share",
-    "batch_size": 1,
-    "namespaced_identifiers": false,
-    "sink": {
-      "deletion_tracking": false,
-      "set_initial_offset": "onload"
-    },
-    "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
-      "type": "dataset"
-    },
-    "transform": {
-      "properties": {
-        "operation_delete_properties": {
-          "datatype": "order/{{@ datatype @}}"
-        },
-        "operation_insert_properties": {
-          "datatype": "order/{{@ datatype @}}"
-        },
-        "operation_lookup_properties": {
-          "datatype": "order/{{@ datatype @}}"
-        },
-        "operation_update_properties": {
-          "datatype": "order/{{@ datatype @}}"
-        },
-        "primary_key": "id",
-        "rest_system": "{{@ system @}}",
-        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
-      },
-      "template": "transform-share-rest",
-      "type": "template"
-    },
     "type": "pipe"
   }
 ]

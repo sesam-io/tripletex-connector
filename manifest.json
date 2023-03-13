@@ -7,10 +7,10 @@
   "auth_variant": "tripletex",
   "datatypes": {
     "address": {
-      "template": "templates/address.json"
+      "template": "templates/customercategory.json"
     },
     "contact": {
-      "template": "templates/contact.json"
+      "template": "templates/customer.json"
     },
     "country": {
       "template": "templates/country.json"
@@ -31,7 +31,7 @@
       "template": "templates/invoice.json"
     },
     "order": {
-      "template": "templates/order.json"
+      "template": "templates/customer.json"
     },
     "orderline": {
       "template": "templates/orderline.json"
@@ -40,25 +40,25 @@
       "template": "templates/customer.json"
     },
     "productgroup": {
-      "template": "templates/productgroup.json"
+      "template": "templates/customercategory.json"
     },
     "productgrouprelation": {
-      "template": "templates/productgrouprelation.json"
+      "template": "templates/customercategory.json"
     },
     "productunit": {
-      "template": "templates/productunit.json"
+      "template": "templates/customercategory.json"
     },
     "project": {
       "template": "templates/customer.json"
     },
     "projectcategory": {
-      "template": "templates/projectcategory.json"
+      "template": "templates/customercategory.json"
     },
     "supplier": {
       "template": "templates/customer.json"
     },
     "vattype": {
-      "template": "templates/vattype.json"
+      "template": "templates/country.json"
     }
   },
   "requires_service_api_access": true,
