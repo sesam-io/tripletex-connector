@@ -136,6 +136,7 @@
     },
     "transform": {
       "operation": "webhook-insert",
+      "allowed_status_codes":"200,201",
       "replace_entity": false,
       "side_effects": true,
       "system": "{{@ system @}}",
