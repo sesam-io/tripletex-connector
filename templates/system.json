@@ -218,10 +218,10 @@
     "invoice-list": {
       "id_expression": "{{ id }}",
       "method": "GET",
-      "next_page_link": "{{@ base_url @}}/v2/invoice?from={{ body.from + body.count }}&invoiceDateFrom={{ properties.DateFrom }}&invoiceDateTo={{ properties.DateTo }}",
+      "next_page_link": "{{@ base_url @}}/v2/invoice?from={{ body.from + body.count }}&invoiceDateFrom=1970-01-01&invoiceDateTo=2999-01-01",
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "invoice?invoiceDateFrom={{ properties.DateFrom }}&invoiceDateTo={{ properties.DateTo }}&fields=*,changes"
+      "url": "invoice?invoiceDateFrom=1970-01-01&invoiceDateTo=2999-01-01&fields=*,changes"
     },
     "invoice-lookup": {
       "method": "GET",
@@ -247,10 +247,10 @@
     "order-list": {
       "id_expression": "{{ id }}",
       "method": "GET",
-      "next_page_link": "{{@ base_url @}}/v2/order?from={{ body.from + body.count }}&orderDateFrom={{ properties.DateFrom }}&orderDateTo={{ properties.DateTo }}",
+      "next_page_link": "{{@ base_url @}}/v2/order?from={{ body.from + body.count }}&orderDateFrom=1970-01-01&orderDateTo=2999-01-01",
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "order?orderDateFrom={{ properties.DateFrom }}&orderDateTo={{ properties.DateTo }}&fields=*,changes"
+      "url": "order?orderDateFrom=1970-01-01&orderDateTo=2999-01-01&fields=*,changes"
     },
     "order-lookup": {
       "method": "GET",
