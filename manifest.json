@@ -7,58 +7,76 @@
   "auth_variant": "tripletex",
   "datatypes": {
     "address": {
-      "template": "templates/customercategory.json"
+      "template": "templates/customercategory.json",
+      "label": "Address"
     },
     "contact": {
-      "template": "templates/customer.json"
+      "template": "templates/customer.json",
+      "label": "Contact"
     },
     "country": {
-      "template": "templates/country.json"
+      "template": "templates/country.json",
+      "label": "Country"
     },
     "currency": {
-      "template": "templates/country.json"
+      "template": "templates/country.json",
+      "label": "Currency"
     },
     "customer": {
-      "template": "templates/customer.json"
+      "template": "templates/customer.json",
+      "label": "Customer"
     },
     "customercategory": {
-      "template": "templates/customercategory.json"
+      "template": "templates/customercategory.json",
+      "label": "Customer Category"
     },
     "employee": {
-      "template": "templates/customer.json"
+      "template": "templates/customer.json",
+      "label": "Employee"
     },
     "invoice": {
-      "template": "templates/invoice.json"
+      "template": "templates/invoice.json",
+      "label": "Invoice"
     },
     "order": {
-      "template": "templates/customer.json"
+      "template": "templates/customer.json",
+      "label": "Order"
     },
     "orderline": {
-      "template": "templates/orderline.json"
+      "template": "templates/orderline.json",
+      "label": "Order Line"
     },
     "product": {
-      "template": "templates/customer.json"
+      "template": "templates/customer.json",
+      "label": "Product"
     },
     "productgroup": {
-      "template": "templates/customercategory.json"
+      "template": "templates/customercategory.json",
+      "label": "Product Group"
     },
     "productgrouprelation": {
-      "template": "templates/customercategory.json"
+      "template": "templates/customercategory.json",
+      "label": "Product Group Relation"
     },
     "productunit": {
-      "template": "templates/customercategory.json"
+      "template": "templates/customercategory.json",
+      "label": "Product Unit"
     },
     "project": {
-      "template": "templates/customer.json"
+      "template": "templates/customer.json",
+      "label": "Project"
     },
     "projectcategory": {
-      "template": "templates/customercategory.json"
+      "template": "templates/customercategory.json",
+      "label": "Project Category"
     },
     "supplier": {
-      "template": "templates/customer.json"
+      "template": "templates/customer.json",
+      "label": "Supplier"
     },
     "vattype": {
-      "template": "templates/country.json"
+      "template": "templates/country.json",
+      "label": "VAT Type"
     }
   },
   "requires_service_api_access": true,
