@@ -119,6 +119,7 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-registerwebhook",
+    "comment": "Can't use the same template as customer, as the webhooks for invoices are different",
     "namespaced_identifiers": false,
     "source": {
       "entities": [
