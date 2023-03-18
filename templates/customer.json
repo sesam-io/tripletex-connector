@@ -72,7 +72,7 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-event-processed",
+    "_id": "{{@ system @}}-{{@ datatype @}}-event2",
     "namespaced_identifiers": false,
     "source": {
       "dataset": "{{@ system @}}-{{@ datatype @}}-event",
@@ -138,14 +138,14 @@
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-collect",
     "exclude_completeness": [
-      "{{@ system @}}-{{@ datatype @}}-event-processed",
+      "{{@ system @}}-{{@ datatype @}}-event2",
       "{{@ system @}}-{{@ datatype @}}-share"
     ],
     "namespaced_identifiers": false,
     "source": {
       "datasets": [
         "{{@ system @}}-{{@ datatype @}}-all",
-        "{{@ system @}}-{{@ datatype @}}-event-processed"
+        "{{@ system @}}-{{@ datatype @}}-event2"
       ],
       "type": "merge_datasets"
     },
