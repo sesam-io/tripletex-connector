@@ -60,16 +60,6 @@
       "payload_property": "value",
       "url": "contact/{{ entity.id }}"
     },
-    "country-delete": {
-      "method": "DELETE",
-      "url": "{{ properties.datatype }}/{{ entity.id }}"
-    },
-    "country-insert": {
-      "method": "POST",
-      "payload-type": "json",
-      "payload_property": "value",
-      "url": "{{ properties.datatype }}"
-    },
     "country-list": {
       "id_expression": "{{ id }}",
       "method": "GET",
@@ -83,22 +73,6 @@
       "payload_property": "value",
       "url": "{{ properties.datatype }}/{{ entity.id }}?fields=*,changes"
     },
-    "country-update": {
-      "method": "PUT",
-      "payload-type": "json",
-      "payload_property": "value",
-      "url": "{{ properties.datatype }}/{{ entity.id }}"
-    },
-    "currency-delete": {
-      "method": "DELETE",
-      "url": "{{ properties.datatype }}/{{ entity.id }}"
-    },
-    "currency-insert": {
-      "method": "POST",
-      "payload-type": "json",
-      "payload_property": "value",
-      "url": "{{ properties.datatype }}"
-    },
     "currency-list": {
       "id_expression": "{{ id }}",
       "method": "GET",
@@ -106,17 +80,6 @@
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
       "url": "{{ properties.datatype }}?fields=*,changes"
-    },
-    "currency-lookup": {
-      "method": "GET",
-      "payload_property": "value",
-      "url": "{{ properties.datatype }}/{{ entity.id }}?fields=*,changes"
-    },
-    "currency-update": {
-      "method": "PUT",
-      "payload-type": "json",
-      "payload_property": "value",
-      "url": "{{ properties.datatype }}/{{ entity.id }}"
     },
     "customer-delete": {
       "method": "DELETE",
@@ -495,16 +458,6 @@
       "payload_property": "value",
       "url": "supplier/{{ entity.id }}"
     },
-    "vattype-delete": {
-      "method": "DELETE",
-      "url": "ledger/vatType/{{ entity.id }}"
-    },
-    "vattype-insert": {
-      "method": "POST",
-      "payload-type": "json",
-      "payload_property": "value",
-      "url": "ledger/vatType"
-    },
     "vattype-list": {
       "id_expression": "{{ id }}",
       "method": "GET",
@@ -517,12 +470,6 @@
       "method": "GET",
       "payload_property": "value",
       "url": "ledger/vatType/{{ entity.id }}?fields=*,changes"
-    },
-    "vattype-update": {
-      "method": "PUT",
-      "payload-type": "json",
-      "payload_property": "value",
-      "url": "ledger/vatType/{{ entity.id }}"
     },
     "webhook-insert": {
       "method": "POST",
