@@ -47,21 +47,9 @@
     "transform": {
       "properties": {
         "operation_delete": "{{@ datatype @}}-delete",
-        "operation_delete_properties": {
-          "datatype": "{{@ datatype @}}"
-        },
         "operation_insert": "{{@ datatype @}}-insert",
-        "operation_insert_properties": {
-          "datatype": "{{@ datatype @}}"
-        },
         "operation_lookup": "{{@ datatype @}}-lookup",
-        "operation_lookup_properties": {
-          "datatype": "{{@ datatype @}}"
-        },
         "operation_update": "{{@ datatype @}}-update",
-        "operation_update_properties": {
-          "datatype": "{{@ datatype @}}"
-        },
         "primary_key": "id",
         "rest_system": "{{@ system @}}",
         "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
@@ -208,9 +196,6 @@
     "namespaced_identifiers": false,
     "source": {
       "operation": "{{@ datatype @}}-list",
-      "properties": {
-        "datatype": "{{@ datatype @}}"
-      },
       "system": "{{@ system @}}",
       "type": "rest"
     },

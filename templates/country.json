@@ -3,9 +3,6 @@
   "namespaced_identifiers": false,
   "source": {
     "operation": "{{@ datatype @}}-list",
-    "properties": {
-      "datatype": "{{@ datatype @}}"
-    },
     "system": "{{@ system @}}",
     "type": "rest"
   },

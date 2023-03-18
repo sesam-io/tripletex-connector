@@ -63,23 +63,23 @@
     "country-list": {
       "id_expression": "{{ id }}",
       "method": "GET",
-      "next_page_link": "{{@ base_url @}}/v2/{{ properties.datatype }}?from={{ body.from + body.count }}",
+      "next_page_link": "{{@ base_url @}}/v2/country?from={{ body.from + body.count }}",
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "{{ properties.datatype }}?fields=*,changes"
+      "url": "country?fields=*,changes"
     },
     "country-lookup": {
       "method": "GET",
       "payload_property": "value",
-      "url": "{{ properties.datatype }}/{{ entity.id }}?fields=*,changes"
+      "url": "country/{{ entity.id }}?fields=*,changes"
     },
     "currency-list": {
       "id_expression": "{{ id }}",
       "method": "GET",
-      "next_page_link": "{{@ base_url @}}/v2/{{ properties.datatype }}?from={{ body.from + body.count }}",
+      "next_page_link": "{{@ base_url @}}/v2/currency?from={{ body.from + body.count }}",
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "{{ properties.datatype }}?fields=*,changes"
+      "url": "currency?fields=*,changes"
     },
     "customer-delete": {
       "method": "DELETE",
