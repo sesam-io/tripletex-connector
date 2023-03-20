@@ -8,78 +8,100 @@
   "datatypes": {
     "address": {
       "template": "templates/customercategory.json",
-      "label": "Address"
+      "label": "Address",
+      "description": "Represents the physical or mailing location of customers, suppliers, or employees."
     },
     "contact": {
       "template": "templates/customer.json",
-      "label": "Contact"
+      "label": "Contact",
+      "description": "Stores the personal information and communication details of individuals associated with customers, suppliers, and employees."
     },
     "country": {
       "template": "templates/country.json",
-      "label": "Country"
+      "label": "Country",
+      "description": "Contains country-related information used to categorize geographical locations and apply regional settings."
     },
     "currency": {
       "template": "templates/country.json",
-      "label": "Currency"
+      "label": "Currency",
+      "description": "Represents various monetary units to facilitate transactions and financial reporting in multiple currencies."
     },
     "customer": {
       "template": "templates/customer.json",
-      "label": "Customer"
+      "label": "Customer",
+      "description": "Tracks the information and financial transactions of clients purchasing goods or services from the business."
     },
     "customercategory": {
       "template": "templates/customercategory.json",
-      "label": "Customer Category"
+      "label": "Customer Category",
+      "description": "Categorizes customers based on criteria such as industry, size, or location for improved segmentation and targeting."
     },
     "employee": {
       "template": "templates/customer.json",
-      "label": "Employee"
+      "label": "Employee",
+      "description": "Stores information about individuals working for the company, such as roles, contact details, and salaries."
     },
     "invoice": {
       "template": "templates/invoice.json",
-      "label": "Invoice"
+      "label": "Invoice",
+      "description": "Records the financial details of goods or services provided, including amounts, due dates, and payment statuses."
     },
     "order": {
       "template": "templates/customer.json",
-      "label": "Order"
+      "label": "Order",
+      "description": "Tracks the details and statuses of customer purchase requests, including items, quantities, and prices."
     },
     "orderline": {
       "template": "templates/orderline.json",
-      "label": "Order Line"
+      "label": "Order Line",
+      "description": "Represents individual items within an order, including the product, quantity, and associated cost."
     },
     "product": {
       "template": "templates/customer.json",
-      "label": "Product"
+      "label": "Product",
+      "description": "Contains information about goods or services offered by the business, such as pricing, descriptions, and stock levels."
     },
     "productgroup": {
       "template": "templates/customercategory.json",
-      "label": "Product Group"
+      "label": "Product Group",
+      "description": "Organizes products into categories or families for easier management, reporting, and analysis."
     },
     "productgrouprelation": {
       "template": "templates/customercategory.json",
-      "label": "Product Group Relation"
+      "label": "Product Group Relation",
+      "description": "Defines relationships between product groups, enabling hierarchical organization or cross-referencing."
     },
     "productunit": {
       "template": "templates/customercategory.json",
-      "label": "Product Unit"
+      "label": "Product Unit",
+      "description": "Specifies the units of measurement for products, such as liters, kilograms, or units."
     },
     "project": {
       "template": "templates/customer.json",
-      "label": "Project"
+      "label": "Project",
+      "description": "Represents a unique work initiative or undertaking, often with specific goals, budgets, people responsible and timeframes."
     },
     "projectcategory": {
       "template": "templates/customercategory.json",
-      "label": "Project Category"
+      "label": "Project Category",
+      "description": "Categorizes projects for better organization and reporting."
     },
     "supplier": {
       "template": "templates/customer.json",
-      "label": "Supplier"
+      "label": "Supplier",
+      "description": "Tracks information and financial transactions related to businesses providing goods or services to the company."
+
     },
     "vattype": {
       "template": "templates/country.json",
-      "label": "VAT Type"
+      "label": "VAT Type",
+      "description": "Contains the value-added tax (VAT) rates and categories applicable to different products or transactions."
+
     },
     "webhook": {
-      "template": "templates/webhook.json"
+      "template": "templates/webhook.json",
+      "label": "Webhook",
+      "description": "Facilitates real-time communication between Tripletex and external services through event-driven notifications."
     }
   },
   "requires_service_api_access": true,
