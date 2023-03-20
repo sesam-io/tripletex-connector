@@ -5,7 +5,7 @@
     "source": {
       "datasets": [
         "{{@ system @}}-{{@ datatype @}}-all",
-        "{{@ system @}}-{{@ datatype @}}-event-processed"
+        "{{@ system @}}-{{@ datatype @}}-event2"
       ],
       "type": "merge_datasets"
     },
@@ -54,7 +54,7 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-event-processed",
+    "_id": "{{@ system @}}-{{@ datatype @}}-event2",
     "namespaced_identifiers": false,
     "source": {
       "dataset": "{{@ system @}}-{{@ datatype @}}-event",
@@ -118,7 +118,8 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-register-webhook",
+    "_id": "{{@ system @}}-{{@ datatype @}}-registerwebhook",
+    "comment": "Can't use the same template as customer, as the webhooks for invoices are different",
     "namespaced_identifiers": false,
     "source": {
       "entities": [

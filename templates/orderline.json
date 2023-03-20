@@ -45,7 +45,7 @@
     ],
     "namespaced_identifiers": false,
     "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-all-2",
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all2",
       "type": "dataset"
     },
     "transform": [
@@ -163,7 +163,7 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-all-2",
+    "_id": "{{@ system @}}-{{@ datatype @}}-all2",
     "namespaced_identifiers": false,
     "source": {
       "dataset": "{{@ system @}}-{{@ datatype @}}-all",
