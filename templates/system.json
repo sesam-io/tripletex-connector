@@ -97,12 +97,12 @@
       "next_page_link": "{{@ base_url @}}/v2/customer?from={{ body.from + body.count }}",
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "customer?fields=*,changes"
+      "url": "customer?fields=*,changes,postalAddress(*),physicalAddress(*),deliveryAddress(*)"
     },
     "customer-lookup": {
       "method": "GET",
       "payload_property": "value",
-      "url": "customer/{{ entity.id }}?fields=*,changes"
+      "url": "customer/{{ entity.id }}?fields=*,changes,postalAddress(*),physicalAddress(*),deliveryAddress(*)"
     },
     "customer-update": {
       "method": "PUT",
