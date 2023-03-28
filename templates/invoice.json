@@ -1,5 +1,20 @@
 [
   {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "namespaced_identifiers": false,
+    "source": {
+      "operation": "{{@ datatype @}}-list",
+      "properties": {
+        "DateFrom": "1970-01-01",
+        "DateTo": "2999-01-01",
+        "datatype": "{{@ datatype @}}"
+      },
+      "system": "{{@ system @}}",
+      "type": "rest"
+    },
+    "type": "pipe"
+  },
+  {
     "_id": "{{@ system @}}-{{@ datatype @}}-collect",
     "namespaced_identifiers": false,
     "source": {
@@ -10,14 +25,6 @@
       "type": "merge_datasets"
     },
     "transform": [
-      {
-        "properties": {
-          "primary_key": "id",
-          "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
-        },
-        "template": "transform-collect-rest",
-        "type": "template"
-      },
       {
         "rules": {
           "default": [
@@ -54,6 +61,39 @@
                 "datetime-parse",
                 "%Y-%m-%dT%H:%M:%S%z",
                 "_S.timestamp"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-event",
+    "compaction": {
+      "keep_versions": 0,
+      "time_threshold_hours": 168
+    },
+    "namespaced_identifiers": false,
+    "source": {
+      "type": "http_endpoint"
+    },
+    "transform": [
+      {
+        "rules": {
+          "default": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
               ]
             ]
           ]
@@ -129,7 +169,7 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-registerwebhook",
-    "comment": "Can't use the same template as customer, as the webhooks for invoices are different",
+    "comment": "Can't use the same template as customer, as the webhooks for {{@ datatype @}}s are different",
     "namespaced_identifiers": false,
     "source": {
       "entities": [
@@ -146,61 +186,13 @@
       "type": "embedded"
     },
     "transform": {
+      "allowed_status_codes": "200,201",
       "operation": "webhook-insert",
-      "allowed_status_codes":"200,201",
       "replace_entity": false,
       "side_effects": true,
       "system": "{{@ system @}}",
       "type": "rest"
     },
-    "type": "pipe"
-  },
-  {
-    "_id": "{{@ system @}}-{{@ datatype @}}-all",
-    "namespaced_identifiers": false,
-    "source": {
-      "operation": "{{@ datatype @}}-list",
-      "properties": {
-        "DateFrom": "1970-01-01",
-        "DateTo": "2999-01-01",
-        "datatype": "{{@ datatype @}}"
-      },
-      "system": "{{@ system @}}",
-      "type": "rest"
-    },
-    "type": "pipe"
-  },
-  {
-    "_id": "{{@ system @}}-{{@ datatype @}}-event",
-    "compaction": {
-      "keep_versions": 0,
-      "time_threshold_hours": 168
-    },
-    "namespaced_identifiers": false,
-    "source": {
-      "type": "http_endpoint"
-    },
-    "transform": [
-      {
-        "rules": {
-          "default": [
-            [
-              "copy",
-              "*"
-            ],
-            [
-              "add",
-              "_id",
-              [
-                "string",
-                "_S.id"
-              ]
-            ]
-          ]
-        },
-        "type": "dtl"
-      }
-    ],
     "type": "pipe"
   }
 ]
