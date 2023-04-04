@@ -267,6 +267,26 @@
             "rules": {
               "default": [
                 [
+                  "add",
+                  "$source",
+                  "_S."
+                ],
+                [
+                  "copy",
+                  [
+                    "literal",
+                    "id"
+                  ]
+                ],
+                [
+                  "copy",
+                  "$origin"
+                ],
+                [
+                  "copy",
+                  "$replaced"
+                ],
+                [
                   "if",
                   [
                     "and",
@@ -409,24 +429,6 @@
                       ]
                     ]
                   ]
-                ],
-                [
-                  "add",
-                  "$source",
-                  "_S."
-                ],
-                [
-                  "add",
-                  "id",
-                  "_S.id"
-                ],
-                [
-                  "copy",
-                  "$origin"
-                ],
-                [
-                  "copy",
-                  "$replaced"
                 ]
               ],
               "delete": [
@@ -470,13 +472,13 @@
                     "if",
                     [
                       "is-not-null",
-                      "_S.$source.$payload"
+                      "_R._T.$source.$payload"
                     ],
-                    "_S.$source.$payload",
+                    "_R._T.$source.$payload",
                     [
                       "apply",
                       "payload",
-                      "_S.$source"
+                      "_R._T.$source"
                     ]
                   ]
                 ],
