@@ -237,46 +237,15 @@
               "default": [
                 [
                   "copy",
-                  "*"
-                ],
-                [
-                  "add",
-                  "$payload",
-                  [
-                    "apply",
-                    "remove_sesam",
-                    "_S."
-                  ]
-                ]
-              ],
-              "remove_sesam": [
-                [
-                  "copy",
-                  "*",
-                  [
-                    "list",
-                    "$*",
-                    "_*"
-                  ]
-                ]
-              ]
-            },
-            "type": "dtl"
-          },
-          {
-            "rules": {
-              "default": [
-                [
-                  "add",
-                  "$source",
-                  "_S."
-                ],
-                [
-                  "copy",
                   [
                     "literal",
                     "id"
                   ]
+                ],
+                [
+                  "add",
+                  "$source",
+                  "_S."
                 ],
                 [
                   "copy",
@@ -312,8 +281,23 @@
                   [
                     "if",
                     [
-                      "is-not-null",
-                      "_S.id"
+                      "all",
+                      [
+                        "is-not-null",
+                        "_."
+                      ],
+                      [
+                        "map",
+                        [
+                          "path",
+                          "_.",
+                          "_S."
+                        ],
+                        [
+                          "literal",
+                          "id"
+                        ]
+                      ]
                     ],
                     [
                       "if",
@@ -629,38 +613,41 @@
                           "list",
                           "_.",
                           [
-                            "if",
+                            "sorted",
                             [
-                              "is-dict",
+                              "if",
                               [
-                                "path",
-                                "_.",
-                                "_S.b"
-                              ]
-                            ],
-                            [
-                              "apply",
-                              "based-on-extract",
-                              [
-                                "dict",
-                                "a",
-                                [
-                                  "path",
-                                  "_.",
-                                  "_S.a"
-                                ],
-                                "b",
+                                "is-dict",
                                 [
                                   "path",
                                   "_.",
                                   "_S.b"
                                 ]
+                              ],
+                              [
+                                "apply",
+                                "based-on-extract",
+                                [
+                                  "dict",
+                                  "a",
+                                  [
+                                    "path",
+                                    "_.",
+                                    "_S.a"
+                                  ],
+                                  "b",
+                                  [
+                                    "path",
+                                    "_.",
+                                    "_S.b"
+                                  ]
+                                ]
+                              ],
+                              [
+                                "path",
+                                "_.",
+                                "_S.b"
                               ]
-                            ],
-                            [
-                              "path",
-                              "_.",
-                              "_S.b"
                             ]
                           ]
                         ],
@@ -670,6 +657,13 @@
                         ]
                       ]
                     ]
+                  ]
+                ],
+                [
+                  "remove",
+                  [
+                    "literal",
+                    "id"
                   ]
                 ]
               ],
@@ -724,8 +718,22 @@
                   "$based_on_update",
                   [
                     "apply",
-                    "payload",
-                    "_S.$source"
+                    "based-on-extract",
+                    [
+                      "dict",
+                      "a",
+                      [
+                        "apply",
+                        "payload",
+                        "_S.$source"
+                      ],
+                      "b",
+                      [
+                        "apply",
+                        "payload",
+                        "_S.$source"
+                      ]
+                    ]
                   ]
                 ]
               ],
@@ -821,6 +829,13 @@
                         [
                           "copy",
                           "$source"
+                        ],
+                        [
+                          "copy",
+                          [
+                            "literal",
+                            "id"
+                          ]
                         ],
                         [
                           "copy",
@@ -988,6 +1003,13 @@
               "default": [
                 [
                   "copy",
+                  [
+                    "literal",
+                    "id"
+                  ]
+                ],
+                [
+                  "copy",
                   "$source"
                 ],
                 [
@@ -1125,6 +1147,7 @@
                         [
                           "list",
                           200,
+                          201,
                           204
                         ]
                       ]
