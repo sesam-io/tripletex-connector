@@ -17,3 +17,6 @@ To register your webhooks make sure to run the webhook register pipes for each o
 
 Verify in the execution log for each of your webhooks pipes that the pipe succeeded in registering the webhooks.
 
+Note:
+
+Customer share uses expanded config since payload needs to be wrapped in a list 
