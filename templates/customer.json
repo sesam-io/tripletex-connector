@@ -238,41 +238,52 @@
               "*"
             ],
             [
-              "add",
-              "$payload",
+              "comment",
+              "wrapping payload in a list for updates"
+            ],
+            [
+              "if",
               [
-                "list",
+                "is-not-null",
+                "_S.id"
+              ],
+              [
+                "add",
+                "$payload",
                 [
-                  "map-dict",
+                  "list",
                   [
-                    "filter",
+                    "map-dict",
                     [
-                      "and",
+                      "filter",
                       [
-                        "neq",
-                        "$",
+                        "and",
                         [
-                          "substring",
-                          0,
-                          1,
-                          "_."
+                          "neq",
+                          "$",
+                          [
+                            "substring",
+                            0,
+                            1,
+                            "_."
+                          ]
+                        ],
+                        [
+                          "neq",
+                          "_",
+                          [
+                            "substring",
+                            0,
+                            1,
+                            "_."
+                          ]
                         ]
                       ],
-                      [
-                        "neq",
-                        "_",
-                        [
-                          "substring",
-                          0,
-                          1,
-                          "_."
-                        ]
-                      ]
+                      "_."
                     ],
-                    "_."
-                  ],
-                  "_.",
-                  "_S."
+                    "_.",
+                    "_S."
+                  ]
                 ]
               ]
             ]
