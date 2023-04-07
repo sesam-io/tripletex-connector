@@ -30,6 +30,10 @@
       "label": "Customer Category",
       "template": "templates/customercategory.json"
     },
+    "department": {
+      "label": "Department",
+      "template": "templates/contact.json"
+    },
     "employee": {
       "label": "Employee",
       "template": "templates/contact.json"
