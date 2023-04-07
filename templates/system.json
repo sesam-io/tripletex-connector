@@ -139,6 +139,35 @@
       "payload_property": "value",
       "url": "customer/category/{{ entity.id }}"
     },
+    "department-delete": {
+      "method": "DELETE",
+      "url": "department/{{ entity.id }}"
+    },
+    "department-insert": {
+      "method": "POST",
+      "payload-type": "json",
+      "payload_property": "value",
+      "url": "department"
+    },
+    "department-list": {
+      "id_expression": "{{ id }}",
+      "method": "GET",
+      "next_page_link": "{{@ base_url @}}/v2/department?from={{ body.from + body.count }}",
+      "next_page_termination_strategy": "empty-result",
+      "payload_property": "values",
+      "url": "department?fields=*,changes"
+    },
+    "department-lookup": {
+      "method": "GET",
+      "payload_property": "value",
+      "url": "department/{{ entity.id }}?fields=*,changes"
+    },
+    "department-update": {
+      "method": "PUT",
+      "payload-type": "json",
+      "payload_property": "value",
+      "url": "department/{{ entity.id }}"
+    },
     "employee-delete": {
       "method": "DELETE",
       "url": "employee/{{ entity.id }}"
