@@ -108,7 +108,7 @@
       "method": "PUT",
       "payload-type": "json",
       "payload_property": "value",
-      "url": "customer/list"
+      "url": "customer/{{ entity.id }}"
     },
     "customercategory-delete": {
       "method": "DELETE",
