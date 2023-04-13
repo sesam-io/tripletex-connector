@@ -520,6 +520,8 @@
       "url": "event/subscription"
     }
   },
+  "rate_limiting_retries": 3,
+  "rate_limiting_delay": 60,
   "password": "$SECRET(sessionToken)",
   "type": "system:rest",
   "url_pattern": "{{@ base_url @}}/v2/%s",
