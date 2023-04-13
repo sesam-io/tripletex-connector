@@ -50,7 +50,8 @@
                   "_S.changes"
                 ]
               ]
-            ]
+            ],
+            ["remove","changes"]
           ],
           "last-modified": [
             [
