@@ -292,7 +292,7 @@
       "method": "POST",
       "payload-type": "json",
       "payload_property": "value",
-      "url": "customer/category"
+      "url": "customer/group"
     },
     "productgroup-list": {
       "id_expression": "{{ id }}",
