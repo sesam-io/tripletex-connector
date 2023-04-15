@@ -46,7 +46,7 @@
               [
                 "in",
                 "_S.changeType",
-                ["UPDATE", "CREATE"]
+                ["list", "UPDATE", "CREATE"]
               ]
             ],
              [
