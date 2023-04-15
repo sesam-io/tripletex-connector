@@ -44,18 +44,18 @@
                 ]
               ]
             ],
-            ["remove","changes"]
+            ["add","changes",["filter",["eq", "_.changeType", "CREATE"], "_S.changes"]]
           ],
           "last-modified": [
             [
               "filter",
               [
-                "eq",
+                "in",
                 "_S.changeType",
-                "UPDATE"
+                ["UPDATE", "CREATE"]
               ]
             ],
-            [
+             [
               "add",
               "$last-modified",
               [
@@ -139,21 +139,22 @@
               [
                 "apply",
                 "last-modified",
-                "_T.changes"
+                "_S.changes"
               ]
             ]
-          ]
+          ],
+          ["add","changes",["filter",["eq", "_.changeType", "CREATE"], "_S.changes"]]
         ],
         "last-modified": [
           [
             "filter",
             [
-              "eq",
+              "in",
               "_S.changeType",
-              "UPDATE"
+              ["UPDATE", "CREATE"]
             ]
           ],
-          [
+         [
             "add",
             "$last-modified",
             [
