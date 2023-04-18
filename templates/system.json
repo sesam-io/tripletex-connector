@@ -22,7 +22,6 @@
     },
     "address-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "address/{{ entity.id }}?fields=*,changes"
     },
     "address-update": {
@@ -51,7 +50,6 @@
     },
     "contact-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "contact/{{ entity.id }}?fields=*,changes"
     },
     "contact-update": {
@@ -70,7 +68,6 @@
     },
     "country-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "country/{{ entity.id }}?fields=*,changes"
     },
     "currency-list": {
@@ -101,7 +98,6 @@
     },
     "customer-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "customer/{{ entity.id }}?fields=*,changes,postalAddress(*),physicalAddress(*),deliveryAddress(*)"
     },
     "customer-update": {
@@ -130,7 +126,6 @@
     },
     "customercategory-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "customer/category/{{ entity.id }}?fields=*,changes"
     },
     "customercategory-update": {
@@ -159,7 +154,6 @@
     },
     "department-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "department/{{ entity.id }}?fields=*,changes"
     },
     "department-update": {
@@ -188,7 +182,6 @@
     },
     "employee-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "employee/{{ entity.id }}?fields=*,changes"
     },
     "employee-update": {
@@ -217,7 +210,6 @@
     },
     "invoice-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "invoice/{{ entity.id }}?fields=*,changes"
     },
     "invoice-update": {
@@ -246,7 +238,6 @@
     },
     "order-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "order/{{ entity.id }}?fields=*,changes"
     },
     "order-update": {
@@ -275,7 +266,6 @@
     },
     "orderline-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "order/orderline/{{ entity.id }}?fields=*,changes"
     },
     "orderline-update": {
@@ -304,7 +294,6 @@
     },
     "product-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "product/{{ entity.id }}?fields=*,changes"
     },
     "product-update": {
@@ -333,7 +322,6 @@
     },
     "productgroup-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "product/group/{{ entity.id }}?fields=*,changes"
     },
     "productgroup-update": {
@@ -362,7 +350,6 @@
     },
     "productgrouprelation-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "product/groupRelation/{{ entity.id }}?fields=*,changes"
     },
     "productgrouprelation-update": {
@@ -391,7 +378,6 @@
     },
     "productunit-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "product/unit/{{ entity.id }}?fields=*,changes"
     },
     "productunit-update": {
@@ -420,7 +406,6 @@
     },
     "project-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "project/{{ entity.id }}?fields=*,changes"
     },
     "project-update": {
@@ -449,7 +434,6 @@
     },
     "projectcategory-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "project/category/{{ entity.id }}?fields=*,changes"
     },
     "projectcategory-update": {
@@ -478,7 +462,6 @@
     },
     "supplier-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "supplier/{{ entity.id }}?fields=*,changes"
     },
     "supplier-update": {
@@ -497,7 +480,6 @@
     },
     "vattype-lookup": {
       "method": "GET",
-      "payload_property": "value",
       "url": "ledger/vatType/{{ entity.id }}?fields=*,changes"
     },
     "webhook-insert": {
