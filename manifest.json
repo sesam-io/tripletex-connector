@@ -20,7 +20,7 @@
     },
     "currency": {
       "label": "Currency",
-      "template": "templates/country.json"
+      "template": "templates/currency.json"
     },
     "customer": {
       "label": "Customer",
