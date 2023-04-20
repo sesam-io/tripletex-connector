@@ -20,7 +20,7 @@
     },
     "currency": {
       "label": "Currency",
-      "template": "templates/country.json"
+      "template": "templates/currency.json"
     },
     "customer": {
       "label": "Customer",
@@ -29,6 +29,10 @@
     "customercategory": {
       "label": "Customer Category",
       "template": "templates/customercategory.json"
+    },
+    "department": {
+      "label": "Department",
+      "template": "templates/contact.json"
     },
     "employee": {
       "label": "Employee",
