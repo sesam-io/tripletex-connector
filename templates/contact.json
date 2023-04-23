@@ -51,15 +51,15 @@
                 ]
               ]
             ],
-            ["remove","changes"]
+            ["add","changes",["filter",["eq", "_.changeType", "CREATE"], "_S.changes"]]
           ],
           "last-modified": [
             [
               "filter",
               [
-                "eq",
+                "in",
                 "_S.changeType",
-                "UPDATE"
+                ["list", "UPDATE", "CREATE"]
               ]
             ],
             [
@@ -146,21 +146,22 @@
               [
                 "apply",
                 "last-modified",
-                "_T.changes"
+                "_S.changes"
               ]
             ]
-          ]
+          ],
+          ["add","changes",["filter",["eq", "_.changeType", "CREATE"], "_S.changes"]]
         ],
         "last-modified": [
           [
             "filter",
             [
-              "eq",
+              "in",
               "_S.changeType",
-              "UPDATE"
+              ["list", "UPDATE", "CREATE"]
             ]
           ],
-          [
+         [
             "add",
             "$last-modified",
             [
@@ -177,6 +178,7 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-registerwebhook",
+    "comment": "WARNING! This pipe is generated from the template of the 'customer' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "source": {
       "entities": [
@@ -185,7 +187,7 @@
           "_updated": 0,
           "properties": {
             "event": "{{@ datatype @}}.create",
-            "targetUrl": "$ENV(service_url)/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
           }
         },
         {
@@ -193,7 +195,7 @@
           "_updated": 1,
           "properties": {
             "event": "{{@ datatype @}}.update",
-            "targetUrl": "$ENV(service_url)/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
           }
         },
         {
@@ -201,7 +203,7 @@
           "_updated": 2,
           "properties": {
             "event": "{{@ datatype @}}.delete",
-            "targetUrl": "$ENV(service_url)/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
           }
         }
       ],
@@ -230,82 +232,19 @@
       "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
       "type": "dataset"
     },
-    "transform": [
-      {
-        "rules": {
-          "default": [
-            [
-              "copy",
-              "*"
-            ],
-            [
-              "comment",
-              "wrapping payload in a list for updates"
-            ],
-            [
-              "if",
-              [
-                "is-not-null",
-                "_S.id"
-              ],
-              [
-                "add",
-                "$payload",
-                [
-                  "list",
-                  [
-                    "map-dict",
-                    [
-                      "filter",
-                      [
-                        "and",
-                        [
-                          "neq",
-                          "$",
-                          [
-                            "substring",
-                            0,
-                            1,
-                            "_."
-                          ]
-                        ],
-                        [
-                          "neq",
-                          "_",
-                          [
-                            "substring",
-                            0,
-                            1,
-                            "_."
-                          ]
-                        ]
-                      ],
-                      "_."
-                    ],
-                    "_.",
-                    "_S."
-                  ]
-                ]
-              ]
-            ]
-          ]
-        },
-        "type": "dtl"
+    "transform": {
+      "properties": {
+        "operation_delete": "{{@ datatype @}}-delete",
+        "operation_insert": "{{@ datatype @}}-insert",
+        "operation_lookup": "{{@ datatype @}}-lookup",
+        "operation_update": "{{@ datatype @}}-update",
+        "primary_key": "id",
+        "rest_system": "{{@ system @}}",
+        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
       },
-      {
-        "properties": {
-          "operation_delete": "{{@ datatype @}}-delete",
-          "operation_insert": "{{@ datatype @}}-insert",
-          "operation_lookup": "{{@ datatype @}}-lookup",
-          "operation_update": "{{@ datatype @}}-update",
-          "primary_key": "id",
-          "rest_system": "{{@ system @}}",
-          "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
-        },
-        "template": "transform-share-rest",
-        "type": "template"
-      }
-    ],
+      "template": "transform-share-rest",
+      "type": "template"
+    },
     "type": "pipe"
   }
 ]

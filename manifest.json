@@ -6,58 +6,87 @@
   "auth": "api_key",
   "auth_variant": "tripletex",
   "datatypes": {
-    "activity": {
-      "template": "templates/customer.json"
-    },
     "address": {
-      "template": "templates/customer.json"
+      "label": "Address",
+      "template": "templates/customercategory.json"
     },
     "contact": {
-      "template": "templates/customer.json"
+      "label": "Contact",
+      "template": "templates/contact.json"
     },
     "country": {
-      "template": "templates/customer.json"
+      "label": "Country",
+      "template": "templates/country.json"
     },
     "currency": {
-      "template": "templates/customer.json"
+      "label": "Currency",
+      "template": "templates/currency.json"
     },
     "customer": {
+      "label": "Customer",
       "template": "templates/customer.json"
+    },
+    "customercategory": {
+      "label": "Customer Category",
+      "template": "templates/customercategory.json"
     },
     "department": {
-      "template": "templates/customer.json"
+      "label": "Department",
+      "template": "templates/contact.json"
     },
     "employee": {
-      "template": "templates/customer.json"
+      "label": "Employee",
+      "template": "templates/contact.json"
     },
     "invoice": {
-      "template": "templates/order.json"
+      "label": "Invoice",
+      "template": "templates/invoice.json"
     },
     "order": {
-      "template": "templates/order.json"
+      "label": "Order",
+      "template": "templates/contact.json"
     },
     "orderline": {
+      "label": "Order Line",
       "template": "templates/orderline.json"
     },
     "product": {
-      "template": "templates/customer.json"
+      "label": "Product",
+      "template": "templates/contact.json"
     },
     "productgroup": {
-      "template": "templates/productgroup.json"
+      "label": "Product Group",
+      "template": "templates/customercategory.json"
     },
     "productgrouprelation": {
-      "template": "templates/productgrouprelation.json"
+      "label": "Product Group Relation",
+      "template": "templates/customercategory.json"
+    },
+    "productunit": {
+      "label": "Product Unit",
+      "template": "templates/customercategory.json"
     },
     "project": {
-      "template": "templates/customer.json"
+      "label": "Project",
+      "template": "templates/contact.json"
     },
     "projectcategory": {
-      "template": "templates/projectcategory.json"
+      "label": "Project Category",
+      "template": "templates/customercategory.json"
+    },
+    "supplier": {
+      "label": "Supplier",
+      "template": "templates/contact.json"
     },
     "vattype": {
-      "template": "templates/vattype.json"
+      "label": "VAT Type",
+      "template": "templates/country.json"
+    },
+    "webhook": {
+      "template": "templates/webhook.json"
     }
   },
   "requires_service_api_access": true,
-  "system-template": "templates/system.json"
+  "system-template": "templates/system.json",
+  "use_webhook_secret": true
 }

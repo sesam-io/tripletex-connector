@@ -4,6 +4,11 @@
     "namespaced_identifiers": false,
     "source": {
       "operation": "{{@ datatype @}}-list",
+      "properties": {
+        "DateFrom": "1970-01-01",
+        "DateTo": "2999-01-01",
+        "datatype": "{{@ datatype @}}"
+      },
       "system": "{{@ system @}}",
       "type": "rest"
     },
@@ -11,10 +16,6 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-collect",
-    "exclude_completeness": [
-      "{{@ system @}}-{{@ datatype @}}-event2",
-      "{{@ system @}}-{{@ datatype @}}-share"
-    ],
     "namespaced_identifiers": false,
     "source": {
       "datasets": [
@@ -24,14 +25,6 @@
       "type": "merge_datasets"
     },
     "transform": [
-      {
-        "properties": {
-          "primary_key": "id",
-          "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
-        },
-        "template": "transform-collect-rest",
-        "type": "template"
-      },
       {
         "rules": {
           "default": [
@@ -51,18 +44,18 @@
                 ]
               ]
             ],
-            ["remove","changes"]
+            ["add","changes",["filter",["eq", "_.changeType", "CREATE"], "_S.changes"]]
           ],
           "last-modified": [
             [
               "filter",
               [
-                "eq",
+                "in",
                 "_S.changeType",
-                "UPDATE"
+                ["list", "UPDATE", "CREATE"]
               ]
             ],
-            [
+             [
               "add",
               "$last-modified",
               [
@@ -146,21 +139,22 @@
               [
                 "apply",
                 "last-modified",
-                "_T.changes"
+                "_S.changes"
               ]
             ]
-          ]
+          ],
+          ["add","changes",["filter",["eq", "_.changeType", "CREATE"], "_S.changes"]]
         ],
         "last-modified": [
           [
             "filter",
             [
-              "eq",
+              "in",
               "_S.changeType",
-              "UPDATE"
+              ["list", "UPDATE", "CREATE"]
             ]
           ],
-          [
+         [
             "add",
             "$last-modified",
             [
@@ -177,31 +171,16 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-registerwebhook",
+    "comment": "Can't use the same template as customer, as the webhooks for {{@ datatype @}}s are different",
     "namespaced_identifiers": false,
     "source": {
       "entities": [
         {
-          "_id": "{{@ datatype @}}-create",
+          "_id": "{{@ datatype @}}-charged",
           "_updated": 0,
           "properties": {
-            "event": "{{@ datatype @}}.create",
-            "targetUrl": "$ENV(service_url)/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
-          }
-        },
-        {
-          "_id": "{{@ datatype @}}-update",
-          "_updated": 1,
-          "properties": {
-            "event": "{{@ datatype @}}.update",
-            "targetUrl": "$ENV(service_url)/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
-          }
-        },
-        {
-          "_id": "{{@ datatype @}}-delete",
-          "_updated": 2,
-          "properties": {
-            "event": "{{@ datatype @}}.delete",
-            "targetUrl": "$ENV(service_url)/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
+            "event": "{{@ datatype @}}.charged",
+            "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
           }
         }
       ],
@@ -216,96 +195,6 @@
       "system": "{{@ system @}}",
       "type": "rest"
     },
-    "type": "pipe"
-  },
-  {
-    "_id": "{{@ system @}}-{{@ datatype @}}-share",
-    "batch_size": 1,
-    "namespaced_identifiers": false,
-    "sink": {
-      "deletion_tracking": false,
-      "set_initial_offset": "onload"
-    },
-    "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
-      "type": "dataset"
-    },
-    "transform": [
-      {
-        "rules": {
-          "default": [
-            [
-              "copy",
-              "*"
-            ],
-            [
-              "comment",
-              "wrapping payload in a list for updates"
-            ],
-            [
-              "if",
-              [
-                "is-not-null",
-                "_S.id"
-              ],
-              [
-                "add",
-                "$payload",
-                [
-                  "list",
-                  [
-                    "map-dict",
-                    [
-                      "filter",
-                      [
-                        "and",
-                        [
-                          "neq",
-                          "$",
-                          [
-                            "substring",
-                            0,
-                            1,
-                            "_."
-                          ]
-                        ],
-                        [
-                          "neq",
-                          "_",
-                          [
-                            "substring",
-                            0,
-                            1,
-                            "_."
-                          ]
-                        ]
-                      ],
-                      "_."
-                    ],
-                    "_.",
-                    "_S."
-                  ]
-                ]
-              ]
-            ]
-          ]
-        },
-        "type": "dtl"
-      },
-      {
-        "properties": {
-          "operation_delete": "{{@ datatype @}}-delete",
-          "operation_insert": "{{@ datatype @}}-insert",
-          "operation_lookup": "{{@ datatype @}}-lookup",
-          "operation_update": "{{@ datatype @}}-update",
-          "primary_key": "id",
-          "rest_system": "{{@ system @}}",
-          "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
-        },
-        "template": "transform-share-rest",
-        "type": "template"
-      }
-    ],
     "type": "pipe"
   }
 ]
