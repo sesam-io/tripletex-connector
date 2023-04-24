@@ -36,7 +36,7 @@
     },
     "employee": {
       "label": "Employee",
-      "template": "templates/contact.json"
+      "template": "templates/employee.json"
     },
     "invoice": {
       "label": "Invoice",
