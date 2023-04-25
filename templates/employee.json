@@ -277,7 +277,7 @@
               [
                 "and",
                 [
-                  "is-not-empty",
+                  "is-empty",
                   "_S.id"
                 ],
                 [
