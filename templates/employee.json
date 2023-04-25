@@ -278,7 +278,7 @@
                 "and",
                 [
                   "is-not-empty",
-                  "_S.$origin"
+                  "_S.id"
                 ],
                 [
                   "is-empty",
