@@ -243,7 +243,7 @@
             ],
             [
               "comment",
-              "wrapping payload in a list for updates, but discarding update entities with null values for any address id"
+              "wrapping payload in a list for updates, but discarding update entities with null values for any address id (IS-14660)"
             ],
             [
               "if",
