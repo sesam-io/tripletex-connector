@@ -88,6 +88,17 @@
       "time_threshold_hours": 168
     },
     "namespaced_identifiers": false,
+    "permissions": [
+      [
+        "allow",
+        [
+          "group:Anonymous"
+        ],
+        [
+          "write_data"
+        ]
+      ]
+    ],
     "source": {
       "type": "http_endpoint"
     },
@@ -272,18 +283,6 @@
                     [
                       "has-key",
                       "id",
-                      "_S.deliveryAddress"
-                    ],
-                    [
-                      "is-null",
-                      "_S.deliveryAddress.id"
-                    ]
-                  ],
-                  [
-                    "and",
-                    [
-                      "has-key",
-                      "id",
                       "_S.postalAddress"
                     ],
                     [
@@ -333,6 +332,34 @@
                       "_S."
                     ]
                   ]
+                ]
+              ]
+            ],
+            [
+              "comment",
+              "Checking for whether address are null and if so discarding the entity. (IS-14723) "
+            ],
+            [
+              "if",
+              [
+                "is-not-null",
+                "_S.id"
+              ],
+              [
+                "if",
+                [
+                  "and",
+                  [
+                    "is-null",
+                    "_S.physicalAddress.id"
+                  ],
+                  [
+                    "is-null",
+                    "_S.postalAddress.id"
+                  ]
+                ],
+                [
+                  "discard"
                 ]
               ]
             ]
