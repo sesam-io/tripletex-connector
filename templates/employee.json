@@ -130,6 +130,9 @@
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-event2",
     "namespaced_identifiers": false,
+    "sink": {
+      "set_initial_offset": "onload"
+    },
     "source": {
       "dataset": "{{@ system @}}-{{@ datatype @}}-event",
       "type": "dataset"
