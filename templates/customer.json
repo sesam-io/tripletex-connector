@@ -272,18 +272,6 @@
                     [
                       "has-key",
                       "id",
-                      "_S.deliveryAddress"
-                    ],
-                    [
-                      "is-null",
-                      "_S.deliveryAddress.id"
-                    ]
-                  ],
-                  [
-                    "and",
-                    [
-                      "has-key",
-                      "id",
                       "_S.postalAddress"
                     ],
                     [
@@ -333,6 +321,34 @@
                       "_S."
                     ]
                   ]
+                ]
+              ]
+            ],
+            [
+              "comment",
+              "Checking for whether address are null and if so discarding the entity. (IS-14723) "
+            ],
+            [
+              "if",
+              [
+                "is-not-null",
+                "_S.id"
+              ],
+              [
+                "if",
+                [
+                  "and",
+                  [
+                    "is-null",
+                    "_S.physicalAddress"
+                  ],
+                  [
+                    "is-null",
+                    "_S.postalAddress"
+                  ]
+                ],
+                [
+                  "discard"
                 ]
               ]
             ]
