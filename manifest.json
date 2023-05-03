@@ -32,7 +32,7 @@
     },
     "department": {
       "label": "Department",
-      "template": "templates/contact.json"
+      "template": "templates/department.json"
     },
     "employee": {
       "label": "Employee",
