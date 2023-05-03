@@ -351,11 +351,11 @@
                   "and",
                   [
                     "is-null",
-                    "_S.physicalAddress.id"
+                    "_S.physicalAddress"
                   ],
                   [
                     "is-null",
-                    "_S.postalAddress.id"
+                    "_S.postalAddress"
                   ]
                 ],
                 [
