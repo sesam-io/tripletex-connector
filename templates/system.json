@@ -479,6 +479,11 @@
       "payload_property": "value",
       "url": "ledger/vatType/{{ entity.id }}?fields=*,changes"
     },
+    "webhook-delete": {
+      "method": "DELETE",
+      "payload-type": "json",
+      "url": "event/subscription/{{ entity['id'] }}"
+    },
     "webhook-insert": {
       "method": "POST",
       "payload": {
@@ -497,11 +502,16 @@
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
       "url": "event/subscription"
+    },
+    "webhook-lookup": {
+      "method": "GET",
+      "payload-type": "json",
+      "url": "event/subscription/{{ entity['id'] }}"
     }
   },
-  "rate_limiting_retries": 3,
-  "rate_limiting_delay": 60,
   "password": "$SECRET(sessionToken)",
+  "rate_limiting_delay": 60,
+  "rate_limiting_retries": 3,
   "type": "system:rest",
   "url_pattern": "{{@ base_url @}}/v2/%s",
   "username": "0",
