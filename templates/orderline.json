@@ -199,6 +199,10 @@
         "rules": {
           "default": [
             [
+              "comment",
+              "adding below dtl to remove order.id for updates. ref. (IS-14784)"
+            ],
+            [
               "copy",
               "*"
             ],
