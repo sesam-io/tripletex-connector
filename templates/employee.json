@@ -342,7 +342,7 @@
       },
       {
         "allowed_status_codes": "200,201",
-        "operation": "{{@ datatype @}}-webhook-insert",
+        "operation": "webhook-insert",
         "replace_entity": false,
         "response_property": "insert_response",
         "response_status_property": "insert_status_code",
