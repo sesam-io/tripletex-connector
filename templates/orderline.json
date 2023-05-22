@@ -203,7 +203,6 @@
               "adding below dtl to remove order.id for updates. ref. (IS-14784)"
             ],
             [
-              "comment",
               "copy",
               "*"
             ],
@@ -226,18 +225,12 @@
                 ]
               ],
               [
+                "add",
+                "$payload",
                 [
-                  "comment",
-                  "IS-14784"
-                ],
-                [
-                  "add",
-                  "$payload",
-                  [
-                    "apply",
-                    "update-payload",
-                    "_S."
-                  ]
+                  "apply",
+                  "update-payload",
+                  "_S."
                 ]
               ],
               [
