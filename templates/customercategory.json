@@ -38,7 +38,19 @@
                 ]
               ]
             ],
-            ["add","changes",["filter",["eq", "_.changeType", "CREATE"], "_S.changes"]]
+            [
+              "add",
+              "changes",
+              [
+                "filter",
+                [
+                  "eq",
+                  "_.changeType",
+                  "CREATE"
+                ],
+                "_S.changes"
+              ]
+            ]
           ],
           "last-modified": [
             [
@@ -46,10 +58,14 @@
               [
                 "in",
                 "_S.changeType",
-                ["list", "UPDATE", "CREATE"]
+                [
+                  "list",
+                  "UPDATE",
+                  "CREATE"
+                ]
               ]
             ],
-             [
+            [
               "add",
               "$last-modified",
               [
