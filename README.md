@@ -5,7 +5,7 @@ A Sesam connector for Tripletex
 
 The following varibles need to be configured:
 
-`base_url` and `token` (used by the special tripletexlogin.py in connector-cli), see https://developer.tripletex.no/docs/documentation/getting-started/1-creating-a-test-account/
+`base_url` and `token` (used by the special tripletexlogin.py in connector-cli - only if refreshing tokens in connector deployer), see https://developer.tripletex.no/docs/documentation/getting-started/1-creating-a-test-account/
 
 ## Setting up Webhooks
 
