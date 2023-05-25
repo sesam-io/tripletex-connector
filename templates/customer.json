@@ -191,6 +191,7 @@
           "_updated": 0,
           "properties": {
             "event": "{{@ datatype @}}.create",
+            "fields": "*,changes,postalAddress(*),physicalAddress(*),deliveryAddress(*)",
             "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
           }
         },
@@ -199,6 +200,7 @@
           "_updated": 1,
           "properties": {
             "event": "{{@ datatype @}}.update",
+            "fields": "*,changes,postalAddress(*),physicalAddress(*),deliveryAddress(*)",
             "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
           }
         },
@@ -207,6 +209,7 @@
           "_updated": 2,
           "properties": {
             "event": "{{@ datatype @}}.delete",
+            "fields": "*,changes,postalAddress(*),physicalAddress(*),deliveryAddress(*)",
             "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
           }
         }

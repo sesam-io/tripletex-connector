@@ -219,6 +219,7 @@
           "_updated": 0,
           "properties": {
             "event": "{{@ datatype @}}.charged",
+            "fields": "*,changes",
             "targetUrl": "{{@ service_url @}}/receivers/{{@ system @}}-{{@ datatype @}}-event/entities"
           }
         }
