@@ -495,6 +495,7 @@
         "authHeaderName": "Authorization",
         "authHeaderValue": "Bearer $SECRET(service_jwt)",
         "event": "{{ properties.event }}",
+        "fields": "{{ properties.fields }}",
         "targetUrl": "{{ properties.targetUrl }}"
       },
       "payload-type": "json",
