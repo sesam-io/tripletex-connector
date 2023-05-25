@@ -51,7 +51,10 @@
                 ]
               ]
             ],
-            ["remove","changes"]
+            [
+              "remove",
+              "changes"
+            ]
           ],
           "last-modified": [
             [
@@ -114,6 +117,9 @@
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-event2",
     "namespaced_identifiers": false,
+    "sink": {
+      "set_initial_offset": "onload"
+    },
     "source": {
       "dataset": "{{@ system @}}-{{@ datatype @}}-event",
       "type": "dataset"
@@ -240,7 +246,7 @@
             ],
             [
               "comment",
-              "wrapping payload in a list for updates"
+              "wrapping payload in a list for updates, but discarding update entities with null values for any address id (IS-14660)"
             ],
             [
               "if",
@@ -249,42 +255,103 @@
                 "_S.id"
               ],
               [
-                "add",
-                "$payload",
+                "if",
                 [
-                  "list",
+                  "or",
                   [
-                    "map-dict",
+                    "and",
                     [
-                      "filter",
+                      "has-key",
+                      "id",
+                      "_S.physicalAddress"
+                    ],
+                    [
+                      "is-null",
+                      "_S.physicalAddress.id"
+                    ]
+                  ],
+                  [
+                    "and",
+                    [
+                      "has-key",
+                      "id",
+                      "_S.postalAddress"
+                    ],
+                    [
+                      "is-null",
+                      "_S.postalAddress.id"
+                    ]
+                  ]
+                ],
+                [
+                  "discard"
+                ],
+                [
+                  "add",
+                  "$payload",
+                  [
+                    "list",
+                    [
+                      "map-dict",
                       [
-                        "and",
+                        "filter",
                         [
-                          "neq",
-                          "$",
+                          "and",
                           [
-                            "substring",
-                            0,
-                            1,
-                            "_."
+                            "neq",
+                            "$",
+                            [
+                              "substring",
+                              0,
+                              1,
+                              "_."
+                            ]
+                          ],
+                          [
+                            "neq",
+                            "_",
+                            [
+                              "substring",
+                              0,
+                              1,
+                              "_."
+                            ]
                           ]
                         ],
-                        [
-                          "neq",
-                          "_",
-                          [
-                            "substring",
-                            0,
-                            1,
-                            "_."
-                          ]
-                        ]
+                        "_."
                       ],
-                      "_."
-                    ],
-                    "_.",
-                    "_S."
+                      "_.",
+                      "_S."
+                    ]
                   ]
+                ]
+              ]
+            ],
+            [
+              "comment",
+              "Checking for whether address are null and if so discarding the entity. (IS-14723) "
+            ],
+            [
+              "if",
+              [
+                "is-not-null",
+                "_S.id"
+              ],
+              [
+                "if",
+                [
+                  "and",
+                  [
+                    "is-null",
+                    "_S.physicalAddress"
+                  ],
+                  [
+                    "is-null",
+                    "_S.postalAddress"
+                  ]
+                ],
+                [
+                  "discard"
                 ]
               ]
             ]

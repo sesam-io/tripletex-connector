@@ -1,29 +1,67 @@
 [
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-share",
-    "batch_size": 1,
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
     "namespaced_identifiers": false,
-    "sink": {
-      "deletion_tracking": false,
-      "set_initial_offset": "onload"
-    },
     "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
+      "dataset": "{{@ system @}}-order-collect",
       "type": "dataset"
     },
-    "transform": {
-      "properties": {
-        "operation_delete": "{{@ datatype @}}-delete",
-        "operation_insert": "{{@ datatype @}}-insert",
-        "operation_lookup": "{{@ datatype @}}-lookup",
-        "operation_update": "{{@ datatype @}}-update",
-        "primary_key": "id",
-        "rest_system": "{{@ system @}}",
-        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
-      },
-      "template": "transform-share-rest",
-      "type": "template"
+    "transform": [
+      {
+        "rules": {
+          "create_rows": [
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ],
+            [
+              "add",
+              "id",
+              "_S.id"
+            ],
+            [
+              "add",
+              "$original_id",
+              "_R._S._id"
+            ],
+            [
+              "add",
+              "version",
+              "_P._S.version"
+            ]
+          ],
+          "default": [
+            [
+              "create-child",
+              [
+                "apply",
+                "create_rows",
+                "_S.orderLines"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all2",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all",
+      "type": "dataset"
     },
+    "transform": [
+      {
+        "type": "emit_children"
+      }
+    ],
     "type": "pipe"
   },
   {
@@ -93,7 +131,19 @@
                 ]
               ]
             ],
-            ["add","changes",["filter",["eq", "_.changeType", "CREATE"], "_S.changes"]]
+            [
+              "add",
+              "changes",
+              [
+                "filter",
+                [
+                  "eq",
+                  "_.changeType",
+                  "CREATE"
+                ],
+                "_S.changes"
+              ]
+            ]
           ],
           "last-modified": [
             [
@@ -101,10 +151,14 @@
               [
                 "in",
                 "_S.changeType",
-                ["list", "UPDATE", "CREATE"]
+                [
+                  "list",
+                  "UPDATE",
+                  "CREATE"
+                ]
               ]
             ],
-             [
+            [
               "add",
               "$last-modified",
               [
@@ -129,66 +183,164 @@
     "type": "pipe"
   },
   {
-    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "_id": "{{@ system @}}-{{@ datatype @}}-share",
+    "batch_size": 1,
     "namespaced_identifiers": false,
+    "sink": {
+      "deletion_tracking": false,
+      "set_initial_offset": "onload"
+    },
     "source": {
-      "dataset": "{{@ system @}}-order-collect",
+      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
       "type": "dataset"
     },
     "transform": [
       {
         "rules": {
-          "create_rows": [
-            [
-              "add",
-              "_id",
-              [
-                "string",
-                "_S.id"
-              ]
-            ],
-            [
-              "add",
-              "id",
-              "_S.id"
-            ],
-            [
-              "add",
-              "$original_id",
-              "_R._S._id"
-            ],
-            [
-              "add",
-              "version",
-              "_P._S.version"
-            ]
-          ],
           "default": [
             [
-              "create-child",
+              "comment",
+              "adding below dtl to remove order.id for updates. ref. (IS-14784)"
+            ],
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "if",
               [
-                "apply",
-                "create_rows",
-                "_S.orderLines"
+                "and",
+                [
+                  "neq",
+                  "_S._deleted",
+                  true
+                ],
+                [
+                  "is-not-null",
+                  "_S.id"
+                ],
+                [
+                  "is-not-null",
+                  "_S.order"
+                ]
+              ],
+              [
+                "add",
+                "$payload",
+                [
+                  "apply",
+                  "update-payload",
+                  "_S."
+                ]
+              ],
+              [
+                "add",
+                "$payload",
+                [
+                  "apply",
+                  "insert-payload",
+                  "_S."
+                ]
+              ]
+            ]
+          ],
+          "insert-payload": [
+            [
+              "merge",
+              [
+                "dict",
+                [
+                  "filter",
+                  [
+                    "not",
+                    [
+                      "or",
+                      [
+                        "matches",
+                        "_*",
+                        [
+                          "first",
+                          "_."
+                        ]
+                      ],
+                      [
+                        "matches",
+                        "$*",
+                        [
+                          "first",
+                          "_."
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    "items",
+                    "_S."
+                  ]
+                ]
+              ]
+            ]
+          ],
+          "update-payload": [
+            [
+              "merge",
+              [
+                "dict",
+                [
+                  "filter",
+                  [
+                    "not",
+                    [
+                      "or",
+                      [
+                        "matches",
+                        "_*",
+                        [
+                          "first",
+                          "_."
+                        ]
+                      ],
+                      [
+                        "matches",
+                        "$*",
+                        [
+                          "first",
+                          "_."
+                        ]
+                      ],
+                      [
+                        "eq",
+                        "order",
+                        [
+                          "first",
+                          "_."
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    "items",
+                    "_S."
+                  ]
+                ]
               ]
             ]
           ]
         },
         "type": "dtl"
-      }
-    ],
-    "type": "pipe"
-  },
-  {
-    "_id": "{{@ system @}}-{{@ datatype @}}-all2",
-    "namespaced_identifiers": false,
-    "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-all",
-      "type": "dataset"
-    },
-    "transform": [
+      },
       {
-        "type": "emit_children"
+        "properties": {
+          "operation_delete": "{{@ datatype @}}-delete",
+          "operation_insert": "{{@ datatype @}}-insert",
+          "operation_lookup": "{{@ datatype @}}-lookup",
+          "operation_update": "{{@ datatype @}}-update",
+          "primary_key": "id",
+          "rest_system": "{{@ system @}}",
+          "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
+        },
+        "template": "transform-share-rest",
+        "type": "template"
       }
     ],
     "type": "pipe"

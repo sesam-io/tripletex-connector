@@ -8,7 +8,7 @@
   "datatypes": {
     "address": {
       "label": "Address",
-      "template": "templates/customercategory.json"
+      "template": "templates/country.json"
     },
     "contact": {
       "label": "Contact",
@@ -32,11 +32,11 @@
     },
     "department": {
       "label": "Department",
-      "template": "templates/contact.json"
+      "template": "templates/department.json"
     },
     "employee": {
       "label": "Employee",
-      "template": "templates/contact.json"
+      "template": "templates/employee.json"
     },
     "invoice": {
       "label": "Invoice",
@@ -76,7 +76,7 @@
     },
     "supplier": {
       "label": "Supplier",
-      "template": "templates/contact.json"
+      "template": "templates/supplier.json"
     },
     "vattype": {
       "label": "VAT Type",
