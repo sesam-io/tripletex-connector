@@ -1,2 +1,4 @@
 .expanded
 .DS_Store
+.syncconfig
+.authconfig
