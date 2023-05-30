@@ -44,7 +44,7 @@
     },
     "order": {
       "label": "Order",
-      "template": "templates/contact.json"
+      "template": "templates/order.json"
     },
     "orderline": {
       "label": "Order Line",
