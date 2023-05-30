@@ -3,7 +3,7 @@ A Sesam connector for Tripletex
 
 # How to test
 
-The following varibles need to be configured:
+Add the following variables to an ``.authconfig`` file at the root:
 
 `base_url` and `token` (used by the special tripletexlogin.py in connector-cli), see https://developer.tripletex.no/docs/documentation/getting-started/1-creating-a-test-account/
 
