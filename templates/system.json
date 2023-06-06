@@ -134,7 +134,7 @@
       "next_page_link": "{{@ base_url @}}/v2/department?from={{ body.from + body.count }}",
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "department?fields=*,changes"
+      "url": "department?fields=*"
     },
     "department-lookup": {
       "method": "GET",
