@@ -1,11 +1,6 @@
 {
   "_id": "{{@ system @}}",
   "authentication": "tripletex",
-  "tripletex": {
-    "consumer_token": "$SECRET(consumer_token)",
-    "employee_token": "$SECRET(employee_token)",
-    "token_url": "{{@ base_url @}}/v2/token/session/:create"
-  },
   "operations": {
     "address-list": {
       "id_expression": "{{ id }}",
@@ -168,12 +163,12 @@
       "next_page_link": "{{@ base_url @}}/v2/employee?from={{ body.from + body.count }}",
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "employee?fields=*,changes,address(*),"
+      "url": "employee?fields=*,changes,address(*)"
     },
     "employee-lookup": {
       "method": "GET",
       "payload_property": "value",
-      "url": "employee/{{ entity.id }}?fields=*,changes"
+      "url": "employee/{{ entity.id }}?fields=*,changes,address(*)"
     },
     "employee-update": {
       "method": "PUT",
@@ -517,6 +512,11 @@
   },
   "rate_limiting_delay": 60,
   "rate_limiting_retries": 3,
+  "tripletex": {
+    "consumer_token": "$SECRET(consumer_token)",
+    "employee_token": "$SECRET(employee_token)",
+    "token_url": "{{@ base_url @}}/v2/token/session/:create"
+  },
   "type": "system:rest",
   "url_pattern": "{{@ base_url @}}/v2/%s",
   "verify_ssl": true
