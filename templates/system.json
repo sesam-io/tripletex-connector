@@ -168,12 +168,12 @@
       "next_page_link": "{{@ base_url @}}/v2/employee?from={{ body.from + body.count }}",
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "employee?fields=*,changes,address(*),"
+      "url": "employee?fields=*,changes,address(*)"
     },
     "employee-lookup": {
       "method": "GET",
       "payload_property": "value",
-      "url": "employee/{{ entity.id }}?fields=*,changes"
+      "url": "employee/{{ entity.id }}?fields=*,changes,address(*)"
     },
     "employee-update": {
       "method": "PUT",
