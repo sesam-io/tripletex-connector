@@ -256,6 +256,10 @@
         "rules": {
           "default": [
             [
+              "copy",
+              "properties"
+            ],
+            [
               "add",
               "id",
               [
