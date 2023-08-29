@@ -165,7 +165,7 @@
               [
                 "apply",
                 "last-modified",
-                "_S.changes"
+                "_S.value.changes"
               ]
             ]
           ],
@@ -179,7 +179,7 @@
                 "_.changeType",
                 "CREATE"
               ],
-              "_S.changes"
+              "_S.value.changes"
             ]
           ]
         ],
@@ -374,14 +374,14 @@
     },
     "transform": {
       "properties": {
+        "insert_allowed_status_codes": "100-501,504-599",
         "operation_delete": "{{@ datatype @}}-delete",
         "operation_insert": "{{@ datatype @}}-insert",
         "operation_lookup": "{{@ datatype @}}-lookup",
         "operation_update": "{{@ datatype @}}-update",
         "primary_key": "id",
         "rest_system": "{{@ system @}}",
-        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share",
-        "insert_allowed_status_codes": "100-501,504-599"
+        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
       },
       "template": "transform-share-rest",
       "type": "template"

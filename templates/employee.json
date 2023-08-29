@@ -165,7 +165,7 @@
               [
                 "apply",
                 "last-modified",
-                "_S.changes"
+                "_S.value.changes"
               ]
             ]
           ],
@@ -179,7 +179,7 @@
                 "_.changeType",
                 "CREATE"
               ],
-              "_S.changes"
+              "_S.value.changes"
             ]
           ]
         ],
