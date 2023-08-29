@@ -94,6 +94,17 @@
       "time_threshold_hours": 168
     },
     "namespaced_identifiers": false,
+    "permissions": [
+      [
+        "allow",
+        [
+          "group:Anonymous"
+        ],
+        [
+          "write_data"
+        ]
+      ]
+    ],
     "source": {
       "type": "http_endpoint"
     },
@@ -158,7 +169,7 @@
               [
                 "apply",
                 "last-modified",
-                "_S.changes"
+                "_S.value.changes"
               ]
             ]
           ],
@@ -172,7 +183,7 @@
                 "_.changeType",
                 "CREATE"
               ],
-              "_S.changes"
+              "_S.value.changes"
             ]
           ]
         ],
