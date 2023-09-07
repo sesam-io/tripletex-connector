@@ -17,9 +17,6 @@
       "{{@ system @}}-{{@ datatype @}}-share"
     ],
     "namespaced_identifiers": false,
-    "sink": {
-      "circuit_breaker_threshold_count": 5
-    },
     "source": {
       "datasets": [
         "{{@ system @}}-{{@ datatype @}}-all",
