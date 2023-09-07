@@ -26,8 +26,17 @@
           ]
         ],
         [
-          "remove",
-          "changes"
+          "add",
+          "changes",
+          [
+            "filter",
+            [
+              "eq",
+              "_.changeType",
+              "CREATE"
+            ],
+            "_S.changes"
+          ]
         ]
       ],
       "last-modified": [
