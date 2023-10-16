@@ -7,34 +7,42 @@
   "auth_variant": "tripletex",
   "datatypes": {
     "address": {
+      "sync_frequency": "slow",
       "label": "Address",
       "template": "templates/country.json"
     },
     "contact": {
+      "schedule_interval": 14400,
       "label": "Contact",
       "template": "templates/contact.json"
     },
     "country": {
+      "sync_frequency": "slow",
       "label": "Country",
       "template": "templates/country.json"
     },
     "currency": {
+      "sync_frequency": "slow",
       "label": "Currency",
       "template": "templates/currency.json"
     },
     "customer": {
+      "schedule_interval": 14400,
       "label": "Customer",
       "template": "templates/customer.json"
     },
     "customercategory": {
+      "sync_frequency": "slow",
       "label": "Customer Category",
       "template": "templates/customercategory.json"
     },
     "department": {
+      "sync_frequency": "slow",
       "label": "Department",
       "template": "templates/department.json"
     },
     "employee": {
+      "sync_frequency": "slow",
       "label": "Employee",
       "template": "templates/employee.json"
     },
@@ -43,6 +51,7 @@
       "template": "templates/invoice.json"
     },
     "order": {
+      "schedule_interval": 14400,
       "label": "Order",
       "template": "templates/order.json"
     },
@@ -51,34 +60,42 @@
       "template": "templates/orderline.json"
     },
     "product": {
+      "schedule_interval": 14400,
       "label": "Product",
       "template": "templates/contact.json"
     },
     "productgroup": {
+      "sync_frequency": "slow",
       "label": "Product Group",
       "template": "templates/customercategory.json"
     },
     "productgrouprelation": {
+      "sync_frequency": "slow",
       "label": "Product Group Relation",
       "template": "templates/customercategory.json"
     },
     "productunit": {
+      "sync_frequency": "slow",
       "label": "Product Unit",
       "template": "templates/customercategory.json"
     },
     "project": {
+      "schedule_interval": 14400,
       "label": "Project",
       "template": "templates/contact.json"
     },
     "projectcategory": {
+      "sync_frequency": "slow",
       "label": "Project Category",
       "template": "templates/customercategory.json"
     },
     "supplier": {
+      "schedule_interval": 14400,
       "label": "Supplier",
       "template": "templates/supplier.json"
     },
     "vattype": {
+      "sync_frequency": "slow",
       "label": "VAT Type",
       "template": "templates/country.json"
     },
