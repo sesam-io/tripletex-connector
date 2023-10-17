@@ -97,6 +97,7 @@
       {
         "operation": "{{@ datatype @}}-lookup",
         "replace_entity": true,
+        "side_effects": false,
         "system": "{{@ system @}}",
         "type": "rest"
       },
@@ -118,6 +119,54 @@
             [
               "merge",
               "_S.value"
+            ],
+            [
+              "merge",
+              [
+                "max",
+                "_.",
+                [
+                  "apply",
+                  "last-modified",
+                  "_S.value.changes"
+                ]
+              ]
+            ],
+            [
+              "add",
+              "changes",
+              [
+                "filter",
+                [
+                  "eq",
+                  "_.changeType",
+                  "CREATE"
+                ],
+                "_S.value.changes"
+              ]
+            ]
+          ],
+          "last-modified": [
+            [
+              "filter",
+              [
+                "in",
+                "_S.changeType",
+                [
+                  "list",
+                  "UPDATE",
+                  "CREATE"
+                ]
+              ]
+            ],
+            [
+              "add",
+              "$last-modified",
+              [
+                "datetime-parse",
+                "%Y-%m-%dT%H:%M:%S%z",
+                "_S.timestamp"
+              ]
             ]
           ]
         },
