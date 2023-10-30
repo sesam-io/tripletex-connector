@@ -1,7 +1,6 @@
 [
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-all",
-    "comment": "WARNING! This pipe is generated from the template of the 'contact' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "source": {
       "operation": "{{@ datatype @}}-list",
@@ -97,7 +96,6 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-event",
-    "comment": "WARNING! This pipe is generated from the template of the 'contact' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "compaction": {
       "keep_versions": 0,
       "time_threshold_hours": 168
@@ -131,7 +129,6 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-event2",
-    "comment": "WARNING! This pipe is generated from the template of the 'contact' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "sink": {
       "set_initial_offset": "onload"
@@ -216,7 +213,6 @@
   },
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-registerwebhook",
-    "comment": "WARNING! This pipe is generated from the template of the 'contact' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "sink": {
       "deletion_tracking": false,
@@ -367,7 +363,6 @@
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-share",
     "batch_size": 1,
-    "comment": "WARNING! This pipe is generated from the template of the 'contact' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "sink": {
       "deletion_tracking": false,
