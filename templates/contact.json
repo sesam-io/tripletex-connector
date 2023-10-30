@@ -97,8 +97,7 @@
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-event",
     "compaction": {
-      "keep_versions": 0,
-      "time_threshold_hours": 168
+      "keep_versions": 1
     },
     "namespaced_identifiers": false,
     "source": {
@@ -131,7 +130,8 @@
     "_id": "{{@ system @}}-{{@ datatype @}}-event2",
     "namespaced_identifiers": false,
     "sink": {
-      "set_initial_offset": "onload"
+      "set_initial_offset": "onload",
+      "deletion_tracking": false
     },
     "source": {
       "dataset": "{{@ system @}}-{{@ datatype @}}-event",
