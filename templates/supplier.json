@@ -133,7 +133,8 @@
     "comment": "WARNING! This pipe is generated from the template of the 'contact' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "namespaced_identifiers": false,
     "sink": {
-      "set_initial_offset": "onload"
+      "set_initial_offset": "onload",
+      "deletion_tracking": false
     },
     "source": {
       "dataset": "{{@ system @}}-{{@ datatype @}}-event",
