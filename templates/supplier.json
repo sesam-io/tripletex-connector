@@ -379,7 +379,6 @@
     },
     "transform": {
       "properties": {
-        "client_side_patching": true,
         "operation_delete": "{{@ datatype @}}-delete",
         "operation_insert": "{{@ datatype @}}-insert",
         "operation_lookup": "{{@ datatype @}}-lookup",
