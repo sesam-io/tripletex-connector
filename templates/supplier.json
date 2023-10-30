@@ -99,8 +99,7 @@
     "_id": "{{@ system @}}-{{@ datatype @}}-event",
     "comment": "WARNING! This pipe is generated from the template of the 'contact' datatype and changes will be silently ignored during collapse. For more information see the connectorpy README.",
     "compaction": {
-      "keep_versions": 0,
-      "time_threshold_hours": 168
+      "keep_versions": 1
     },
     "namespaced_identifiers": false,
     "source": {
