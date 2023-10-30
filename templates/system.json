@@ -453,12 +453,12 @@
       "next_page_link": "{{@ base_url @}}/v2/supplier?from={{ body.from + body.count }}",
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "supplier?fields=*,changes"
+      "url": "supplier?fields=*,changes,postalAddress(*),physicalAddress(*),deliveryAddress(*)"
     },
     "supplier-lookup": {
       "method": "GET",
       "payload_property": "value",
-      "url": "supplier/{{ entity.id }}?fields=*,changes"
+      "url": "supplier/{{ entity.id }}?fields=*,changes,postalAddress(*),physicalAddress(*),deliveryAddress(*)"
     },
     "supplier-update": {
       "method": "PUT",
