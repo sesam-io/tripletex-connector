@@ -35,20 +35,57 @@
       {
         "rules": {
           "default": [
-            ["copy", "*"],
-            ["merge", ["max", "_.", ["apply", "last-modified", "_S.changes"]]],
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "merge",
+              [
+                "max",
+                "_.",
+                [
+                  "apply",
+                  "last-modified",
+                  "_S.changes"
+                ]
+              ]
+            ],
             [
               "add",
               "changes",
-              ["filter", ["eq", "_.changeType", "CREATE"], "_S.changes"]
+              [
+                "filter",
+                [
+                  "eq",
+                  "_.changeType",
+                  "CREATE"
+                ],
+                "_S.changes"
+              ]
             ]
           ],
           "last-modified": [
-            ["filter", ["in", "_S.changeType", ["list", "UPDATE", "CREATE"]]],
+            [
+              "filter",
+              [
+                "in",
+                "_S.changeType",
+                [
+                  "list",
+                  "UPDATE",
+                  "CREATE"
+                ]
+              ]
+            ],
             [
               "add",
               "$last-modified",
-              ["datetime-parse", "%Y-%m-%dT%H:%M:%S%z", "_S.timestamp"]
+              [
+                "datetime-parse",
+                "%Y-%m-%dT%H:%M:%S%z",
+                "_S.timestamp"
+              ]
             ]
           ]
         },
@@ -71,8 +108,18 @@
       {
         "rules": {
           "default": [
-            ["copy", "*go"],
-            ["add", "_id", ["string", "_S.id"]]
+            [
+              "copy",
+              "*go"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ]
           ]
         },
         "type": "dtl"
@@ -95,10 +142,21 @@
         "default": [
           [
             "if",
-            ["eq", "_S.event", "{{@ datatype @}}.delete"],
-            ["add", "_deleted", true]
+            [
+              "eq",
+              "_S.event",
+              "{{@ datatype @}}.delete"
+            ],
+            [
+              "add",
+              "_deleted",
+              true
+            ]
           ],
-          ["merge", "_S.value"]
+          [
+            "merge",
+            "_S.value"
+          ]
         ]
       },
       "type": "dtl"
@@ -149,7 +207,10 @@
       {
         "rules": {
           "default": [
-            ["copy", "properties"],
+            [
+              "copy",
+              "properties"
+            ],
             [
               "add",
               "id",
@@ -161,8 +222,17 @@
                     "datasets": [
                       "{{@ system @}}-{{@ datatype @}}-registerwebhook sink"
                     ],
-                    "return": ["first", "sink.insert_response.value.id"],
-                    "where": [["eq", "_S._id", "sink._id"]]
+                    "return": [
+                      "first",
+                      "sink.insert_response.value.id"
+                    ],
+                    "where": [
+                      [
+                        "eq",
+                        "_S._id",
+                        "sink._id"
+                      ]
+                    ]
                   }
                 ]
               ]
@@ -170,7 +240,15 @@
             [
               "add",
               "$operation",
-              ["if", ["is-not-null", "_T.id"], "lookup", "insert"]
+              [
+                "if",
+                [
+                  "is-not-null",
+                  "_T.id"
+                ],
+                "lookup",
+                "insert"
+              ]
             ]
           ]
         },
@@ -193,7 +271,10 @@
       {
         "rules": {
           "default": [
-            ["copy", "*"],
+            [
+              "copy",
+              "*"
+            ],
             [
               "comment",
               "TODO: we should compare the state of the actual object vs our desired state."
@@ -202,8 +283,16 @@
               "discard",
               [
                 "or",
-                ["eq", 404, "_T.lookup_status_code"],
-                ["eq", "_S.$operation", "insert"]
+                [
+                  "eq",
+                  404,
+                  "_T.lookup_status_code"
+                ],
+                [
+                  "eq",
+                  "_S.$operation",
+                  "insert"
+                ]
               ]
             ]
           ]
@@ -239,30 +328,52 @@
       {
         "rules": {
           "default": [
-            ["copy", "*"],
+            [
+              "copy",
+              "*"
+            ],
             [
               "comment",
               "wrapping payload in a list for updates, but discarding update entities with null values for any address id (IS-14660)"
             ],
             [
               "if",
-              ["is-not-null", "_S.id"],
+              [
+                "is-not-null",
+                "_S.id"
+              ],
               [
                 "if",
                 [
                   "or",
                   [
                     "and",
-                    ["has-key", "id", "_S.physicalAddress"],
-                    ["is-null", "_S.physicalAddress.id"]
+                    [
+                      "has-key",
+                      "id",
+                      "_S.physicalAddress"
+                    ],
+                    [
+                      "is-null",
+                      "_S.physicalAddress.id"
+                    ]
                   ],
                   [
                     "and",
-                    ["has-key", "id", "_S.postalAddress"],
-                    ["is-null", "_S.postalAddress.id"]
+                    [
+                      "has-key",
+                      "id",
+                      "_S.postalAddress"
+                    ],
+                    [
+                      "is-null",
+                      "_S.postalAddress.id"
+                    ]
                   ]
                 ],
-                ["discard"],
+                [
+                  "discard"
+                ],
                 [
                   "add",
                   "$payload",
@@ -274,8 +385,26 @@
                         "filter",
                         [
                           "and",
-                          ["neq", "$", ["substring", 0, 1, "_."]],
-                          ["neq", "_", ["substring", 0, 1, "_."]]
+                          [
+                            "neq",
+                            "$",
+                            [
+                              "substring",
+                              0,
+                              1,
+                              "_."
+                            ]
+                          ],
+                          [
+                            "neq",
+                            "_",
+                            [
+                              "substring",
+                              0,
+                              1,
+                              "_."
+                            ]
+                          ]
                         ],
                         "_."
                       ],
@@ -292,15 +421,26 @@
             ],
             [
               "if",
-              ["is-not-null", "_S.id"],
+              [
+                "is-not-null",
+                "_S.id"
+              ],
               [
                 "if",
                 [
                   "and",
-                  ["is-null", "_S.physicalAddress"],
-                  ["is-null", "_S.postalAddress"]
+                  [
+                    "is-null",
+                    "_S.physicalAddress"
+                  ],
+                  [
+                    "is-null",
+                    "_S.postalAddress"
+                  ]
                 ],
-                ["discard"]
+                [
+                  "discard"
+                ]
               ]
             ]
           ]
@@ -318,50 +458,35 @@
           "rewrite_rules_payload": {
             "is-match": [
               ["comment", "workaround for shadowing the outer _. variable"],
-              [
-                "discard",
-                [
-                  "is-not-empty",
-                  [
-                    "filter",
-                    ["matches", "_S.pattern", "_."],
-                    "_R._S.$source.$based_on_properties"
-                  ]
+              ["discard",
+                ["is-not-empty",
+                  ["filter",
+                    ["matches", "_S.pattern", "_."], "_R._S.$source.$based_on_properties"]
                 ]
               ]
             ],
             "recursive-merge2": [
-              [
-                "merge",
-                [
-                  "dict",
-                  [
-                    "map",
-                    [
-                      "list",
-                      "_.",
-                      [
-                        "sorted",
-                        [
-                          "if",
-                          [
-                            "and",
-                            ["is-dict", ["path", "_.", "_S.a"]],
-                            ["is-dict", ["path", "_.", "_S.b"]]
-                          ],
-                          [
-                            "apply",
-                            "recursive-merge2",
-                            [
-                              "dict",
-                              "a",
-                              ["path", "_.", "_S.a"],
-                              "b",
+              ["merge",
+                ["dict",
+                  ["map",
+                    ["list", "_.",
+                      ["sorted",
+                        ["if",
+                          ["and",
+                            ["is-dict",
+                              ["path", "_.", "_S.a"]
+                            ],
+                            ["is-dict",
                               ["path", "_.", "_S.b"]
                             ]
                           ],
-                          [
-                            "if",
+                          ["apply", "recursive-merge2",
+                            ["dict", "a",
+                              ["path", "_.", "_S.a"], "b",
+                              ["path", "_.", "_S.b"]
+                            ]
+                          ],
+                          ["if",
                             ["has-key", "_.", "_S.b"],
                             ["path", "_.", "_S.b"],
                             ["path", "_.", "_S.a"]
@@ -369,113 +494,94 @@
                         ]
                       ]
                     ],
-                    [
-                      "distinct",
-                      ["combine", ["keys", "_S.a"], ["keys", "_S.b"]]
+                    ["distinct",
+                      ["combine",
+                        ["keys", "_S.a"],
+                        ["keys", "_S.b"]
+                      ]
                     ]
                   ]
                 ]
               ]
             ],
             "remove-unmapped-properties": [
-              [
-                "comment",
-                "function that builds up the dotted key and checks if one of dotted notations in $based_on_properties starts with this dotted key, recurses if the value is a dict"
-              ],
-              [
-                "comment",
-                "the inner 'map' checks if key matches any of the paths in $based_on_properties and recurses dicts"
-              ],
-              [
-                "comment",
-                "the 'group' removes keys for values that are null, empty strings, empty lists or empty dicts (after recursively removing unmapped properties) and groups lists of dicts"
-              ],
-              [
-                "comment",
-                "the 'map-dict' checks if the values are single valued lists and unwraps them as the previous group collects all values in lists"
-              ],
-              [
-                "comment",
-                "possible optimizations: don't recurse deep or long lists of dicts if there is no prefix that matches"
-              ],
-              [
-                "comment",
-                "possible optimizations: drop outer map-dict that unwraps the single value lists as the values are normalized regardless"
-              ],
-              [
-                "merge",
-                [
-                  "map-dict",
-                  "_.",
-                  ["if", ["eq", ["count", "_."], 1], ["first", "_."], "_."],
-                  [
-                    "dict",
-                    [
-                      "group",
-                      [
-                        "if",
-                        [
-                          "or",
-                          [
-                            "and",
-                            ["is-dict", ["last", "_."]],
-                            ["gt", ["count", ["last", "_."]], 0]
+              ["comment", "function that builds up the dotted key and checks if one of dotted notations in $based_on_properties starts with this dotted key, recurses if the value is a dict"],
+              ["comment", "the inner 'map' checks if key matches any of the paths in $based_on_properties and recurses dicts"],
+              ["comment", "the 'group' removes keys for values that are null, empty strings, empty lists or empty dicts (after recursively removing unmapped properties) and groups lists of dicts"],
+              ["comment", "the 'map-dict' checks if the values are single valued lists and unwraps them as the previous group collects all values in lists"],
+              ["comment", "possible optimizations: don't recurse deep or long lists of dicts if there is no prefix that matches"],
+              ["comment", "possible optimizations: drop outer map-dict that unwraps the single value lists as the values are normalized regardless"],
+              ["merge",
+                ["map-dict", "_.",
+                  ["if",
+                    ["eq",
+                      ["count", "_."], 1],
+                    ["first", "_."], "_."],
+                  ["dict",
+                    ["group",
+                      ["if",
+                        ["or",
+                          ["and",
+                            ["is-dict",
+                              ["last", "_."]
+                            ],
+                            ["gt",
+                              ["count",
+                                ["last", "_."]
+                              ], 0]
                           ],
-                          [
-                            "and",
-                            ["not", ["is-dict", ["last", "_."]]],
-                            [
-                              "and",
-                              ["is-not-empty", ["last", "_."]],
-                              ["neq", ["last", "_."], ""]
+                          ["and",
+                            ["not",
+                              ["is-dict",
+                                ["last", "_."]
+                              ]
+                            ],
+                            ["and",
+                              ["is-not-empty",
+                                ["last", "_."]
+                              ],
+                              ["neq",
+                                ["last", "_."], ""]
                             ]
                           ]
                         ],
                         ["first", "_."]
                       ],
                       ["last", "_."],
-                      [
-                        "map",
-                        [
-                          "list",
-                          [
-                            "if",
-                            [
-                              "is-not-empty",
-                              [
-                                "apply",
-                                "is-match",
-                                [
-                                  "dict",
-                                  "pattern",
-                                  [
-                                    "concat",
-                                    "_S.prefix",
-                                    ["ni-id", ["ni", ["first", "_."]]],
-                                    "*"
-                                  ]
+                      ["map",
+                        ["list",
+                          ["if",
+                            ["is-not-empty",
+                              ["apply", "is-match",
+                                ["dict", "pattern",
+                                  ["concat", "_S.prefix",
+                                    ["ni-id",
+                                      ["ni",
+                                        ["first", "_."]
+                                      ]
+                                    ], "*"]
                                 ]
                               ]
                             ],
-                            ["ni-id", ["ni", ["first", "_."]]]
+                            ["ni-id",
+                              ["ni",
+                                ["first", "_."]
+                              ]
+                            ]
                           ],
-                          [
-                            "if",
-                            ["is-dict", ["last", "_."]],
-                            [
-                              "apply",
-                              "remove-unmapped-properties",
-                              [
-                                "dict",
-                                "data",
-                                ["last", "_."],
-                                "prefix",
-                                [
-                                  "concat",
-                                  "_S.prefix",
-                                  ["ni-id", ["ni", ["first", "_."]]],
-                                  "."
-                                ]
+                          ["if",
+                            ["is-dict",
+                              ["last", "_."]
+                            ],
+                            ["apply", "remove-unmapped-properties",
+                              ["dict", "data",
+                                ["last", "_."], "prefix",
+                                ["concat", "_S.prefix",
+                                  ["ni-id",
+                                    ["ni",
+                                      ["first", "_."]
+                                    ]
+                                  ], "."]
                               ]
                             ],
                             ["last", "_."]
@@ -489,25 +595,12 @@
               ]
             ],
             "rewrite_update_payload": [
-              [
-                "add",
-                "$payload",
-                [
-                  "list",
-                  [
-                    "apply",
-                    "recursive-merge2",
-                    [
-                      "dict",
-                      "a",
-                      "_S.response_body",
-                      "b",
-                      [
-                        "apply",
-                        "strip-sesam-properties",
-                        [
-                          "apply",
-                          "remove-unmapped-properties",
+              ["add", "$payload",
+                ["list",
+                  ["apply", "recursive-merge2",
+                    ["dict", "a", "_S.response_body", "b",
+                      ["apply", "strip-sesam-properties",
+                        ["apply", "remove-unmapped-properties",
                           ["dict", "prefix", "", "data", "_S.$source"]
                         ]
                       ]
@@ -516,7 +609,9 @@
                 ]
               ]
             ],
-            "strip-sesam-properties": [["copy", "*", "sesam_*"]]
+            "strip-sesam-properties": [
+              ["copy", "*", "sesam_*"]
+            ]
           },
           "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
         },
