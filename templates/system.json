@@ -76,12 +76,12 @@
       "next_page_link": "{{@ base_url @}}/v2/customer?from={{ body.from + body.count }}",
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "customer?fields=*,changes,postalAddress(*),physicalAddress(*),deliveryAddress(*)"
+      "url": "customer?fields=*,changes,postalAddress(*,changes),physicalAddress(*,changes),deliveryAddress(*,changes)"
     },
     "customer-lookup": {
       "method": "GET",
       "payload_property": "value",
-      "url": "customer/{{ entity.id }}?fields=*,changes,postalAddress(*),physicalAddress(*),deliveryAddress(*)"
+      "url": "customer/{{ entity.id }}?fields=*,changes,postalAddress(*,changes),physicalAddress(*,changes),deliveryAddress(*,changes)"
     },
     "customer-update": {
       "method": "PUT",
@@ -453,12 +453,12 @@
       "next_page_link": "{{@ base_url @}}/v2/supplier?from={{ body.from + body.count }}",
       "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "supplier?fields=*,changes,postalAddress(*),physicalAddress(*),deliveryAddress(*)"
+      "url": "supplier?fields=*,changes,postalAddress(*,changes),physicalAddress(*,changes),deliveryAddress(*,changes)"
     },
     "supplier-lookup": {
       "method": "GET",
       "payload_property": "value",
-      "url": "supplier/{{ entity.id }}?fields=*,changes,postalAddress(*),physicalAddress(*),deliveryAddress(*)"
+      "url": "supplier/{{ entity.id }}?fields=*,changes,postalAddress(*,changes),physicalAddress(*,changes),deliveryAddress(*,changes)"
     },
     "supplier-update": {
       "method": "PUT",

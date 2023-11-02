@@ -7,43 +7,43 @@
   "auth_variant": "tripletex",
   "datatypes": {
     "address": {
-      "sync_frequency": "slow",
       "label": "Address",
+      "sync_frequency": "slow",
       "template": "templates/country.json"
     },
     "contact": {
-      "schedule_interval": 14400,
       "label": "Contact",
+      "schedule_interval": 14400,
       "template": "templates/contact.json"
     },
     "country": {
-      "sync_frequency": "slow",
       "label": "Country",
+      "sync_frequency": "slow",
       "template": "templates/country.json"
     },
     "currency": {
-      "sync_frequency": "slow",
       "label": "Currency",
+      "sync_frequency": "slow",
       "template": "templates/currency.json"
     },
     "customer": {
-      "schedule_interval": 14400,
       "label": "Customer",
+      "schedule_interval": 3600,
       "template": "templates/customer.json"
     },
     "customercategory": {
-      "sync_frequency": "slow",
       "label": "Customer Category",
+      "sync_frequency": "slow",
       "template": "templates/customercategory.json"
     },
     "department": {
-      "sync_frequency": "slow",
       "label": "Department",
+      "sync_frequency": "slow",
       "template": "templates/department.json"
     },
     "employee": {
-      "sync_frequency": "slow",
       "label": "Employee",
+      "sync_frequency": "slow",
       "template": "templates/employee.json"
     },
     "invoice": {
@@ -51,8 +51,8 @@
       "template": "templates/invoice.json"
     },
     "order": {
-      "schedule_interval": 14400,
       "label": "Order",
+      "schedule_interval": 14400,
       "template": "templates/order.json"
     },
     "orderline": {
@@ -60,43 +60,43 @@
       "template": "templates/orderline.json"
     },
     "product": {
-      "schedule_interval": 14400,
       "label": "Product",
+      "schedule_interval": 14400,
       "template": "templates/contact.json"
     },
     "productgroup": {
-      "sync_frequency": "slow",
       "label": "Product Group",
+      "sync_frequency": "slow",
       "template": "templates/customercategory.json"
     },
     "productgrouprelation": {
-      "sync_frequency": "slow",
       "label": "Product Group Relation",
+      "sync_frequency": "slow",
       "template": "templates/customercategory.json"
     },
     "productunit": {
-      "sync_frequency": "slow",
       "label": "Product Unit",
+      "sync_frequency": "slow",
       "template": "templates/customercategory.json"
     },
     "project": {
-      "schedule_interval": 14400,
       "label": "Project",
+      "schedule_interval": 14400,
       "template": "templates/contact.json"
     },
     "projectcategory": {
-      "sync_frequency": "slow",
       "label": "Project Category",
+      "sync_frequency": "slow",
       "template": "templates/customercategory.json"
     },
     "supplier": {
-      "schedule_interval": 14400,
       "label": "Supplier",
-      "template": "templates/supplier.json"
+      "schedule_interval": 3600,
+      "template": "templates/customer.json"
     },
     "vattype": {
-      "sync_frequency": "slow",
       "label": "VAT Type",
+      "sync_frequency": "slow",
       "template": "templates/country.json"
     },
     "webhook": {
