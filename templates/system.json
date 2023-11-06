@@ -487,8 +487,8 @@
     "webhook-insert": {
       "method": "POST",
       "payload": {
-        "authHeaderName": "Authorization",
-        "authHeaderValue": "Bearer $SECRET(service_jwt)",
+        "authHeaderName": "X-Sesam-Authorization",
+        "authHeaderValue": "$SECRET(webhook_secret)",
         "event": "{{ properties.event }}",
         "fields": "{{ properties.fields }}",
         "targetUrl": "{{ properties.targetUrl }}"
