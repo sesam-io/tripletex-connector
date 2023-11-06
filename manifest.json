@@ -13,7 +13,7 @@
     },
     "contact": {
       "label": "Contact",
-      "schedule_interval": 14400,
+      "schedule_interval": 3600,
       "template": "templates/contact.json"
     },
     "country": {
