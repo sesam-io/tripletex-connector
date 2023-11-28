@@ -202,6 +202,7 @@
     },
     "namespaced_identifiers": false,
     "source": {
+      "system": "{{@ system @}}",
       "type": "http_endpoint",
       "validation_expression": "{% if request_headers['X-Sesam-Authorization'] == secret('webhook_secret') %}{% else %}FAIL!{% endif %}"
     },
