@@ -3,15 +3,53 @@
     "_id": "{{@ system @}}-{{@ datatype @}}-all",
     "namespaced_identifiers": false,
     "source": {
-      "operation": "{{@ datatype @}}-list",
-      "properties": {
-        "DateFrom": "1970-01-01",
-        "DateTo": "2999-01-01",
-        "datatype": "{{@ datatype @}}"
-      },
-      "system": "{{@ system @}}",
-      "type": "rest"
+      "dataset": "{{@ system @}}-accountingperiod-collect",
+      "type": "dataset"
     },
+    "transform": [
+      {
+        "operation": "{{@ datatype @}}-list",
+        "replace_entity": true,
+        "side_effects": false,
+        "system": "{{@ system @}}",
+        "trace": {
+          "log_response_body_maxsize": 100000
+        },
+        "type": "rest"
+      },
+      {
+        "rules": {
+          "default": [
+            [
+              "create",
+              [
+                "apply",
+                "{{@ datatype @}}s",
+                "_S.values"
+              ]
+            ],
+            [
+              "discard"
+            ]
+          ],
+          "{{@ datatype @}}s": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
     "type": "pipe"
   },
   {
@@ -125,8 +163,8 @@
     "_id": "{{@ system @}}-{{@ datatype @}}-event2",
     "namespaced_identifiers": false,
     "sink": {
-      "set_initial_offset": "onload",
-      "deletion_tracking": false
+      "deletion_tracking": false,
+      "set_initial_offset": "onload"
     },
     "source": {
       "dataset": "{{@ system @}}-{{@ datatype @}}-event",
