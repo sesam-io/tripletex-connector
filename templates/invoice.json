@@ -1,17 +1,59 @@
 [
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "batch_size": 1,
+    "comment": [
+      "Batch size 1 due to possible rate limiting causeing full import to fail. Rescan in order to catch daily updates/new entities due to lack of continuation support possibility"
+    ],
     "namespaced_identifiers": false,
-    "source": {
-      "operation": "{{@ datatype @}}-list",
-      "properties": {
-        "DateFrom": "1970-01-01",
-        "DateTo": "2999-01-01",
-        "datatype": "{{@ datatype @}}"
-      },
-      "system": "{{@ system @}}",
-      "type": "rest"
+    "pump": {
+      "rescan_cron_expression": "0 0 * * *"
     },
+    "source": {
+      "dataset": "{{@ system @}}-accountingperiod-collect",
+      "type": "dataset"
+    },
+    "transform": [
+      {
+        "operation": "{{@ datatype @}}-list",
+        "replace_entity": true,
+        "side_effects": false,
+        "system": "{{@ system @}}",
+        "type": "rest"
+      },
+      {
+        "rules": {
+          "default": [
+            [
+              "create",
+              [
+                "apply",
+                "{{@ datatype @}}s",
+                "_S.values"
+              ]
+            ],
+            [
+              "discard"
+            ]
+          ],
+          "{{@ datatype @}}s": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
     "type": "pipe"
   },
   {
@@ -125,8 +167,8 @@
     "_id": "{{@ system @}}-{{@ datatype @}}-event2",
     "namespaced_identifiers": false,
     "sink": {
-      "set_initial_offset": "onload",
-      "deletion_tracking": false
+      "deletion_tracking": false,
+      "set_initial_offset": "onload"
     },
     "source": {
       "dataset": "{{@ system @}}-{{@ datatype @}}-event",

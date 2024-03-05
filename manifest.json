@@ -6,6 +6,11 @@
   "auth": "api_key",
   "auth_variant": "tripletex",
   "datatypes": {
+    "accountingperiod": {
+      "label": "accountingperiod",
+      "sync_frequency": "slow",
+      "template": "templates/country.json"
+    },
     "address": {
       "label": "Address",
       "sync_frequency": "slow",

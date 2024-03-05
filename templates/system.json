@@ -2,6 +2,12 @@
   "_id": "{{@ system @}}",
   "authentication": "tripletex",
   "operations": {
+    "accountingperiod-list": {
+      "id_expression": "{{ id }}",
+      "method": "GET",
+      "payload_property": "values",
+      "url": "ledger/accountingPeriod"
+    },
     "address-list": {
       "id_expression": "{{ id }}",
       "method": "GET",
@@ -189,10 +195,8 @@
     "invoice-list": {
       "id_expression": "{{ id }}",
       "method": "GET",
-      "next_page_link": "{{@ base_url @}}/v2/invoice?from={{ body.from + body.count }}&invoiceDateFrom=1970-01-01&invoiceDateTo=2999-01-01",
-      "next_page_termination_strategy": "empty-result",
       "payload_property": "values",
-      "url": "invoice?invoiceDateFrom=1970-01-01&invoiceDateTo=2999-01-01&fields=*,changes"
+      "url": "invoice?invoiceDateFrom={{ entity.start }}&invoiceDateTo={{ entity.end }}&fields=*,changes"
     },
     "invoice-lookup": {
       "method": "GET",
