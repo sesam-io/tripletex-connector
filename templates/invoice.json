@@ -1,7 +1,14 @@
 [
   {
     "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "batch_size": 1,
+    "comment": [
+      "Batch size 1 due to possible rate limiting causeing full import to fail. Rescan in order to catch daily updates/new entities due to lack of continuation support possibility"
+    ],
     "namespaced_identifiers": false,
+    "pump": {
+      "rescan_cron_expression": "0 0 * * *"
+    },
     "source": {
       "dataset": "{{@ system @}}-accountingperiod-collect",
       "type": "dataset"
