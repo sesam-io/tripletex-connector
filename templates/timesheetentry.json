@@ -1,0 +1,152 @@
+[
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "batch_size": 1,
+    "namespaced_identifiers": false,
+    "pump": {
+      "rescan_cron_expression": "0 0 * * *"
+    },
+    "source": {
+      "dataset": "{{@ system @}}-accountingperiod-collect",
+      "type": "dataset"
+    },
+    "transform": [
+      {
+        "operation": "{{@ datatype @}}-list",
+        "replace_entity": true,
+        "side_effects": false,
+        "system": "{{@ system @}}",
+        "type": "rest"
+      },
+      {
+        "rules": {
+          "default": [
+            [
+              "create",
+              [
+                "apply",
+                "{{@ datatype @}}s",
+                "_S.values"
+              ]
+            ],
+            [
+              "discard"
+            ]
+          ],
+          "{{@ datatype @}}s": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "namespaced_identifiers": false,
+    "source": {
+      "datasets": [
+        "{{@ system @}}-{{@ datatype @}}-all",
+        "{{@ system @}}-{{@ datatype @}}-event2"
+      ],
+      "type": "merge_datasets"
+    },
+    "transform": [
+      {
+        "rules": {
+          "default": [
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "merge",
+              [
+                "max",
+                "_.",
+                [
+                  "apply",
+                  "last-modified",
+                  "_S.changes"
+                ]
+              ]
+            ],
+            [
+              "add",
+              "changes",
+              [
+                "filter",
+                [
+                  "eq",
+                  "_.changeType",
+                  "CREATE"
+                ],
+                "_S.changes"
+              ]
+            ]
+          ],
+          "last-modified": [
+            [
+              "filter",
+              [
+                "in",
+                "_S.changeType",
+                [
+                  "list",
+                  "UPDATE",
+                  "CREATE"
+                ]
+              ]
+            ],
+            [
+              "add",
+              "$last-modified",
+              [
+                "datetime-parse",
+                "%Y-%m-%dT%H:%M:%S%z",
+                "_S.timestamp"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-share",
+    "batch_size": 1,
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-transform",
+      "type": "dataset"
+    },
+    "transform": {
+      "properties": {
+        "operation_delete": "{{@ datatype @}}-delete",
+        "operation_insert": "{{@ datatype @}}-insert",
+        "operation_lookup": "{{@ datatype @}}-lookup",
+        "operation_update": "{{@ datatype @}}-update",
+        "primary_key": "id",
+        "rest_system": "{{@ system @}}",
+        "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
+      },
+      "template": "transform-share-rest",
+      "type": "template"
+    },
+    "type": "pipe"
+  }
+]

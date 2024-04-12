@@ -470,6 +470,34 @@
       "payload_property": "value",
       "url": "supplier/{{ entity.id }}"
     },
+    "timesheetentry-delete": {
+      "method": "DELETE",
+      "payload-type": "json",
+      "url": "timesheet/entry/{{ entity.id }}"
+    },
+    "timesheetentry-insert": {
+      "method": "POST",
+      "payload-type": "json",
+      "payload_property": "value",
+      "url": "timesheet/entry"
+    },
+    "timesheetentry-list": {
+      "id_expression": "{{ id }}",
+      "method": "GET",
+      "payload_property": "values",
+      "url": "timesheet/entry?dateFrom={{ entity.start }}&dateTo={{ entity.end }}&fields=*,changes"
+    },
+    "timesheetentry-lookup": {
+      "method": "GET",
+      "payload_property": "value",
+      "url": "timesheet/entry/{{ entity.id }}?fields=*,changes"
+    },
+    "timesheetentry-update": {
+      "method": "PUT",
+      "payload-type": "json",
+      "payload_property": "value",
+      "url": "timesheet/entry/{{ entity.id }}"
+    },
     "vattype-list": {
       "id_expression": "{{ id }}",
       "method": "GET",
