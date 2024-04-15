@@ -11,6 +11,9 @@
       "sync_frequency": "slow",
       "template": "templates/country.json"
     },
+    "activity": {
+      "template": "templates/activity.json"
+    },
     "address": {
       "label": "Address",
       "sync_frequency": "slow",
