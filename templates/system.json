@@ -426,14 +426,6 @@
       "payload_property": "value",
       "url": "project/{{ entity.id }}"
     },
-    "projectactivity-list": {
-      "id_expression": "{{ id }}",
-      "method": "GET",
-      "next_page_link": "{{@ base_url @}}/v2/project/projectactivity?from={{ body.from + body.count }}",
-      "next_page_termination_strategy": "empty-result",
-      "payload_property": "values",
-      "url": "project/projectactivity/2851665?fields=*,changes"
-    },
     "projectcategory-delete": {
       "method": "DELETE",
       "url": "project/category/{{ entity.id }}"
