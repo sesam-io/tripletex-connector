@@ -11,6 +11,9 @@
       "sync_frequency": "slow",
       "template": "templates/country.json"
     },
+    "activity": {
+      "template": "templates/activity.json"
+    },
     "address": {
       "label": "Address",
       "sync_frequency": "slow",
@@ -88,6 +91,9 @@
       "label": "Project",
       "schedule_interval": 14400,
       "template": "templates/contact.json"
+    },
+    "projectactivity": {
+      "template": "templates/projectactivity.json"
     },
     "projectcategory": {
       "label": "Project Category",
