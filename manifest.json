@@ -92,9 +92,6 @@
       "schedule_interval": 14400,
       "template": "templates/contact.json"
     },
-    "projectactivity": {
-      "template": "templates/projectactivity.json"
-    },
     "projectcategory": {
       "label": "Project Category",
       "sync_frequency": "slow",
