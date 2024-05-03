@@ -1,0 +1,178 @@
+[
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "namespaced_identifiers": false,
+    "pump": {
+      "rescan_cron_expression": "0 0 * * *"
+    },
+    "source": {
+      "dataset": "{{@ system @}}-employee-collect",
+      "type": "dataset"
+    },
+    "transform": [
+      {
+        "operation": "{{@ datatype @}}-list",
+        "replace_entity": true,
+        "side_effects": false,
+        "system": "{{@ system @}}",
+        "type": "rest"
+      },
+      {
+        "rules": {
+          "active-{{@ datatype @}}": [
+            [
+              "filter",
+              [
+                "eq",
+                [
+                  "max",
+                  [
+                    "datetime-parse",
+                    "%Y-%m-%d",
+                    "_R._T._non_terminated_{{@ datatype @}}s.startDate"
+                  ]
+                ],
+                [
+                  "datetime-parse",
+                  "%Y-%m-%d",
+                  "_S.startDate"
+                ]
+              ]
+            ],
+            [
+              "copy",
+              "*"
+            ]
+          ],
+          "default": [
+            [
+              "add",
+              "_non_terminated_{{@ datatype @}}s",
+              [
+                "apply",
+                "non-terminated-{{@ datatype @}}s",
+                "_S.values"
+              ]
+            ],
+            [
+              "create",
+              [
+                "apply",
+                "active-{{@ datatype @}}",
+                "_T._non_terminated_{{@ datatype @}}s"
+              ]
+            ],
+            [
+              "discard"
+            ]
+          ],
+          "non-terminated-{{@ datatype @}}s": [
+            [
+              "filter",
+              [
+                "or",
+                [
+                  "is-empty",
+                  "_S.endDate"
+                ],
+                [
+                  "lt",
+                  [
+                    "now"
+                  ],
+                  [
+                    "datetime-parse",
+                    "%Y-%m-%d",
+                    "_S.endDate"
+                  ]
+                ]
+              ]
+            ],
+            [
+              "copy",
+              "*"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "string",
+                "_S.id"
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all",
+      "type": "dataset"
+    },
+    "transform": {
+      "rules": {
+        "default": [
+          [
+            "copy",
+            "*"
+          ],
+          [
+            "merge",
+            [
+              "max",
+              "_.",
+              [
+                "apply",
+                "last-modified",
+                "_S.changes"
+              ]
+            ]
+          ],
+          [
+            "add",
+            "changes",
+            [
+              "filter",
+              [
+                "eq",
+                "_.changeType",
+                "CREATE"
+              ],
+              "_S.changes"
+            ]
+          ]
+        ],
+        "last-modified": [
+          [
+            "filter",
+            [
+              "in",
+              "_S.changeType",
+              [
+                "list",
+                "UPDATE",
+                "CREATE"
+              ]
+            ]
+          ],
+          [
+            "add",
+            "$last-modified",
+            [
+              "datetime-parse",
+              "%Y-%m-%dT%H:%M:%S%z",
+              "_S.timestamp"
+            ]
+          ]
+        ]
+      },
+      "type": "dtl"
+    },
+    "type": "pipe"
+  }
+]
