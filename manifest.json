@@ -54,6 +54,9 @@
       "sync_frequency": "slow",
       "template": "templates/employee.json"
     },
+    "employment": {
+      "template": "templates/employment.json"
+    },
     "invoice": {
       "label": "Invoice",
       "template": "templates/invoice.json"

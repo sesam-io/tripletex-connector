@@ -196,6 +196,10 @@
       "payload_property": "value",
       "url": "employee/{{ entity.id }}"
     },
+    "employment-list": {
+      "method": "GET",
+      "url": "employee/employment?fields=*,changes&employeeId={{ entity.id }}"
+    },
     "invoice-delete": {
       "method": "DELETE",
       "url": "invoice/{{ entity.id }}"
