@@ -122,6 +122,10 @@
             "*"
           ],
           [
+            "comment",
+            "Adding value to an internal attribute used to create a classificatoin entity"
+          ],
+          [
             "add",
             "sesam_{{@ datatype @}}_status",
             true
