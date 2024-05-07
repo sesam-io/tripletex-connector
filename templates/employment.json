@@ -122,6 +122,11 @@
             "*"
           ],
           [
+            "add",
+            "sesam_{{@ datatype @}}_status",
+            true
+          ],
+          [
             "merge",
             [
               "max",
