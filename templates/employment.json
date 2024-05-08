@@ -11,6 +11,17 @@
     },
     "transform": [
       {
+        "type": "dtl",
+        "rules": {
+          "default": [
+            ["filter",
+              ["neq", "_S._deleted", true]
+            ],
+            ["copy", "*"]
+          ]
+        }
+      },
+      {
         "operation": "{{@ datatype @}}-list",
         "replace_entity": true,
         "side_effects": false,
