@@ -96,6 +96,7 @@
       "template": "templates/contact.json"
     },
     "projectactivity": {
+      "parent": "project",
       "template": "templates/projectactivity.json"
     },
     "projectcategory": {
