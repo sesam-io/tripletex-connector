@@ -430,6 +430,17 @@
       "payload_property": "value",
       "url": "project/{{ entity.id }}"
     },
+    "projectactivity-insert": {
+      "method": "POST",
+      "payload-type": "json",
+      "payload_property": "value",
+      "url": "project/projectActivity"
+    },
+    "projectactivity-lookup": {
+      "method": "GET",
+      "payload_property": "value",
+      "url": "project/projectActivity/{{ entity.id }}?fields=*,changes"
+    },
     "projectcategory-delete": {
       "method": "DELETE",
       "url": "project/category/{{ entity.id }}"
