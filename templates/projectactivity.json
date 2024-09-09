@@ -3,7 +3,7 @@
     "_id": "{{@ system @}}-{{@ datatype @}}-all",
     "namespaced_identifiers": false,
     "source": {
-      "dataset": "{{@ system @}}-project-collect",
+      "dataset": "{{@ system @}}-{{@ parent @}}-collect",
       "type": "dataset"
     },
     "transform": [
@@ -14,19 +14,19 @@
               "filter",
               [
                 "is-not-empty",
-                "_S.projectActivities.id"
+                "_S.{{@ parent @}}Activities.id"
               ]
             ],
             [
               "create-child",
               [
                 "apply",
-                "projectActivities",
-                "_S.projectActivities"
+                "{{@ parent @}}Activities",
+                "_S.{{@ parent @}}Activities"
               ]
             ]
           ],
-          "projectActivities": [
+          "{{@ parent @}}Activities": [
             [
               "copy",
               "*"
