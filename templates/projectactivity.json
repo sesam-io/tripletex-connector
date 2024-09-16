@@ -41,7 +41,7 @@
             ],
             [
               "add",
-              "$original_id",              
+              "sesam_projectid",              
               "_R._S.id"              
             ]
           ]
