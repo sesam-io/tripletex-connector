@@ -38,6 +38,11 @@
                 "string",
                 "_S.id"
               ]
+            ],
+            [
+              "add",
+              "$original_id",              
+              "_R._S.id"              
             ]
           ]
         },
