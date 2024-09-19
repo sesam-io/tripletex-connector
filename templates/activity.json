@@ -136,6 +136,19 @@
                 "$discard",
                 "inserts only"
               ]
+            ],
+            [
+              "if",
+              [
+                "eq",
+                "_S.{{@ datatype @}}Type",
+                "PROJECT_GENERAL_ACTIVITY"
+              ],
+              [
+                "add",
+                "$discard",
+                "Can not process 'project general activities'"
+              ]
             ]
           ]
         },
