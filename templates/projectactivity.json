@@ -158,8 +158,6 @@
           "insert_allowed_status_codes": "100-501,504-599",
           "operation_delete": "{{@ datatype @}}-delete",
           "operation_insert": "{{@ datatype @}}-insert",
-          "operation_lookuo": "{{@ datatype @}}-lookup",
-          "operation_update": "{{@ datatype @}}-update",
           "primary_key": "id",
           "rest_system": "{{@ system @}}",
           "share_dataset": "{{@ system @}}-{{@ datatype @}}-share"
