@@ -142,12 +142,12 @@
               [
                 "eq",
                 "_S.{{@ datatype @}}Type",
-                "PROJECT_GENERAL_ACTIVITY"
+                "PROJECT_SPECIFIC_ACTIVITY"
               ],
               [
                 "add",
                 "$discard",
-                "Can not process 'project general activities'"
+                "Can not process 'project specific activities'"
               ]
             ]
           ]
