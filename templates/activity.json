@@ -36,6 +36,23 @@
               "*"
             ],
             [
+              "comment",
+              "IS-17840"
+            ],
+            [
+              "if", 
+              [
+                "eq",
+                "_S.number",
+                ""
+              ], 
+              [
+                "add",
+                "number",
+                null
+              ]
+            ],
+            [
               "merge",
               [
                 "max",
