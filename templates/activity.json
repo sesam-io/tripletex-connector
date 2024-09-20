@@ -36,6 +36,19 @@
               "*"
             ],
             [
+              "if", 
+              [
+                "eq",
+                "_S.number",
+                ""
+              ], 
+              [
+                "add",
+                "number",
+                null
+              ]
+            ],
+            [
               "merge",
               [
                 "max",
